@@ -1,7 +1,6 @@
-import './App.css';
 import {Component, ReactNode} from "react";
 
-class App extends Component<ReactNode, object> {
+class SearchResult extends Component<ReactNode, object> {
   render() {
 
     return (
@@ -12,4 +11,4 @@ class App extends Component<ReactNode, object> {
   }
 }
 
-export default App;
+export default SearchResult;
