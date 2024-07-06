@@ -1,10 +1,14 @@
 import { Component, ReactNode } from 'react';
 
-import style from './loader.module.css';
+import styles from './loader.module.css';
 
 class Loader extends Component<ReactNode, object> {
   render() {
-    return <div className={style.loader}></div>;
+    return (
+      <div className={styles.loaderWrapper}>
+        <div className={styles.loader}></div>
+      </div>
+    );
   }
 }
 
