@@ -9,6 +9,8 @@ type StateType = {
   searchText: string;
 };
 
+export const LS_MY_SEARCH = 'mySearch';
+
 class Search extends Component<ReactNode, StateType> {
   constructor(props) {
     super(props);
@@ -18,9 +20,17 @@ class Search extends Component<ReactNode, StateType> {
     };
   }
 
+  componentDidMount() {
+    const searchText = localStorage.getItem(LS_MY_SEARCH);
+    if (searchText) {
+      this.setState({ searchText });
+    }
+  }
+
   changeSearchText = (event) => {
     this.setState({ searchText: event.target.value });
   };
+
   render() {
     return (
       <div className={styles.searchWrapper}>
