@@ -1,3 +1,3 @@
-import SearchRequest from "./ui/searchRequest";
+import SearchRequest from './ui/searchRequest';
 
 export default SearchRequest;
