@@ -1,0 +1,25 @@
+.searchResult {
+    margin-top: 20px;
+    max-height: 100%;
+    overflow-y: auto;
+    min-width: 480px;
+}
+
+.searchItem {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px dotted #e5e5e5;
+}
+
+.error {
+    color: red;
+    position: absolute;
+    right: 30px;
+    bottom: 30px;
+}
+
+.noResult {
+    color: #999;
+    align-items: center;
+}
