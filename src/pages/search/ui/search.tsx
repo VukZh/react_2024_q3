@@ -3,7 +3,6 @@ import { ChangeEvent, Component, ReactNode } from 'react';
 import styles from './search.module.css';
 import SearchRequest from '../widgets/search-request';
 import SearchResult from '../widgets/search-result';
-import ErrorBoundary from '../../../shared/error-boundary';
 import { RickAndMortyCharacter } from '../model/types.ts';
 import { getShortCharacters } from '../api/helpers.ts';
 
@@ -54,12 +53,9 @@ class Search extends Component<ReactNode, StateType> {
           isLoading={this.state.isLoading}
           changeIsLoading={this.setIsLoading}
           setCharacters={this.setCharacters}></SearchRequest>
-        <ErrorBoundary>
-          <SearchResult
-            characters={getShortCharacters(
-              this.state.characters,
-            )}></SearchResult>
-        </ErrorBoundary>
+
+        <SearchResult
+          characters={getShortCharacters(this.state.characters)}></SearchResult>
       </div>
     );
   }
