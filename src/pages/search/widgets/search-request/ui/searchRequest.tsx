@@ -1,9 +1,9 @@
 import { Component } from 'react';
 import styles from './searchRequest.module.css';
 import { LS_MY_SEARCH } from '../../../ui/search.tsx';
-import { searchCharacters } from '../../../api/rickAndMortyAPI.ts';
 import Loader from '../../../../../shared/loader';
 import { RickAndMortyCharacter } from '../../../model/types.ts';
+import { fetchData } from '../../../api/helpers.ts';
 
 type PropsType = {
   searchText: string;
@@ -12,29 +12,24 @@ type PropsType = {
   changeIsLoading: (isLoading: boolean) => void;
   setCharacters: (characters: RickAndMortyCharacter[]) => void;
 };
+
 class SearchRequest extends Component<PropsType, object> {
   handleSearchSubmit = async () => {
-    localStorage.setItem(LS_MY_SEARCH, this.props.searchText);
-    try {
-      this.props.changeIsLoading(true);
-      const res = await searchCharacters(this.props.searchText);
-      this.props.setCharacters(res);
-      this.props.changeIsLoading(false);
-    } catch (error) {
-      console.error('Error during search:', error);
+    const { searchText, changeIsLoading, setCharacters } = this.props;
+    localStorage.setItem(LS_MY_SEARCH, searchText);
+    fetchData(searchText, changeIsLoading, setCharacters);
+  };
+
+  handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      this.handleSearchSubmit();
     }
   };
 
   async componentDidMount() {
-    const initialSearchText = localStorage.getItem(LS_MY_SEARCH);
-    try {
-      this.props.changeIsLoading(true);
-      const res = await searchCharacters(initialSearchText || '');
-      this.props.setCharacters(res);
-      this.props.changeIsLoading(false);
-    } catch (error) {
-      console.error('Error during search:', error);
-    }
+    const { changeIsLoading, setCharacters } = this.props;
+    const initialSearchText = localStorage.getItem(LS_MY_SEARCH) || '';
+    fetchData(initialSearchText, changeIsLoading, setCharacters);
   }
 
   render() {
@@ -46,6 +41,7 @@ class SearchRequest extends Component<PropsType, object> {
           className={styles.inputSearch}
           value={this.props.searchText}
           onChange={this.props.changeSearchText}
+          onKeyUp={this.handleKeyPress}
         />
         {!this.props.isLoading ? (
           <button

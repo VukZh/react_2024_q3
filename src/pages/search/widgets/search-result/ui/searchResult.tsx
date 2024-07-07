@@ -1,4 +1,4 @@
-import React, { Component, ReactNode } from 'react';
+import { Component } from 'react';
 import styles from './searchResult.module.css';
 import { RickAndMortyShortCharacter } from '../../../model/types.ts';
 import CharacterItem from '../../../entities/characterItem';
@@ -9,7 +9,7 @@ type PropsType = {
   characters: RickAndMortyShortCharacter[];
 };
 class SearchResult extends Component<PropsType, StateType> {
-  constructor(props) {
+  constructor(props: PropsType) {
     super(props);
     this.state = {
       errorIsThrown: false,
@@ -20,10 +20,7 @@ class SearchResult extends Component<PropsType, StateType> {
     this.setState({ errorIsThrown: true });
   };
 
-  componentDidUpdate(
-    prevProps: Readonly<PropsType>,
-    prevState: Readonly<StateType>,
-  ) {
+  componentDidUpdate() {
     if (this.state.errorIsThrown) {
       throw new Error('Something went wrong.');
     }

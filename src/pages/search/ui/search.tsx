@@ -1,4 +1,4 @@
-import { Component, ReactNode } from 'react';
+import { ChangeEvent, Component, ReactNode } from 'react';
 
 import styles from './search.module.css';
 import SearchRequest from '../widgets/search-request';
@@ -16,7 +16,7 @@ type StateType = {
 export const LS_MY_SEARCH = 'mySearch';
 
 class Search extends Component<ReactNode, StateType> {
-  constructor(props) {
+  constructor(props: ReactNode) {
     super(props);
 
     this.state = {
@@ -33,7 +33,7 @@ class Search extends Component<ReactNode, StateType> {
     }
   }
 
-  changeSearchText = (event) => {
+  changeSearchText = (event: ChangeEvent<HTMLInputElement>) => {
     this.setState({ searchText: event.target.value });
   };
 

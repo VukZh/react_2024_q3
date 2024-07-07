@@ -1,29 +1,17 @@
-import React, { Component, ReactElement, ReactNode, ReactPortal } from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
 import styles from './errorBoundary.module.css';
-interface ReactNodeArray extends Array<ReactNode> {}
 
-type ReactText = string | number;
-type ReactChild = ReactElement | ReactText;
-type ReactFragment = {} | ReactNodeArray;
-type ReactNode =
-  | ReactChild
-  | ReactFragment
-  | ReactPortal
-  | boolean
-  | null
-  | undefined;
-
-type Props = {
+type PropsType = {
   children: ReactNode;
 };
 
-class ErrorBoundary extends Component<Props, { hasError: boolean }> {
-  constructor(props) {
+class ErrorBoundary extends Component<PropsType, { hasError: boolean }> {
+  constructor(props: PropsType) {
     super(props);
     this.state = { hasError: false };
   }
 
-  componentDidCatch(error, errorInfo) {
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
     this.setState({ hasError: true });
     console.log('Catch error: ', error, errorInfo);
   }
