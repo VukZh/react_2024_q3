@@ -1,0 +1,19 @@
+.characterItemWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 40px;
+    border-top: 1px solid gray;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.status {
+    color: cyan;
+}
+
+.species {
+    color: orange;
+}

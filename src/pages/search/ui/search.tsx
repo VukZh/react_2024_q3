@@ -4,10 +4,13 @@ import styles from './search.module.css';
 import SearchRequest from '../widgets/search-request';
 import SearchResult from '../widgets/search-result';
 import ErrorBoundary from '../../../shared/error-boundary';
+import { RickAndMortyCharacter } from '../model/types.ts';
+import { getShortCharacters } from '../api/helpers.ts';
 
 type StateType = {
   searchText: string;
   isLoading: boolean;
+  characters: RickAndMortyCharacter[];
 };
 
 export const LS_MY_SEARCH = 'mySearch';
@@ -19,6 +22,7 @@ class Search extends Component<ReactNode, StateType> {
     this.state = {
       searchText: '',
       isLoading: false,
+      characters: [],
     };
   }
 
@@ -30,11 +34,15 @@ class Search extends Component<ReactNode, StateType> {
   }
 
   changeSearchText = (event) => {
-    this.setState({ ...this.state, searchText: event.target.value });
+    this.setState({ searchText: event.target.value });
+  };
+
+  setCharacters = (characters: RickAndMortyCharacter[]) => {
+    this.setState({ characters });
   };
 
   setIsLoading = (isLoading: boolean) => {
-    this.setState({ ...this.state, isLoading });
+    this.setState({ isLoading });
   };
 
   render() {
@@ -44,9 +52,13 @@ class Search extends Component<ReactNode, StateType> {
           searchText={this.state.searchText}
           changeSearchText={this.changeSearchText}
           isLoading={this.state.isLoading}
-          changeIsLoading={this.setIsLoading}></SearchRequest>
+          changeIsLoading={this.setIsLoading}
+          setCharacters={this.setCharacters}></SearchRequest>
         <ErrorBoundary>
-          <SearchResult></SearchResult>
+          <SearchResult
+            characters={getShortCharacters(
+              this.state.characters,
+            )}></SearchResult>
         </ErrorBoundary>
       </div>
     );

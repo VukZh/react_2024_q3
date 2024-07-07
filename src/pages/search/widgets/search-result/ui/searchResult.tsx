@@ -1,9 +1,14 @@
 import React, { Component, ReactNode } from 'react';
 import styles from './searchResult.module.css';
+import { RickAndMortyShortCharacter } from '../../../model/types.ts';
+import CharacterItem from '../../../entities/characterItem';
 
 type StateType = { errorIsThrown: boolean };
 
-class SearchResult extends Component<ReactNode, StateType> {
+type PropsType = {
+  characters: RickAndMortyShortCharacter[];
+};
+class SearchResult extends Component<PropsType, StateType> {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,7 +21,7 @@ class SearchResult extends Component<ReactNode, StateType> {
   };
 
   componentDidUpdate(
-    prevProps: Readonly<ReactNode>,
+    prevProps: Readonly<PropsType>,
     prevState: Readonly<StateType>,
   ) {
     if (this.state.errorIsThrown) {
@@ -27,11 +32,16 @@ class SearchResult extends Component<ReactNode, StateType> {
   render() {
     return (
       <div className={styles.searchResult}>
-        <div className={styles.searchItem}>1</div>
-        <div className={styles.searchItem}>2</div>
-        <div className={styles.searchItem}>3</div>
-        <div className={styles.searchItem}>4</div>
-        <div className={styles.searchItem}>5</div>
+        {this.props.characters.length ? (
+          this.props.characters.map((character) => (
+            <CharacterItem
+              key={character.id}
+              character={character}></CharacterItem>
+          ))
+        ) : (
+          <div className={styles.searchItem}>No results</div>
+        )}
+
         <button className={styles.error} onClick={this.makeError}>
           Error
         </button>

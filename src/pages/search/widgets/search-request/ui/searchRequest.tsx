@@ -3,19 +3,22 @@ import styles from './searchRequest.module.css';
 import { LS_MY_SEARCH } from '../../../ui/search.tsx';
 import { searchCharacters } from '../../../api/rickAndMortyAPI.ts';
 import Loader from '../../../../../shared/loader';
+import { RickAndMortyCharacter } from '../../../model/types.ts';
 
 type PropsType = {
   searchText: string;
   changeSearchText: (event: React.ChangeEvent<HTMLInputElement>) => void;
   isLoading: boolean;
   changeIsLoading: (isLoading: boolean) => void;
+  setCharacters: (characters: RickAndMortyCharacter[]) => void;
 };
 class SearchRequest extends Component<PropsType, object> {
   handleSearchSubmit = async () => {
     localStorage.setItem(LS_MY_SEARCH, this.props.searchText);
     try {
       this.props.changeIsLoading(true);
-      await searchCharacters(this.props.searchText);
+      const res = await searchCharacters(this.props.searchText);
+      this.props.setCharacters(res);
       this.props.changeIsLoading(false);
     } catch (error) {
       console.error('Error during search:', error);
@@ -24,14 +27,13 @@ class SearchRequest extends Component<PropsType, object> {
 
   async componentDidMount() {
     const initialSearchText = localStorage.getItem(LS_MY_SEARCH);
-    if (initialSearchText) {
-      try {
-        this.props.changeIsLoading(true);
-        const res = await searchCharacters(initialSearchText);
-        this.props.changeIsLoading(false);
-      } catch (error) {
-        console.error('Error during search:', error);
-      }
+    try {
+      this.props.changeIsLoading(true);
+      const res = await searchCharacters(initialSearchText || '');
+      this.props.setCharacters(res);
+      this.props.changeIsLoading(false);
+    } catch (error) {
+      console.error('Error during search:', error);
     }
   }
 

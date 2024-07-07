@@ -18,3 +18,8 @@
     right: 30px;
     bottom: 30px;
 }
+
+.noResult {
+    color: #999;
+    align-items: center;
+}
