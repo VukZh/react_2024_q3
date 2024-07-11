@@ -4,7 +4,8 @@ import styles from './search.module.css';
 import SearchRequest from '../widgets/search-request';
 import SearchResult from '../widgets/search-result';
 import { RickAndMortyCharacter } from '../model/types.ts';
-import { getShortCharacters } from '../api/helpers.ts';
+import { getDetailsCharacter, getShortCharacters } from '../api/helpers.ts';
+import CharacterDetails from '../entities/characterDetails/ui/characterDetails.tsx';
 
 type StateType = {
   searchText: string;
@@ -53,9 +54,20 @@ class Search extends Component<ReactNode, StateType> {
           isLoading={this.state.isLoading}
           changeIsLoading={this.setIsLoading}
           setCharacters={this.setCharacters}></SearchRequest>
+        <div className={styles.resultsWrapper}>
+          <SearchResult
+            characters={getShortCharacters(
+              this.state.characters,
+            )}></SearchResult>
 
-        <SearchResult
-          characters={getShortCharacters(this.state.characters)}></SearchResult>
+          {this.state.characters.length ? (
+            <CharacterDetails
+              character={getDetailsCharacter(
+                this.state.characters,
+                37,
+              )}></CharacterDetails>
+          ) : null}
+        </div>
       </div>
     );
   }

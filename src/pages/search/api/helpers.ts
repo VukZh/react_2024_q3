@@ -1,5 +1,6 @@
 import {
   RickAndMortyCharacter,
+  RickAndMortyDetailsCharacter,
   RickAndMortyShortCharacter,
 } from '../model/types.ts';
 import { searchCharacters } from './rickAndMortyAPI.ts';
@@ -13,6 +14,22 @@ export const getShortCharacters = (
     status: character.status,
     species: character.species,
   }));
+};
+
+export const getDetailsCharacter = (
+  characters: RickAndMortyCharacter[],
+  id: number,
+): RickAndMortyDetailsCharacter => {
+  console.log(characters, id);
+  const neededCharacter = characters.filter((character) => character.id === id);
+  return {
+    id: neededCharacter[0].id,
+    name: neededCharacter[0].name,
+    status: neededCharacter[0].status,
+    species: neededCharacter[0].species,
+    image: neededCharacter[0].image,
+    location: neededCharacter[0].location,
+  };
 };
 
 export const fetchData = async (

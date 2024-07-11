@@ -23,3 +23,8 @@ export type RickAndMortyShortCharacter = Pick<
   RickAndMortyCharacter,
   'id' | 'name' | 'status' | 'species'
 >;
+
+export type RickAndMortyDetailsCharacter = Pick<
+  RickAndMortyCharacter,
+  'id' | 'name' | 'status' | 'species' | 'image' | 'location'
+>;

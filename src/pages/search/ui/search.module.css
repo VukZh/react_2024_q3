@@ -4,3 +4,11 @@
     align-items: center;
     height: 100vh;
 }
+
+.resultsWrapper {
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    gap: 10px;
+    width: 900px;
+}
