@@ -1,50 +1,44 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './searchResult.module.css';
 import { RickAndMortyShortCharacter } from '../../../model/types.ts';
 import CharacterItem from '../../../entities/characterItem';
 
-type StateType = { errorIsThrown: boolean };
-
 type PropsType = {
   characters: RickAndMortyShortCharacter[];
 };
-class SearchResult extends Component<PropsType, StateType> {
-  constructor(props: PropsType) {
-    super(props);
-    this.state = {
-      errorIsThrown: false,
-    };
-  }
 
-  makeError = () => {
-    this.setState({ errorIsThrown: true });
+function SearchResult(props: PropsType) {
+  const { characters } = props;
+
+  const [errorIsThrown, setErrorIsThrown] = useState<boolean>(false);
+
+  const makeError = () => {
+    setErrorIsThrown(true);
   };
 
-  componentDidUpdate() {
-    if (this.state.errorIsThrown) {
+  useEffect(() => {
+    if (errorIsThrown) {
       throw new Error('Something went wrong.');
     }
-  }
+  }, [errorIsThrown]);
 
-  render() {
-    return (
-      <div className={styles.searchResult}>
-        {this.props.characters.length ? (
-          this.props.characters.map((character) => (
-            <CharacterItem
-              key={character.id}
-              character={character}></CharacterItem>
-          ))
-        ) : (
-          <div className={styles.searchItem}>No results</div>
-        )}
+  return (
+    <div className={styles.searchResult}>
+      {characters.length ? (
+        characters.map((character) => (
+          <CharacterItem
+            key={character.id}
+            character={character}></CharacterItem>
+        ))
+      ) : (
+        <div className={styles.searchItem}>No results</div>
+      )}
 
-        <button className={styles.error} onClick={this.makeError}>
-          Error
-        </button>
-      </div>
-    );
-  }
+      <button className={styles.error} onClick={makeError}>
+        Error
+      </button>
+    </div>
+  );
 }
 
 export default SearchResult;
