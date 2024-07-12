@@ -5,10 +5,12 @@ import CharacterItem from '../../../entities/characterItem';
 
 type PropsType = {
   characters: RickAndMortyShortCharacter[];
+  changeSelectedId: (number) => void;
+  changeIsShowingDetails: (isShowing) => void;
 };
 
 function SearchResult(props: PropsType) {
-  const { characters } = props;
+  const { characters, changeSelectedId, changeIsShowingDetails } = props;
 
   const [errorIsThrown, setErrorIsThrown] = useState<boolean>(false);
 
@@ -26,9 +28,15 @@ function SearchResult(props: PropsType) {
     <div className={styles.searchResult}>
       {characters.length ? (
         characters.map((character) => (
-          <CharacterItem
+          <div
             key={character.id}
-            character={character}></CharacterItem>
+            onClick={(e) => {
+              e.stopPropagation();
+              changeSelectedId(character.id);
+              changeIsShowingDetails(true);
+            }}>
+            <CharacterItem character={character}></CharacterItem>
+          </div>
         ))
       ) : (
         <div className={styles.searchItem}>No results</div>

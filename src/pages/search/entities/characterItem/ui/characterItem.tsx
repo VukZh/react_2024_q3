@@ -6,11 +6,12 @@ type PropsType = {
 };
 
 function CharacterItem(props: PropsType) {
+  const { id, name, status, species } = props.character;
   return (
     <div className={styles.characterItemWrapper}>
-      <div className={styles.name}>{props.character.name}</div>
-      <div className={styles.status}>{props.character.status}</div>
-      <div className={styles.species}>{props.character.species}</div>
+      <div className={styles.name}>{name}</div>
+      <div className={styles.status}>{status}</div>
+      <div className={styles.species}>{species}</div>
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import styles from './search.module.css';
 import SearchRequest from '../widgets/search-request';
@@ -13,6 +13,8 @@ function Search() {
   const [searchText, setSearchText] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [characters, setCharacters] = useState<RickAndMortyCharacter[]>([]);
+  const [isShowingDetails, setIsShowingDetails] = useState<boolean>(true);
+  const [selectedId, setSelectedId] = useState(NaN);
 
   useEffect(() => {
     const searchText = localStorage.getItem(LS_MY_SEARCH);
@@ -20,10 +22,6 @@ function Search() {
       setSearchText(searchText);
     }
   }, []);
-
-  const changeSearchText = (event: ChangeEvent<HTMLInputElement>) => {
-    this.setState({ searchText: event.target.value });
-  };
 
   return (
     <div className={styles.searchWrapper}>
@@ -33,13 +31,19 @@ function Search() {
         isLoading={isLoading}
         changeIsLoading={setIsLoading}
         setCharacters={setCharacters}></SearchRequest>
-      <div className={styles.resultsWrapper}>
+      <div
+        className={styles.resultsWrapper}
+        onClick={() => setIsShowingDetails(false)}>
         <SearchResult
-          characters={getShortCharacters(characters)}></SearchResult>
+          characters={getShortCharacters(characters)}
+          changeSelectedId={setSelectedId}
+          changeIsShowingDetails={setIsShowingDetails}></SearchResult>
 
         {characters.length ? (
           <CharacterDetails
-            character={getDetailsCharacter(characters, 9)}></CharacterDetails>
+            character={getDetailsCharacter(characters, selectedId)}
+            isShowing={isShowingDetails}
+            changeIsShowingDetails={setIsShowingDetails}></CharacterDetails>
         ) : null}
       </div>
     </div>
