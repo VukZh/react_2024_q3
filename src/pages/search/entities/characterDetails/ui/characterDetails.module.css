@@ -4,6 +4,7 @@
     align-items: center;
     gap: 10px;
     width: 400px;
+    height: 530px;
     padding: 20px 0 20px;
     border: 1px solid gray;
     margin-top: 20px;
@@ -28,6 +29,7 @@
 
 .image {
     border-radius: 15px;
+    height: 300px;
 }
 
 .buttonClose {

@@ -50,12 +50,12 @@ function SearchResult(props: PropsType) {
             key={character.id}
             onClick={async (e) => {
               e.stopPropagation();
+              changeIsShowingDetails(true);
               changeSelectedId(character.id);
               changeIsLoadingDetails(true);
               const characterDetails = await getDetailsCharacter(character.id);
               setCharacterDetails(characterDetails);
               changeIsLoadingDetails(false);
-              changeIsShowingDetails(true);
             }}>
             <CharacterItem character={character}></CharacterItem>
           </div>

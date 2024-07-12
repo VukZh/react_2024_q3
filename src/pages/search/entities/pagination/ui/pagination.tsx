@@ -21,13 +21,12 @@ function Pagination(props: PropsType) {
   } = props;
 
   const handleSearchPageSubmit = async (currPage) => {
-    console.log('currPage >>>>>>>>>>', currPage);
     const searchText = localStorage.getItem(LS_MY_SEARCH);
     fetchData(searchText, changeIsLoading, setCharacters, setPage, currPage);
   };
 
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper} onClick={(e) => e.stopPropagation()}>
       <div className={styles.paginationWrapper}>
         {totalPages > 1 && currPage > 1 ? (
           <div

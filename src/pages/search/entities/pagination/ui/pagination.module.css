@@ -3,7 +3,7 @@
     width: 100px;
     justify-content: space-around;
     background-color: gray;
-    gap: 10;
+    gap: 10px;
     position: relative;
     left: 200px;
     user-select: none;
