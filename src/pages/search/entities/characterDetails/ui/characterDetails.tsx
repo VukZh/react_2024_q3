@@ -1,35 +1,48 @@
 import styles from './characterDetails.module.css';
 import { RickAndMortyDetailsCharacter } from '../../../model/types.ts';
+import Loader from '../../../../../shared/loader';
 
 type PropsType = {
   character: RickAndMortyDetailsCharacter | null;
   isShowing: boolean;
   changeIsShowingDetails: (isShowing) => void;
+  isLoadingDetails: boolean;
 };
 
 function CharacterDetails(props: PropsType) {
-  const { character, isShowing, changeIsShowingDetails } = props;
+  const { character, isShowing, changeIsShowingDetails, isLoadingDetails } =
+    props;
 
   if (!isShowing || !character) {
     return <div className={styles.empty}></div>;
   }
 
   return (
-    <div
-      className={styles.characterDetailsWrapper}
-      onClick={(e) => e.stopPropagation()}>
-      <img src={character.image} alt="character" className={styles.image} />
-      <div className={styles.name}>Name: {character.name}</div>
-      <div className={styles.status}>Status: {character.status}</div>
-      <div className={styles.species}>Species: {character.species}</div>
-      <div className={styles.location}>Location: {character.location.name}</div>
+    <>
+      {!isLoadingDetails ? (
+        <div
+          className={styles.characterDetailsWrapper}
+          onClick={(e) => e.stopPropagation()}>
+          <img src={character.image} alt="character" className={styles.image} />
+          <div className={styles.name}>Name: {character.name}</div>
+          <div className={styles.status}>Status: {character.status}</div>
+          <div className={styles.species}>Species: {character.species}</div>
+          <div className={styles.location}>
+            Location: {character.location.name}
+          </div>
 
-      <button
-        className={styles.buttonClose}
-        onClick={() => changeIsShowingDetails(false)}>
-        Close
-      </button>
-    </div>
+          <button
+            className={styles.buttonClose}
+            onClick={() => changeIsShowingDetails(false)}>
+            Close
+          </button>
+        </div>
+      ) : (
+        <div className={styles.loaderWrapper}>
+          <Loader />
+        </div>
+      )}
+    </>
   );
 }
 

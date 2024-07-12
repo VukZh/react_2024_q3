@@ -1,16 +1,28 @@
 import { useEffect, useState } from 'react';
 import styles from './searchResult.module.css';
-import { RickAndMortyShortCharacter } from '../../../model/types.ts';
+import {
+  RickAndMortyCharacter,
+  RickAndMortyShortCharacter,
+} from '../../../model/types.ts';
 import CharacterItem from '../../../entities/characterItem';
+import { getDetailsCharacter } from '../../../api/rickAndMortyAPI.ts';
 
 type PropsType = {
   characters: RickAndMortyShortCharacter[];
-  changeSelectedId: (number) => void;
-  changeIsShowingDetails: (isShowing) => void;
+  changeSelectedId: (id: number) => void;
+  changeIsShowingDetails: (isShowing: boolean) => void;
+  changeIsLoadingDetails: (isLoading: boolean) => void;
+  setCharacterDetails: (character: RickAndMortyCharacter) => void;
 };
 
 function SearchResult(props: PropsType) {
-  const { characters, changeSelectedId, changeIsShowingDetails } = props;
+  const {
+    characters,
+    changeSelectedId,
+    changeIsShowingDetails,
+    changeIsLoadingDetails,
+    setCharacterDetails,
+  } = props;
 
   const [errorIsThrown, setErrorIsThrown] = useState<boolean>(false);
 
@@ -24,15 +36,25 @@ function SearchResult(props: PropsType) {
     }
   }, [errorIsThrown]);
 
+  useEffect(() => {
+    if (!characters.length) {
+      changeIsShowingDetails(false);
+    }
+  }, [characters.length]);
+
   return (
     <div className={styles.searchResult}>
       {characters.length ? (
         characters.map((character) => (
           <div
             key={character.id}
-            onClick={(e) => {
+            onClick={async (e) => {
               e.stopPropagation();
               changeSelectedId(character.id);
+              changeIsLoadingDetails(true);
+              const characterDetails = await getDetailsCharacter(character.id);
+              setCharacterDetails(characterDetails);
+              changeIsLoadingDetails(false);
               changeIsShowingDetails(true);
             }}>
             <CharacterItem character={character}></CharacterItem>

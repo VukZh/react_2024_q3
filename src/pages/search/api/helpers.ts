@@ -18,20 +18,29 @@ export const getShortCharacters = (
 };
 
 export const getDetailsCharacter = (
-  characters: RickAndMortyCharacter[],
-  id: number,
-): RickAndMortyDetailsCharacter | null => {
-  const neededCharacter = characters.filter((character) => character.id === id);
-  return neededCharacter.length
+  character: RickAndMortyCharacter,
+): RickAndMortyDetailsCharacter => {
+  // const neededCharacter = characters.filter((character) => character.id === id);
+  return character.id
     ? {
-        id: neededCharacter[0].id,
-        name: neededCharacter[0].name,
-        status: neededCharacter[0].status,
-        species: neededCharacter[0].species,
-        image: neededCharacter[0].image,
-        location: neededCharacter[0].location,
+        id: character.id,
+        name: character.name,
+        status: character.status,
+        species: character.species,
+        image: character.image,
+        location: character.location,
       }
-    : null;
+    : {
+        id: 0,
+        name: '',
+        status: '',
+        species: '',
+        image: '',
+        location: {
+          name: '',
+          url: '',
+        },
+      };
 };
 
 export const fetchData = async (

@@ -46,3 +46,12 @@
 .empty {
     width: 400px;
 }
+
+.loaderWrapper {
+    width: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 150px;
+}

@@ -20,6 +20,9 @@ function Search() {
     currPage: 1,
     totalPages: 1,
   });
+  const [isLoadingDetails, setIsLoadingDetails] = useState<boolean>(false);
+  const [characterDetails, setCharacterDetails] =
+    useState<RickAndMortyCharacter>();
 
   useEffect(() => {
     const searchText = localStorage.getItem(LS_MY_SEARCH);
@@ -44,7 +47,9 @@ function Search() {
           <SearchResult
             characters={getShortCharacters(characters)}
             changeSelectedId={setSelectedId}
-            changeIsShowingDetails={setIsShowingDetails}></SearchResult>
+            changeIsShowingDetails={setIsShowingDetails}
+            changeIsLoadingDetails={setIsLoadingDetails}
+            setCharacterDetails={setCharacterDetails}></SearchResult>
           {characters.length ? (
             <Pagination
               currPage={page.currPage}
@@ -55,11 +60,12 @@ function Search() {
               setPage={setPage}></Pagination>
           ) : null}
         </div>
-        {characters.length ? (
+        {characterDetails?.id ? (
           <CharacterDetails
-            character={getDetailsCharacter(characters, selectedId)}
+            character={getDetailsCharacter(characterDetails)}
             isShowing={isShowingDetails}
-            changeIsShowingDetails={setIsShowingDetails}></CharacterDetails>
+            changeIsShowingDetails={setIsShowingDetails}
+            isLoadingDetails={isLoadingDetails}></CharacterDetails>
         ) : null}
       </div>
     </div>
