@@ -11,7 +11,7 @@ type PropsType = {
   isLoading: boolean;
   changeIsLoading: (isLoading: boolean) => void;
   setCharacters: (characters: RickAndMortyCharacter[]) => void;
-  sepPage: (page: PageType) => void;
+  setPage: (page: PageType) => void;
 };
 
 function SearchRequest(props: PropsType) {
@@ -21,11 +21,11 @@ function SearchRequest(props: PropsType) {
     isLoading,
     changeIsLoading,
     setCharacters,
-    sepPage,
+    setPage,
   } = props;
   const handleSearchSubmit = async () => {
     localStorage.setItem(LS_MY_SEARCH, searchText);
-    fetchData(searchText, changeIsLoading, setCharacters, sepPage);
+    fetchData(searchText, changeIsLoading, setCharacters, setPage);
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -36,7 +36,7 @@ function SearchRequest(props: PropsType) {
 
   useEffect(() => {
     const initialSearchText = localStorage.getItem(LS_MY_SEARCH) || '';
-    fetchData(initialSearchText, changeIsLoading, setCharacters);
+    fetchData(initialSearchText, changeIsLoading, setCharacters, setPage);
   }, []);
 
   return (

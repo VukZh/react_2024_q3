@@ -36,7 +36,7 @@ function Search() {
         isLoading={isLoading}
         changeIsLoading={setIsLoading}
         setCharacters={setCharacters}
-        sepPage={setPage}></SearchRequest>
+        setPage={setPage}></SearchRequest>
       <div
         className={styles.resultsWrapper}
         onClick={() => setIsShowingDetails(false)}>
@@ -49,7 +49,10 @@ function Search() {
             <Pagination
               currPage={page.currPage}
               totalPages={page.totalPages}
-              changePage={setPage}></Pagination>
+              changePage={setPage}
+              changeIsLoading={setIsLoading}
+              setCharacters={setCharacters}
+              setPage={setPage}></Pagination>
           ) : null}
         </div>
         {characters.length ? (

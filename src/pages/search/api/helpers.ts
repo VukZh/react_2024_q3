@@ -39,10 +39,12 @@ export const fetchData = async (
   setLoading: (isLoading: boolean) => void,
   setCharacters: (characters: RickAndMortyCharacter[]) => void,
   setPage: (page: PageType) => void,
+  searchPage?: number,
 ) => {
   setLoading(true);
+
   try {
-    const { characters, page } = await searchCharacters(searchText);
+    const { characters, page } = await searchCharacters(searchText, searchPage);
     setCharacters(characters);
     setPage(page);
   } catch (error) {
