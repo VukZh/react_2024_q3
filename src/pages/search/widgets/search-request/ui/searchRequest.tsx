@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import styles from './searchRequest.module.css';
 import { LS_MY_SEARCH } from '../../../ui/search.tsx';
 import Loader from '../../../../../shared/loader';
-import { RickAndMortyCharacter } from '../../../model/types.ts';
+import { PageType, RickAndMortyCharacter } from '../../../model/types.ts';
 import { fetchData } from '../../../api/helpers.ts';
 
 type PropsType = {
@@ -11,6 +11,7 @@ type PropsType = {
   isLoading: boolean;
   changeIsLoading: (isLoading: boolean) => void;
   setCharacters: (characters: RickAndMortyCharacter[]) => void;
+  sepPage: (page: PageType) => void;
 };
 
 function SearchRequest(props: PropsType) {
@@ -20,10 +21,11 @@ function SearchRequest(props: PropsType) {
     isLoading,
     changeIsLoading,
     setCharacters,
+    sepPage,
   } = props;
   const handleSearchSubmit = async () => {
     localStorage.setItem(LS_MY_SEARCH, searchText);
-    fetchData(searchText, changeIsLoading, setCharacters);
+    fetchData(searchText, changeIsLoading, setCharacters, sepPage);
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {

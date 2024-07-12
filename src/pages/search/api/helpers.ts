@@ -1,4 +1,5 @@
 import {
+  PageType,
   RickAndMortyCharacter,
   RickAndMortyDetailsCharacter,
   RickAndMortyShortCharacter,
@@ -20,7 +21,6 @@ export const getDetailsCharacter = (
   characters: RickAndMortyCharacter[],
   id: number,
 ): RickAndMortyDetailsCharacter | null => {
-  console.log(characters, id);
   const neededCharacter = characters.filter((character) => character.id === id);
   return neededCharacter.length
     ? {
@@ -38,11 +38,13 @@ export const fetchData = async (
   searchText: string,
   setLoading: (isLoading: boolean) => void,
   setCharacters: (characters: RickAndMortyCharacter[]) => void,
+  setPage: (page: PageType) => void,
 ) => {
   setLoading(true);
   try {
-    const data = await searchCharacters(searchText);
-    setCharacters(data);
+    const { characters, page } = await searchCharacters(searchText);
+    setCharacters(characters);
+    setPage(page);
   } catch (error) {
     console.error('Error during search:', error);
   } finally {

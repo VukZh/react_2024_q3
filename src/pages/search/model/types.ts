@@ -28,3 +28,8 @@ export type RickAndMortyDetailsCharacter = Pick<
   RickAndMortyCharacter,
   'id' | 'name' | 'status' | 'species' | 'image' | 'location'
 >;
+
+export type PageType = {
+  currPage: number;
+  totalPages: number;
+};
