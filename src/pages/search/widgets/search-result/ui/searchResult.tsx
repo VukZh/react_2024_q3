@@ -6,6 +6,7 @@ import {
 } from '../../../model/types.ts';
 import CharacterItem from '../../../entities/characterItem';
 import { getDetailsCharacter } from '../../../api/rickAndMortyAPI.ts';
+import useCustomSearchParams from '../../../../../shared/hooks/useCustomSearchParams.tsx';
 
 type PropsType = {
   characters: RickAndMortyShortCharacter[];
@@ -43,6 +44,24 @@ function SearchResult(props: PropsType) {
       changeIsShowingDetails(true);
     }
   }, [characters.length]);
+
+  const [searchParams, updateSearchParams] = useCustomSearchParams();
+
+  useEffect(() => {
+    const getDetails = async () => {
+      if (searchParams.get('details') > 0) {
+        changeIsShowingDetails(true);
+        changeSelectedId(+searchParams.get('details'));
+        changeIsLoadingDetails(true);
+        const characterDetails = await getDetailsCharacter(
+          +searchParams.get('details'),
+        );
+        setCharacterDetails(characterDetails);
+        changeIsLoadingDetails(false);
+      }
+    };
+    getDetails();
+  }, []);
 
   return (
     <div className={styles.searchResult}>

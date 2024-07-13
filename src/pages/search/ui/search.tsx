@@ -72,12 +72,16 @@ function Search() {
   }, [page]);
 
   useEffect(() => {
-    if (localSearchText) {
+    if (searchParams.get('name')) {
+      setSearchText(searchParams.get('name'));
+    } else if (localSearchText) {
       setSearchText(localSearchText);
       handleNameChange(localSearchText);
     }
     return () => {
-      saveLocalSearchText(localSearchText);
+      saveLocalSearchText(
+        searchParams.get('name') ? searchParams.get('name') : localSearchText,
+      );
     };
   }, []);
 

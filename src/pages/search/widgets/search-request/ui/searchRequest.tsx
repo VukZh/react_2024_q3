@@ -4,6 +4,7 @@ import Loader from '../../../../../shared/loader';
 import { PageType, RickAndMortyCharacter } from '../../../model/types.ts';
 import { fetchData } from '../../../api/helpers.ts';
 import { useLocalStorage } from '../../../../../shared/hooks/useLocalStorage.tsx';
+import useCustomSearchParams from '../../../../../shared/hooks/useCustomSearchParams.tsx';
 
 type PropsType = {
   searchText: string;
@@ -26,8 +27,12 @@ function SearchRequest(props: PropsType) {
 
   const [, saveLocalSearchText] = useLocalStorage();
   const handleSearchSubmit = async () => {
-    saveLocalSearchText(searchText);
-    fetchData(searchText, changeIsLoading, setCharacters, setPage);
+    await fetchData(searchText, changeIsLoading, setCharacters, setPage);
+    handleNameChange(searchText);
+    handleNameChange(searchText);
+    saveLocalSearchText(
+      searchParams.get('name') ? searchParams.get('name') : searchText,
+    );
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
@@ -38,8 +43,23 @@ function SearchRequest(props: PropsType) {
 
   const [localSearchText] = useLocalStorage();
 
+  const [searchParams, updateSearchParams] = useCustomSearchParams();
+
+  const handleNameChange = (newName) => {
+    updateSearchParams((prev) => {
+      prev.set('name', newName);
+      return prev;
+    });
+  };
+
   useEffect(() => {
-    fetchData(localSearchText, changeIsLoading, setCharacters, setPage);
+    fetchData(
+      searchParams.get('name') ? searchParams.get('name') : localSearchText,
+      changeIsLoading,
+      setCharacters,
+      setPage,
+      searchParams.get('page') ? +searchParams.get('page') : 0,
+    );
   }, []);
 
   return (
