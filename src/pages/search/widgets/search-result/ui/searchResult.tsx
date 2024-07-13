@@ -39,6 +39,8 @@ function SearchResult(props: PropsType) {
   useEffect(() => {
     if (!characters.length) {
       changeIsShowingDetails(false);
+    } else {
+      changeIsShowingDetails(true);
     }
   }, [characters.length]);
 

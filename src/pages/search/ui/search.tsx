@@ -7,6 +7,7 @@ import { PageType, RickAndMortyCharacter } from '../model/types.ts';
 import { getDetailsCharacter, getShortCharacters } from '../api/helpers.ts';
 import CharacterDetails from '../entities/characterDetails';
 import Pagination from '../entities/pagination/ui/pagination.tsx';
+import { useLocalStorage } from '../../../shared/hooks/useLocalStorage.tsx';
 
 export const LS_MY_SEARCH = 'mySearch';
 
@@ -24,11 +25,15 @@ function Search() {
   const [characterDetails, setCharacterDetails] =
     useState<RickAndMortyCharacter>();
 
+  const [localSearchText, saveLocalSearchText] = useLocalStorage();
+
   useEffect(() => {
-    const searchText = localStorage.getItem(LS_MY_SEARCH);
-    if (searchText) {
-      setSearchText(searchText);
+    if (localSearchText) {
+      setSearchText(localSearchText);
     }
+    return () => {
+      saveLocalSearchText(localSearchText);
+    };
   }, []);
 
   return (
@@ -57,7 +62,8 @@ function Search() {
               changePage={setPage}
               changeIsLoading={setIsLoading}
               setCharacters={setCharacters}
-              setPage={setPage}></Pagination>
+              setPage={setPage}
+              searchText={searchText}></Pagination>
           ) : null}
         </div>
         {characterDetails?.id ? (
@@ -66,7 +72,9 @@ function Search() {
             isShowing={isShowingDetails}
             changeIsShowingDetails={setIsShowingDetails}
             isLoadingDetails={isLoadingDetails}></CharacterDetails>
-        ) : null}
+        ) : (
+          <div className={styles.empty}></div>
+        )}
       </div>
     </div>
   );

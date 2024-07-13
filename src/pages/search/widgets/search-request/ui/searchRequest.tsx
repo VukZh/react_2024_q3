@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import styles from './searchRequest.module.css';
-import { LS_MY_SEARCH } from '../../../ui/search.tsx';
 import Loader from '../../../../../shared/loader';
 import { PageType, RickAndMortyCharacter } from '../../../model/types.ts';
 import { fetchData } from '../../../api/helpers.ts';
+import { useLocalStorage } from '../../../../../shared/hooks/useLocalStorage.tsx';
 
 type PropsType = {
   searchText: string;
@@ -23,8 +23,10 @@ function SearchRequest(props: PropsType) {
     setCharacters,
     setPage,
   } = props;
+
+  const [, saveLocalSearchText] = useLocalStorage();
   const handleSearchSubmit = async () => {
-    localStorage.setItem(LS_MY_SEARCH, searchText);
+    saveLocalSearchText(searchText);
     fetchData(searchText, changeIsLoading, setCharacters, setPage);
   };
 
@@ -34,9 +36,10 @@ function SearchRequest(props: PropsType) {
     }
   };
 
+  const [localSearchText] = useLocalStorage();
+
   useEffect(() => {
-    const initialSearchText = localStorage.getItem(LS_MY_SEARCH) || '';
-    fetchData(initialSearchText, changeIsLoading, setCharacters, setPage);
+    fetchData(localSearchText, changeIsLoading, setCharacters, setPage);
   }, []);
 
   return (

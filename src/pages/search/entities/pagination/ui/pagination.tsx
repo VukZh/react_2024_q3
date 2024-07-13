@@ -1,6 +1,5 @@
 import styles from './pagination.module.css';
 import { PageType, RickAndMortyCharacter } from '../../../model/types.ts';
-import { LS_MY_SEARCH } from '../../../ui/search.tsx';
 import { fetchData } from '../../../api/helpers.ts';
 
 type PropsType = PageType & {
@@ -8,6 +7,7 @@ type PropsType = PageType & {
   changeIsLoading: (isLoading: boolean) => void;
   setCharacters: (characters: RickAndMortyCharacter[]) => void;
   setPage: (page: PageType) => void;
+  searchText: string;
 };
 
 function Pagination(props: PropsType) {
@@ -18,10 +18,10 @@ function Pagination(props: PropsType) {
     changeIsLoading,
     setCharacters,
     setPage,
+    searchText,
   } = props;
 
   const handleSearchPageSubmit = async (currPage) => {
-    const searchText = localStorage.getItem(LS_MY_SEARCH);
     fetchData(searchText, changeIsLoading, setCharacters, setPage, currPage);
   };
 
