@@ -103,7 +103,8 @@ function Search() {
             changeSelectedId={setSelectedId}
             changeIsShowingDetails={setIsShowingDetails}
             changeIsLoadingDetails={setIsLoadingDetails}
-            setCharacterDetails={setCharacterDetails}></SearchResult>
+            setCharacterDetails={setCharacterDetails}
+            selectedId={selectedId}></SearchResult>
           {characters.length ? (
             <Pagination
               currPage={page.currPage}

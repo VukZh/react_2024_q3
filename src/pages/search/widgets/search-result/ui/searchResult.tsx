@@ -14,6 +14,7 @@ type PropsType = {
   changeIsShowingDetails: (isShowing: boolean) => void;
   changeIsLoadingDetails: (isLoading: boolean) => void;
   setCharacterDetails: (character: RickAndMortyCharacter) => void;
+  selectedId: number;
 };
 
 function SearchResult(props: PropsType) {
@@ -23,6 +24,7 @@ function SearchResult(props: PropsType) {
     changeIsShowingDetails,
     changeIsLoadingDetails,
     setCharacterDetails,
+    selectedId,
   } = props;
 
   const [errorIsThrown, setErrorIsThrown] = useState<boolean>(false);
@@ -78,7 +80,9 @@ function SearchResult(props: PropsType) {
               setCharacterDetails(characterDetails);
               changeIsLoadingDetails(false);
             }}>
-            <CharacterItem character={character}></CharacterItem>
+            <CharacterItem
+              character={character}
+              isSelected={selectedId === character.id}></CharacterItem>
           </div>
         ))
       ) : (
