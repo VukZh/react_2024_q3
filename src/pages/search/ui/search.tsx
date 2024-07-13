@@ -62,8 +62,7 @@ function Search() {
               changePage={setPage}
               changeIsLoading={setIsLoading}
               setCharacters={setCharacters}
-              setPage={setPage}
-              searchText={searchText}></Pagination>
+              setPage={setPage}></Pagination>
           ) : null}
         </div>
         {characterDetails?.id ? (
