@@ -11,14 +11,7 @@ export function useLocalStorage(
     return storedValue ? storedValue : initialValue;
   };
 
-  const [searchParams, updateSearchParams] = useCustomSearchParams();
-
-  const handleNameChange = (newName) => {
-    updateSearchParams((prev) => {
-      prev.set('name', newName);
-      return prev;
-    });
-  };
+  const { handleNameChange } = useCustomSearchParams();
 
   const [newValue, setNewValue] = useState(getStoredValue());
 

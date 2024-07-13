@@ -28,21 +28,12 @@ function Search() {
 
   const [localSearchText, saveLocalSearchText] = useLocalStorage();
 
-  const [searchParams, updateSearchParams] = useCustomSearchParams();
-
-  const handleNameChange = (newName) => {
-    updateSearchParams((prev) => {
-      prev.set('name', newName);
-      return prev;
-    });
-  };
-
-  const handleDetailsChange = (newId) => {
-    updateSearchParams((prev) => {
-      prev.set('details', newId);
-      return prev;
-    });
-  };
+  const {
+    searchParams,
+    handleNameChange,
+    handleDetailsChange,
+    handlePageChange,
+  } = useCustomSearchParams();
 
   useEffect(() => {
     if (!isShowingDetails) {
@@ -56,13 +47,6 @@ function Search() {
       handleDetailsChange(selectedId);
     }
   }, [selectedId]);
-
-  const handlePageChange = (page) => {
-    updateSearchParams((prev) => {
-      prev.set('page', page);
-      return prev;
-    });
-  };
 
   useEffect(() => {
     if (page.currPage) {

@@ -43,14 +43,7 @@ function SearchRequest(props: PropsType) {
 
   const [localSearchText] = useLocalStorage();
 
-  const [searchParams, updateSearchParams] = useCustomSearchParams();
-
-  const handleNameChange = (newName) => {
-    updateSearchParams((prev) => {
-      prev.set('name', newName);
-      return prev;
-    });
-  };
+  const { searchParams, handleNameChange } = useCustomSearchParams();
 
   useEffect(() => {
     fetchData(

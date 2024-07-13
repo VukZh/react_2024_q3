@@ -47,7 +47,7 @@ function SearchResult(props: PropsType) {
     }
   }, [characters.length]);
 
-  const [searchParams, updateSearchParams] = useCustomSearchParams();
+  const { searchParams } = useCustomSearchParams();
 
   useEffect(() => {
     const getDetails = async () => {
