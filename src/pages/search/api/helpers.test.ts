@@ -1,5 +1,10 @@
 import { RickAndMortyCharacter } from '../model/types.ts';
-import { getDetailsCharacter, getShortCharacters } from './helpers.ts';
+import {
+  fetchData,
+  getDetailsCharacter,
+  getShortCharacters,
+} from './helpers.ts';
+import { searchCharacters } from '../api/rickAndMortyAPI.ts';
 
 const mockCharacters: RickAndMortyCharacter[] = [
   {
@@ -131,5 +136,73 @@ describe('getDetailsCharacter test', () => {
     const result = getDetailsCharacter(characterWithZeroId);
 
     expect(result).toEqual(expectedDetails);
+  });
+});
+
+jest.mock('../api/rickAndMortyAPI.ts', () => ({
+  searchCharacters: jest.fn(),
+}));
+
+describe('fetchData tests', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should fetch characters and update state when successful', async () => {
+    const setLoading = jest.fn();
+    const setCharacters = jest.fn();
+    const setPage = jest.fn();
+    const searchText = 'Rick';
+    const searchPage = 1;
+    const characters = [{ id: 1, name: 'Rick Sanchez' }];
+    const page = { count: 1, pages: 1, next: null, prev: null };
+
+    searchCharacters.mockResolvedValue({ characters, page });
+
+    await fetchData(searchText, setLoading, setCharacters, setPage, searchPage);
+
+    expect(setLoading).toHaveBeenCalledTimes(2);
+    expect(setLoading).toHaveBeenCalledWith(true);
+    expect(setLoading).toHaveBeenCalledWith(false);
+
+    expect(searchCharacters).toHaveBeenCalledTimes(1);
+    expect(searchCharacters).toHaveBeenCalledWith(searchText, searchPage);
+
+    expect(setCharacters).toHaveBeenCalledTimes(1);
+    expect(setCharacters).toHaveBeenCalledWith(characters);
+
+    expect(setPage).toHaveBeenCalledTimes(1);
+    expect(setPage).toHaveBeenCalledWith(page);
+  });
+
+  it('should handle error and set loading to false when an error occurs', async () => {
+    const setLoading = jest.fn();
+    const setCharacters = jest.fn();
+    const setPage = jest.fn();
+    const searchText = 'Rick';
+    const searchPage = 1;
+    const error = new Error('Search error');
+
+    const consoleErrorSpy = jest
+      .spyOn(console, 'error')
+      .mockImplementation(() => {});
+    searchCharacters.mockRejectedValue(error);
+
+    await fetchData(searchText, setLoading, setCharacters, setPage, searchPage);
+
+    expect(setLoading).toHaveBeenCalledTimes(2);
+    expect(setLoading).toHaveBeenCalledWith(true);
+    expect(setLoading).toHaveBeenCalledWith(false);
+
+    expect(searchCharacters).toHaveBeenCalledTimes(1);
+    expect(searchCharacters).toHaveBeenCalledWith(searchText, searchPage);
+
+    expect(setCharacters).not.toHaveBeenCalled();
+    expect(setPage).not.toHaveBeenCalled();
+
+    expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+
+    expect(console.error).toHaveBeenCalledWith('Error during search:', error);
+    consoleErrorSpy.mockRestore();
   });
 });
