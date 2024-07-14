@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Loader from './Loader';
 
-describe('Loader', () => {
+describe('Renders the Loader page', () => {
   it('renders the loader component', () => {
     render(<Loader />);
 

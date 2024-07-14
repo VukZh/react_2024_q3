@@ -10,7 +10,7 @@ import {
   useState,
 } from 'react';
 
-interface ContextType {
+export interface ContextType {
   searchText: string;
   setSearchText: Dispatch<SetStateAction<ContextType['searchText']>>;
   isLoading: boolean;
