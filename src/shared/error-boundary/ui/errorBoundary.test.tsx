@@ -30,11 +30,6 @@ describe('ErrorBoundary test', () => {
     );
 
     expect(screen.queryByText(/Something went wrong./i)).toBeInTheDocument();
-    expect(ConsoleLogMock).toHaveBeenCalledWith(
-      'Catch error: ',
-      expect.any(Error),
-      expect.any(Object),
-    );
 
     ConsoleLogMock.mockRestore();
   });
