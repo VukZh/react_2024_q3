@@ -16,8 +16,6 @@ function SearchResult() {
     selectedId,
   } = useContext(Context);
 
-  console.log('draftCharacters', draftCharacters);
-
   const characters = getShortCharacters(draftCharacters);
 
   const [errorIsThrown, setErrorIsThrown] = useState<boolean>(false);

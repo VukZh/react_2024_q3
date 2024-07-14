@@ -3,11 +3,11 @@ import { useContext, useEffect } from 'react';
 import styles from './search.module.css';
 import SearchRequest from '../widgets/search-request';
 import SearchResult from '../widgets/search-result';
-import CharacterDetails from '../entities/characterDetails';
 import Pagination from '../entities/pagination/ui/pagination.tsx';
 import { useLocalStorage } from '../../../shared/hooks/useLocalStorage.tsx';
 import useCustomSearchParams from '../../../shared/hooks/useCustomSearchParams.tsx';
 import { Context } from '../../../shared/context/contextProvider.tsx';
+import { Outlet } from 'react-router-dom';
 
 export const LS_MY_SEARCH = 'mySearch';
 
@@ -77,7 +77,7 @@ function Search() {
           {characters?.length ? <Pagination></Pagination> : null}
         </div>
         {characterDetails?.id ? (
-          <CharacterDetails></CharacterDetails>
+          <Outlet />
         ) : (
           <div className={styles.empty}></div>
         )}
