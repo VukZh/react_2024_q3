@@ -1,17 +1,18 @@
 import styles from './characterDetails.module.css';
-import { RickAndMortyDetailsCharacter } from '../../../model/types.ts';
 import Loader from '../../../../../shared/loader';
+import { useContext } from 'react';
+import { Context } from '../../../../../shared/context/contextProvider.tsx';
+import { getDetailsCharacter } from '../../../api/helpers.ts';
 
-type PropsType = {
-  character: RickAndMortyDetailsCharacter | null;
-  isShowing: boolean;
-  changeIsShowingDetails: (isShowing) => void;
-  isLoadingDetails: boolean;
-};
+function CharacterDetails() {
+  const {
+    characterDetails,
+    isShowingDetails: isShowing,
+    setIsShowingDetails: changeIsShowingDetails,
+    isLoadingDetails,
+  } = useContext(Context);
 
-function CharacterDetails(props: PropsType) {
-  const { character, isShowing, changeIsShowingDetails, isLoadingDetails } =
-    props;
+  const character = getDetailsCharacter(characterDetails);
 
   if (!isShowing || !character) {
     return <div className={styles.empty}></div>;

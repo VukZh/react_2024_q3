@@ -1,24 +1,18 @@
 import styles from './pagination.module.css';
-import { PageType, RickAndMortyCharacter } from '../../../model/types.ts';
 import { LS_MY_SEARCH } from '../../../ui/search.tsx';
 import { fetchData } from '../../../api/helpers.ts';
+import { useContext } from 'react';
+import { Context } from '../../../../../shared/context/contextProvider.tsx';
 
-type PropsType = PageType & {
-  changePage: (page: PageType) => void;
-  changeIsLoading: (isLoading: boolean) => void;
-  setCharacters: (characters: RickAndMortyCharacter[]) => void;
-  setPage: (page: PageType) => void;
-};
-
-function Pagination(props: PropsType) {
+function Pagination() {
   const {
-    currPage,
-    totalPages,
-    changePage,
-    changeIsLoading,
+    setIsLoading: changeIsLoading,
     setCharacters,
+    page,
     setPage,
-  } = props;
+  } = useContext(Context);
+
+  const { currPage, totalPages } = page;
 
   const handleSearchPageSubmit = async (currPage) => {
     const searchText = localStorage.getItem(LS_MY_SEARCH);
@@ -32,7 +26,7 @@ function Pagination(props: PropsType) {
           <div
             className={styles.noCurrPage}
             onClick={() => {
-              changePage({
+              setPage({
                 totalPages,
                 currPage: currPage - 1,
               });
@@ -48,7 +42,7 @@ function Pagination(props: PropsType) {
           <div
             className={styles.noCurrPage}
             onClick={() => {
-              changePage({
+              setPage({
                 totalPages,
                 currPage: currPage + 1,
               });

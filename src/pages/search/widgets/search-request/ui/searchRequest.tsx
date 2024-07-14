@@ -1,31 +1,22 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import styles from './searchRequest.module.css';
 import Loader from '../../../../../shared/loader';
-import { PageType, RickAndMortyCharacter } from '../../../model/types.ts';
 import { fetchData } from '../../../api/helpers.ts';
 import { useLocalStorage } from '../../../../../shared/hooks/useLocalStorage.tsx';
 import useCustomSearchParams from '../../../../../shared/hooks/useCustomSearchParams.tsx';
+import { Context } from '../../../../../shared/context/contextProvider.tsx';
 
-type PropsType = {
-  searchText: string;
-  changeSearchText: (text: string) => void;
-  isLoading: boolean;
-  changeIsLoading: (isLoading: boolean) => void;
-  setCharacters: (characters: RickAndMortyCharacter[]) => void;
-  setPage: (page: PageType) => void;
-};
+function SearchRequest() {
+  const [, saveLocalSearchText] = useLocalStorage();
 
-function SearchRequest(props: PropsType) {
   const {
     searchText,
-    changeSearchText,
+    setSearchText: changeSearchText,
     isLoading,
-    changeIsLoading,
+    setIsLoading: changeIsLoading,
     setCharacters,
     setPage,
-  } = props;
-
-  const [, saveLocalSearchText] = useLocalStorage();
+  } = useContext(Context);
   const handleSearchSubmit = async () => {
     await fetchData(searchText, changeIsLoading, setCharacters, setPage);
     handleNameChange(searchText);

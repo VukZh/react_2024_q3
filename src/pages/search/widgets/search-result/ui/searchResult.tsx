@@ -1,31 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from './searchResult.module.css';
-import {
-  RickAndMortyCharacter,
-  RickAndMortyShortCharacter,
-} from '../../../model/types.ts';
 import CharacterItem from '../../../entities/characterItem';
 import { getDetailsCharacter } from '../../../api/rickAndMortyAPI.ts';
 import useCustomSearchParams from '../../../../../shared/hooks/useCustomSearchParams.tsx';
+import { Context } from '../../../../../shared/context/contextProvider.tsx';
+import { getShortCharacters } from '../../../api/helpers.ts';
 
-type PropsType = {
-  characters: RickAndMortyShortCharacter[];
-  changeSelectedId: (id: number) => void;
-  changeIsShowingDetails: (isShowing: boolean) => void;
-  changeIsLoadingDetails: (isLoading: boolean) => void;
-  setCharacterDetails: (character: RickAndMortyCharacter) => void;
-  selectedId: number;
-};
-
-function SearchResult(props: PropsType) {
+function SearchResult() {
   const {
-    characters,
-    changeSelectedId,
-    changeIsShowingDetails,
-    changeIsLoadingDetails,
+    characters: draftCharacters,
+    setSelectedId: changeSelectedId,
+    setIsShowingDetails: changeIsShowingDetails,
+    setIsLoadingDetails: changeIsLoadingDetails,
     setCharacterDetails,
     selectedId,
-  } = props;
+  } = useContext(Context);
+
+  console.log('draftCharacters', draftCharacters);
+
+  const characters = getShortCharacters(draftCharacters);
 
   const [errorIsThrown, setErrorIsThrown] = useState<boolean>(false);
 
