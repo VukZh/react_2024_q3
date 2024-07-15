@@ -1,0 +1,28 @@
+.characterItemWrapper,.characterSelectedItemWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 40px;
+    border-top: 1px solid gray;
+}
+
+.characterSelectedItemWrapper{
+    background-color: dimgray;
+}
+
+.characterItemWrapper:hover,.characterSelectedItemWrapper:hover {
+    background-color: darkslategray;
+    cursor: pointer;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.status {
+    color: cyan;
+}
+
+.species {
+    color: orange;
+}

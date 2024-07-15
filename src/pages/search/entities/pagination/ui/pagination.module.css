@@ -1,0 +1,32 @@
+.paginationWrapper {
+    display: flex;
+    width: 100px;
+    justify-content: space-around;
+    background-color: gray;
+    gap: 10px;
+    position: relative;
+    left: 200px;
+    user-select: none;
+}
+
+.currPage {
+    color: cyan;
+}
+
+.noCurrPage {
+    color: #242424;
+    cursor: pointer;
+}
+
+.noPage {
+    width: 10px;
+}
+
+.total {
+    position: relative;
+    left: 240px;
+}
+
+.wrapper {
+    display: flex;
+}
