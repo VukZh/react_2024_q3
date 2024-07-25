@@ -9,21 +9,23 @@ import useCustomSearchParams from '../../../shared/hooks/useCustomSearchParams.t
 import { Context } from '../../../shared/context/contextProvider.tsx';
 import { Outlet } from 'react-router-dom';
 import ThemeSwitcher from '../entities/themeSwitcher';
+import { useSearch } from '../../../shared/hooks/useSearch.tsx';
 
 export const LS_MY_SEARCH = 'mySearch';
 
 function Search() {
+  const { themeIsDark } = useContext(Context);
+
   const {
     characters,
     isShowingDetails,
-    setSelectedId,
+    handleSetSelectedIdCallback,
     page,
-    setIsShowingDetails,
+    handleSetIsShowingDetailsCallback,
     characterDetails,
-    setSearchText,
+    handleSetSearchTextCallback,
     selectedId,
-    themeIsDark,
-  } = useContext(Context);
+  } = useSearch();
 
   const [localSearchText, saveLocalSearchText] = useLocalStorage();
 
@@ -36,7 +38,7 @@ function Search() {
 
   useEffect(() => {
     if (!isShowingDetails) {
-      setSelectedId(0);
+      handleSetSelectedIdCallback(0);
     }
   }, [isShowingDetails]);
 
@@ -56,9 +58,9 @@ function Search() {
 
   useEffect(() => {
     if (searchParams.get('name')) {
-      setSearchText(searchParams.get('name'));
+      handleSetSearchTextCallback(searchParams.get('name'));
     } else if (localSearchText) {
-      setSearchText(localSearchText);
+      handleSetSearchTextCallback(localSearchText);
       handleNameChange(localSearchText);
     }
     return () => {
@@ -74,7 +76,7 @@ function Search() {
       <SearchRequest></SearchRequest>
       <div
         className={styles.resultsWrapper}
-        onClick={() => setIsShowingDetails(false)}>
+        onClick={() => handleSetIsShowingDetailsCallback(false)}>
         <div>
           <SearchResult></SearchResult>
           {characters?.length ? <Pagination></Pagination> : null}

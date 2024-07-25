@@ -12,7 +12,10 @@ import {
   setIsLoadingDetails,
   setCharacterDetails,
 } from '../store/search';
-import {PageType, RickAndMortyCharacterType} from "../../pages/search/model/types.ts";
+import {
+  PageType,
+  RickAndMortyCharacterType,
+} from '../../pages/search/model/types.ts';
 
 const useSearch = () => {
   const dispatch = useTypedDispatch();
@@ -29,6 +32,7 @@ const useSearch = () => {
 
   const handleSetSearchTextCallback = useCallback(
     (searchText: string) => {
+      console.log('searchText', searchText);
       dispatch(setSearchText(searchText));
     },
     [dispatch],
@@ -69,14 +73,14 @@ const useSearch = () => {
     [dispatch],
   );
 
-  const handleSetIsLoadingDetails = useCallback(
+  const handleSetIsLoadingDetailsCallback = useCallback(
     (isLoadingDetails: boolean) => {
       dispatch(setIsLoadingDetails(isLoadingDetails));
     },
     [dispatch],
   );
 
-  const handleSetCharacterDetails = useCallback(
+  const handleSetCharacterDetailsCallback = useCallback(
     (characterDetails: RickAndMortyCharacterType) => {
       dispatch(setCharacterDetails(characterDetails));
     },
@@ -98,8 +102,8 @@ const useSearch = () => {
     handleSetIsShowingDetailsCallback,
     handleSetSelectedIdCallback,
     handleSetPageCallback,
-    handleSetIsLoadingDetails,
-    handleSetCharacterDetails
+    handleSetIsLoadingDetailsCallback,
+    handleSetCharacterDetailsCallback,
   };
 };
 

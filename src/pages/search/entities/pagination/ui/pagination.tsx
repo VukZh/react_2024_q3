@@ -1,16 +1,14 @@
 import styles from './pagination.module.css';
 import { LS_MY_SEARCH } from '../../../ui/search.tsx';
-import { fetchData } from '../../../api/helpers.ts';
-import { useContext } from 'react';
-import { Context } from '../../../../../shared/context/contextProvider.tsx';
+import { fetchData } from '../../../api/helpers.ts';import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 
 function Pagination() {
   const {
-    setIsLoading: changeIsLoading,
-    setCharacters,
+    handleSetIsLoadingCallback: changeIsLoading,
+    handleSetCharactersCallback,
     page,
-    setPage,
-  } = useContext(Context);
+    handleSetPageCallback,
+  } = useSearch();
 
   const { currPage, totalPages } = page;
 
@@ -19,8 +17,8 @@ function Pagination() {
     fetchData(
       searchText as string,
       changeIsLoading,
-      setCharacters,
-      setPage,
+      handleSetCharactersCallback,
+      handleSetPageCallback,
       currPage,
     );
   };
@@ -32,7 +30,7 @@ function Pagination() {
           <div
             className={styles.noCurrPage}
             onClick={() => {
-              setPage({
+              handleSetPageCallback({
                 totalPages,
                 currPage: currPage - 1,
               });
@@ -48,7 +46,7 @@ function Pagination() {
           <div
             className={styles.noCurrPage}
             onClick={() => {
-              setPage({
+              handleSetPageCallback({
                 totalPages,
                 currPage: currPage + 1,
               });

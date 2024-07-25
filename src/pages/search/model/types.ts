@@ -36,5 +36,5 @@ export type PageType = {
 
 export type ReqCharactersType = {
   name: string;
-  page?: number
-}
+  page?: number;
+};

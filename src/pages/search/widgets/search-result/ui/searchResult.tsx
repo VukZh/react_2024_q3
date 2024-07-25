@@ -1,20 +1,21 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styles from './searchResult.module.css';
 import CharacterItem from '../../../entities/characterItem';
 import { getDetailsCharacter } from '../../../api/rickAndMortyAPI.ts';
 import useCustomSearchParams from '../../../../../shared/hooks/useCustomSearchParams.tsx';
-import { Context } from '../../../../../shared/context/contextProvider.tsx';
 import { getShortCharacters } from '../../../api/helpers.ts';
+import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 
 function SearchResult() {
   const {
     characters: draftCharacters,
-    setSelectedId: changeSelectedId,
-    setIsShowingDetails: changeIsShowingDetails,
-    setIsLoadingDetails: changeIsLoadingDetails,
-    setCharacterDetails,
+    handleSetSelectedIdCallback: changeSelectedId,
+    handleSetIsShowingDetailsCallback: changeIsShowingDetails,
+    handleSetIsLoadingDetailsCallback: changeIsLoadingDetails,
+    handleSetCharacterDetailsCallback,
     selectedId,
-  } = useContext(Context);
+    isShowingDetails,
+  } = useSearch();
 
   const characters = getShortCharacters(draftCharacters);
 
@@ -37,7 +38,7 @@ function SearchResult() {
         const characterDetails = await getDetailsCharacter(
           +searchParams.get('details'),
         );
-        setCharacterDetails(characterDetails);
+        handleSetCharacterDetailsCallback(characterDetails);
         changeIsLoadingDetails(false);
       }
     };
@@ -56,7 +57,7 @@ function SearchResult() {
               changeSelectedId(character.id);
               changeIsLoadingDetails(true);
               const characterDetails = await getDetailsCharacter(character.id);
-              setCharacterDetails(characterDetails);
+              handleSetCharacterDetailsCallback(characterDetails);
               changeIsLoadingDetails(false);
             }}>
             <CharacterItem

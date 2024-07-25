@@ -1,16 +1,14 @@
 import styles from './characterDetails.module.css';
-import Loader from '../../../../../shared/loader';
-import { useContext } from 'react';
-import { Context } from '../../../../../shared/context/contextProvider.tsx';
-import { getDetailsCharacter } from '../../../api/helpers.ts';
+import Loader from '../../../../../shared/loader';import { getDetailsCharacter } from '../../../api/helpers.ts';
+import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 
 function CharacterDetails() {
   const {
     characterDetails,
     isShowingDetails: isShowing,
-    setIsShowingDetails: changeIsShowingDetails,
+    handleSetIsShowingDetailsCallback: changeIsShowingDetails,
     isLoadingDetails,
-  } = useContext(Context);
+  } = useSearch();
 
   const character = getDetailsCharacter(characterDetails);
 

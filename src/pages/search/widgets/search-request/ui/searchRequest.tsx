@@ -5,21 +5,29 @@ import { fetchData } from '../../../api/helpers.ts';
 import { useLocalStorage } from '../../../../../shared/hooks/useLocalStorage.tsx';
 import useCustomSearchParams from '../../../../../shared/hooks/useCustomSearchParams.tsx';
 import { Context } from '../../../../../shared/context/contextProvider.tsx';
+import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 
 function SearchRequest() {
   const [, saveLocalSearchText] = useLocalStorage();
 
+  const { themeIsDark } = useContext(Context);
+
   const {
     searchText,
-    setSearchText: changeSearchText,
+    handleSetSearchTextCallback: changeSearchText,
     isLoading,
-    setIsLoading: changeIsLoading,
-    setCharacters,
-    setPage,
-    themeIsDark,
-  } = useContext(Context);
+    handleSetIsLoadingCallback: changeIsLoading,
+    handleSetCharactersCallback,
+    handleSetPageCallback,
+  } = useSearch();
+
   const handleSearchSubmit = async () => {
-    await fetchData(searchText, changeIsLoading, setCharacters, setPage);
+    await fetchData(
+      searchText,
+      changeIsLoading,
+      handleSetCharactersCallback,
+      handleSetPageCallback,
+    );
     handleNameChange(searchText);
     handleNameChange(searchText);
     saveLocalSearchText(
@@ -41,8 +49,8 @@ function SearchRequest() {
     fetchData(
       searchParams.get('name') ? searchParams.get('name') : localSearchText,
       changeIsLoading,
-      setCharacters,
-      setPage,
+      handleSetCharactersCallback,
+      handleSetPageCallback,
       searchParams.get('page') ? +searchParams.get('page') : 0,
     );
   }, []);
