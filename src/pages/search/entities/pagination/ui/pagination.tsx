@@ -16,7 +16,13 @@ function Pagination() {
 
   const handleSearchPageSubmit = async (currPage) => {
     const searchText = localStorage.getItem(LS_MY_SEARCH);
-    fetchData(searchText, changeIsLoading, setCharacters, setPage, currPage);
+    fetchData(
+      searchText as string,
+      changeIsLoading,
+      setCharacters,
+      setPage,
+      currPage,
+    );
   };
 
   return (

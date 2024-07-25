@@ -5,6 +5,10 @@
   height: 100vh;
 }
 
+.light {
+  background-color: white;
+}
+
 .notFound {
   font-size: 2rem;
   color: gray;

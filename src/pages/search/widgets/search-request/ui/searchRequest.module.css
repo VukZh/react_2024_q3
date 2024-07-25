@@ -13,6 +13,11 @@
     padding: 10px;
 }
 
+.light {
+    background-color: white;
+    color: black;
+}
+
 .buttonSearch {
     width: 120px;
     height: 32px;

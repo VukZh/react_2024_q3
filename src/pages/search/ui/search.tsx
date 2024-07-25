@@ -8,6 +8,7 @@ import { useLocalStorage } from '../../../shared/hooks/useLocalStorage.tsx';
 import useCustomSearchParams from '../../../shared/hooks/useCustomSearchParams.tsx';
 import { Context } from '../../../shared/context/contextProvider.tsx';
 import { Outlet } from 'react-router-dom';
+import ThemeSwitcher from '../entities/themeSwitcher';
 
 export const LS_MY_SEARCH = 'mySearch';
 
@@ -21,6 +22,7 @@ function Search() {
     characterDetails,
     setSearchText,
     selectedId,
+    themeIsDark,
   } = useContext(Context);
 
   const [localSearchText, saveLocalSearchText] = useLocalStorage();
@@ -67,7 +69,8 @@ function Search() {
   }, []);
 
   return (
-    <div className={styles.searchWrapper}>
+    <div
+      className={`${styles.searchWrapper} ${themeIsDark ? '' : styles.light}`}>
       <SearchRequest></SearchRequest>
       <div
         className={styles.resultsWrapper}
@@ -81,6 +84,7 @@ function Search() {
         ) : (
           <div className={styles.empty}></div>
         )}
+        <ThemeSwitcher />
       </div>
     </div>
   );

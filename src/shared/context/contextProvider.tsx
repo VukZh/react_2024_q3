@@ -33,6 +33,8 @@ export interface ContextType {
   setCharacterDetails: Dispatch<
     SetStateAction<ContextType['characterDetails']>
   >;
+  themeIsDark: boolean;
+  setThemeIsDark: Dispatch<SetStateAction<ContextType['themeIsDark']>>;
 }
 
 const InitialContext: ContextType = {
@@ -71,6 +73,8 @@ const InitialContext: ContextType = {
     created: '',
   },
   setCharacterDetails: () => {},
+  themeIsDark: true,
+  setThemeIsDark: () => {},
 };
 
 export const Context = createContext(InitialContext);
@@ -98,6 +102,9 @@ export function ContextProvider({ children }: PropsWithChildren<object>) {
   const [characterDetails, setCharacterDetails] = useState<
     ContextType['characterDetails']
   >(InitialContext.characterDetails);
+  const [themeIsDark, setThemeIsDark] = useState<ContextType['themeIsDark']>(
+    InitialContext.themeIsDark,
+  );
 
   return (
     <Context.Provider
@@ -118,6 +125,8 @@ export function ContextProvider({ children }: PropsWithChildren<object>) {
         setIsLoadingDetails,
         characterDetails,
         setCharacterDetails,
+        themeIsDark,
+        setThemeIsDark,
       }}>
       {children}
     </Context.Provider>

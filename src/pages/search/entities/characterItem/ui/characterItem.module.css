@@ -15,12 +15,16 @@
     cursor: pointer;
 }
 
+.light:hover {
+    background-color: lightgray;
+}
+
 .name {
     font-weight: bold;
 }
 
 .status {
-    color: cyan;
+    color: darkcyan;
 }
 
 .species {

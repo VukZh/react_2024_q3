@@ -16,6 +16,7 @@ function SearchRequest() {
     setIsLoading: changeIsLoading,
     setCharacters,
     setPage,
+    themeIsDark,
   } = useContext(Context);
   const handleSearchSubmit = async () => {
     await fetchData(searchText, changeIsLoading, setCharacters, setPage);
@@ -51,7 +52,7 @@ function SearchRequest() {
       <input
         type="text"
         placeholder="Enter search query"
-        className={styles.inputSearch}
+        className={`${styles.inputSearch} ${themeIsDark ? '' : styles.light}`}
         value={searchText}
         onChange={(e) => changeSearchText(e.target.value)}
         onKeyUp={handleKeyPress}
