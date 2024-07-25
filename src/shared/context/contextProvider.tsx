@@ -1,6 +1,6 @@
 import {
   PageType,
-  RickAndMortyCharacter,
+  RickAndMortyCharacterType,
 } from '../../pages/search/model/types.ts';
 import {
   createContext,
@@ -15,7 +15,7 @@ export interface ContextType {
   setSearchText: Dispatch<SetStateAction<ContextType['searchText']>>;
   isLoading: boolean;
   setIsLoading: Dispatch<React.SetStateAction<ContextType['isLoading']>>;
-  characters: RickAndMortyCharacter[];
+  characters: RickAndMortyCharacterType[];
   setCharacters: Dispatch<React.SetStateAction<ContextType['characters']>>;
   isShowingDetails: boolean;
   setIsShowingDetails: Dispatch<
@@ -29,7 +29,7 @@ export interface ContextType {
   setIsLoadingDetails: Dispatch<
     SetStateAction<ContextType['isLoadingDetails']>
   >;
-  characterDetails: RickAndMortyCharacter;
+  characterDetails: RickAndMortyCharacterType;
   setCharacterDetails: Dispatch<
     SetStateAction<ContextType['characterDetails']>
   >;

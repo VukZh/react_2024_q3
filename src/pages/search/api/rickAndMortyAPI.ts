@@ -1,4 +1,4 @@
-import { RickAndMortyCharacter } from '../model/types.ts';
+import { RickAndMortyCharacterType } from '../model/types.ts';
 
 const BASE_URL = 'https://rickandmortyapi.com/api/character';
 
@@ -13,7 +13,7 @@ export const searchCharacters = async (name: string, queryPage = 0) => {
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
-    const characters: RickAndMortyCharacter[] = data.results;
+    const characters: RickAndMortyCharacterType[] = data.results;
 
     const totalPages = Math.ceil(data.info.count / PAGE_SIZE);
 
@@ -48,7 +48,7 @@ export const getDetailsCharacter = async (id: number) => {
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }
-    const character: RickAndMortyCharacter = await response.json();
+    const character: RickAndMortyCharacterType = await response.json();
     return character;
   } catch (error) {
     console.error('Error fetching data:', error);

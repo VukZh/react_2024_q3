@@ -1,4 +1,4 @@
-import { RickAndMortyCharacter } from '../model/types.ts';
+import { RickAndMortyCharacterType } from '../model/types.ts';
 import {
   fetchData,
   getDetailsCharacter,
@@ -6,7 +6,7 @@ import {
 } from './helpers.ts';
 import { searchCharacters } from '../api/rickAndMortyAPI.ts';
 
-const mockCharacters: RickAndMortyCharacter[] = [
+const mockCharacters: RickAndMortyCharacterType[] = [
   {
     id: 1,
     name: 'Rick Sanchez',
@@ -72,7 +72,7 @@ describe('getShortCharacters test', () => {
   });
 
   it('should return an empty array when given an empty array', () => {
-    const characters: RickAndMortyCharacter[] = [];
+    const characters: RickAndMortyCharacterType[] = [];
 
     const result = getShortCharacters(characters);
 
@@ -100,7 +100,7 @@ describe('getDetailsCharacter test', () => {
   });
 
   it('should return default values when given a character without an id', () => {
-    const characterWithZeroId: RickAndMortyCharacter = {
+    const characterWithZeroId: RickAndMortyCharacterType = {
       id: 0,
       name: '',
       status: '',

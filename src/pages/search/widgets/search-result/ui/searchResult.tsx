@@ -18,18 +18,6 @@ function SearchResult() {
 
   const characters = getShortCharacters(draftCharacters);
 
-  const [errorIsThrown, setErrorIsThrown] = useState<boolean>(false);
-
-  const makeError = () => {
-    setErrorIsThrown(true);
-  };
-
-  useEffect(() => {
-    if (errorIsThrown) {
-      throw new Error('Something went wrong.');
-    }
-  }, [errorIsThrown]);
-
   useEffect(() => {
     if (!characters.length) {
       changeIsShowingDetails(false);
@@ -79,10 +67,6 @@ function SearchResult() {
       ) : (
         <div className={styles.searchItem}>No results</div>
       )}
-
-      <button className={styles.error} onClick={makeError}>
-        Error
-      </button>
     </div>
   );
 }

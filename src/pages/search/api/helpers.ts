@@ -1,13 +1,13 @@
 import {
   PageType,
-  RickAndMortyCharacter,
+  RickAndMortyCharacterType,
   RickAndMortyDetailsCharacter,
   RickAndMortyShortCharacter,
 } from '../model/types.ts';
 import { searchCharacters } from './rickAndMortyAPI.ts';
 
 export const getShortCharacters = (
-  characters: RickAndMortyCharacter[],
+  characters: RickAndMortyCharacterType[],
 ): RickAndMortyShortCharacter[] => {
   return characters.map((character) => ({
     id: character.id,
@@ -18,7 +18,7 @@ export const getShortCharacters = (
 };
 
 export const getDetailsCharacter = (
-  character: RickAndMortyCharacter,
+  character: RickAndMortyCharacterType,
 ): RickAndMortyDetailsCharacter => {
   // const neededCharacter = characters.filter((character) => character.id === id);
   return character.id
@@ -46,7 +46,7 @@ export const getDetailsCharacter = (
 export const fetchData = async (
   searchText: string,
   setLoading: (isLoading: boolean) => void,
-  setCharacters: (characters: RickAndMortyCharacter[]) => void,
+  setCharacters: (characters: RickAndMortyCharacterType[]) => void,
   setPage: (page: PageType) => void,
   searchPage?: number,
 ) => {

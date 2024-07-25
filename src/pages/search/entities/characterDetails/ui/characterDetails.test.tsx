@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import CharacterDetails from './CharacterDetails';
 import '@testing-library/jest-dom';
 
-import { RickAndMortyCharacter } from '../../../model/types.ts';
+import { RickAndMortyCharacterType } from '../../../model/types.ts';
 import { getDetailsCharacter } from '../../../api/helpers.ts';
 
 import {
@@ -21,7 +21,7 @@ jest.mock('../../../../../shared/loader/ui/loader.tsx', () => {
 });
 
 describe('CharacterDetails tests', () => {
-  const character: RickAndMortyCharacter = {
+  const character: RickAndMortyCharacterType = {
     id: 1,
     name: 'Rick Sanchez',
     status: 'Alive',

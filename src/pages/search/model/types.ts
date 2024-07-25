@@ -1,4 +1,4 @@
-export type RickAndMortyCharacter = {
+export type RickAndMortyCharacterType = {
   id: number;
   name: string;
   status: string;
@@ -20,12 +20,12 @@ export type RickAndMortyCharacter = {
 };
 
 export type RickAndMortyShortCharacter = Pick<
-  RickAndMortyCharacter,
+  RickAndMortyCharacterType,
   'id' | 'name' | 'status' | 'species'
 >;
 
 export type RickAndMortyDetailsCharacter = Pick<
-  RickAndMortyCharacter,
+  RickAndMortyCharacterType,
   'id' | 'name' | 'status' | 'species' | 'image' | 'location'
 >;
 
@@ -33,3 +33,8 @@ export type PageType = {
   currPage: number;
   totalPages: number;
 };
+
+export type ReqCharactersType = {
+  name: string;
+  page?: number
+}
