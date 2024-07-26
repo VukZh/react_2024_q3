@@ -10,6 +10,7 @@ import { Context } from '../../../shared/context/contextProvider.tsx';
 import { Outlet } from 'react-router-dom';
 import ThemeSwitcher from '../entities/themeSwitcher';
 import { useSearch } from '../../../shared/hooks/useSearch.tsx';
+import Flyout from '../entities/flyout';
 
 export const LS_MY_SEARCH = 'mySearch';
 
@@ -87,6 +88,7 @@ function Search() {
           <div className={styles.empty}></div>
         )}
         <ThemeSwitcher />
+        <Flyout />
       </div>
     </div>
   );

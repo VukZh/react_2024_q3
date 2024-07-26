@@ -14,7 +14,11 @@ type PropsType = {
 function CharacterItem(props: PropsType) {
   const { themeIsDark } = useContext(Context);
   const { name, status, species, id } = props.character;
-  const { handleSetSelectedItemsCallback, selectedItems, selectedItemsWithDetails } = useSearch();
+  const {
+    handleSetSelectedItemsCallback,
+    selectedItems,
+    selectedItemsWithDetails,
+  } = useSearch();
   return (
     <div
       className={`
@@ -30,11 +34,13 @@ function CharacterItem(props: PropsType) {
         <div className={styles.status}>{status}</div>
         <div className={styles.species}>{species}</div>
       </div>
-      <input
-        type="checkbox"
-        onChange={() => handleSetSelectedItemsCallback(id)}
-        checked={selectedItems.includes(id)}
-      />
+      <div onClick={(e) => e.stopPropagation()}>
+        <input
+          type="checkbox"
+          onChange={() => handleSetSelectedItemsCallback(id)}
+          checked={selectedItems.includes(id)}
+        />
+      </div>
     </div>
   );
 }

@@ -62,3 +62,17 @@ export const fetchData = async (
     setLoading(false);
   }
 };
+
+export const getCharactersToExport = (
+  characters: RickAndMortyCharacterType[],
+): RickAndMortyShortCharacter[] => {
+  return characters.map((character) => ({
+    id: character.id,
+    name: character.name,
+    status: character.status,
+    species: character.species,
+    gender: character.gender,
+    created: character.created,
+    image: character.image,
+  }));
+};
