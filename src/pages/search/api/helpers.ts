@@ -21,7 +21,7 @@ export const getDetailsCharacter = (
   character: RickAndMortyCharacterType,
 ): RickAndMortyDetailsCharacter => {
   // const neededCharacter = characters.filter((character) => character.id === id);
-  return character.id
+  return character?.id
     ? {
         id: character.id,
         name: character.name,

@@ -2,24 +2,43 @@ import styles from './characterDetails.module.css';
 import Loader from '../../../../../shared/loader';
 import { getDetailsCharacter } from '../../../api/helpers.ts';
 import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
+import { useGetCharacterDetailsQuery } from '../../../../../shared/store/characterDetailsApi.ts';
+import useCustomSearchParams from '../../../../../shared/hooks/useCustomSearchParams.tsx';
+import { useEffect } from 'react';
 
 function CharacterDetails() {
   const {
-    characterDetails,
     isShowingDetails: isShowing,
     handleSetIsShowingDetailsCallback: changeIsShowingDetails,
-    isLoadingDetails,
+    selectedId,
+    handleSetCharacterDetailsCallback,
+    handleSetSelectedIdCallback,
   } = useSearch();
 
-  const character = getDetailsCharacter(characterDetails);
+  const { searchParams } = useCustomSearchParams();
 
-  if (!isShowing || !character) {
+  useEffect(() => {
+    if (searchParams.get('details')) {
+      changeIsShowingDetails(true);
+      handleSetSelectedIdCallback(+searchParams.get('details'));
+    }
+  }, []);
+
+  const { data, isFetching } = useGetCharacterDetailsQuery(selectedId, {
+    skip: selectedId === 0,
+  });
+  handleSetCharacterDetailsCallback(data);
+
+  const character = getDetailsCharacter(data);
+  handleSetCharacterDetailsCallback(data);
+
+  if (!selectedId || !isShowing) {
     return <div className={styles.empty}></div>;
   }
 
   return (
     <>
-      {!isLoadingDetails ? (
+      {!isFetching ? (
         <div
           className={styles.characterDetailsWrapper}
           onClick={(e) => e.stopPropagation()}>

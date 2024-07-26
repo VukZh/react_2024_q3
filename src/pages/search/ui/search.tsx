@@ -82,11 +82,7 @@ function Search() {
           <SearchResult></SearchResult>
           {characters?.length ? <Pagination></Pagination> : null}
         </div>
-        {characterDetails?.id ? (
-          <Outlet />
-        ) : (
-          <div className={styles.empty}></div>
-        )}
+        <Outlet />
         <ThemeSwitcher />
         <Flyout />
       </div>

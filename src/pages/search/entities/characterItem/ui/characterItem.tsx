@@ -14,11 +14,8 @@ type PropsType = {
 function CharacterItem(props: PropsType) {
   const { themeIsDark } = useContext(Context);
   const { name, status, species, id } = props.character;
-  const {
-    handleSetSelectedItemsCallback,
-    selectedItems,
-    selectedItemsWithDetails,
-  } = useSearch();
+  const { handleSetSelectedItemsCallback, selectedItems } = useSearch();
+
   return (
     <div
       className={`

@@ -7,7 +7,7 @@ import {
 const BASE_URL = 'https://rickandmortyapi.com/api/character/';
 
 export const charactersApi = createApi({
-  reducerPath: 'characterDetailsApi',
+  reducerPath: 'characterApi',
   baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
   endpoints: (builder) => ({
     getCharacters: builder.query<RickAndMortyCharacterType, ReqCharactersType>({
