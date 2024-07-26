@@ -11,6 +11,8 @@ import {
   setPage,
   setIsLoadingDetails,
   setCharacterDetails,
+  setSelectedItems,
+  setSelectedItemsWithDetails,
 } from '../store/search';
 import {
   PageType,
@@ -28,11 +30,12 @@ const useSearch = () => {
     page,
     isLoadingDetails,
     characterDetails,
+    selectedItems,
+    selectedItemsWithDetails,
   } = useTypedSelector((state) => state.search);
 
   const handleSetSearchTextCallback = useCallback(
     (searchText: string) => {
-      console.log('searchText', searchText);
       dispatch(setSearchText(searchText));
     },
     [dispatch],
@@ -87,6 +90,35 @@ const useSearch = () => {
     [dispatch],
   );
 
+  const handleSetSelectedItemsCallback = useCallback(
+    (id: number) => {
+      const selectedItemsTmp = [...selectedItems];
+      const selectedItemsWithDetailsTmp = [...selectedItemsWithDetails];
+      if (id < 0) {
+        dispatch(setSelectedItems([]));
+        dispatch(setSelectedItemsWithDetails([]));
+      } else {
+        const findInd = selectedItemsTmp.findIndex(
+          (item) => item === id,
+        );
+        if (findInd >= 0) {
+          selectedItemsTmp.splice(findInd, 1);
+          selectedItemsWithDetailsTmp.splice(findInd, 1);
+          dispatch(setSelectedItems(selectedItemsTmp));
+          dispatch(setSelectedItemsWithDetails(selectedItemsWithDetailsTmp));
+
+        } else {
+          const selectedItemWithDetails= characters.find(i => i.id === id);
+          selectedItemsTmp.push(id);
+          selectedItemsWithDetailsTmp.push(selectedItemWithDetails);
+          dispatch(setSelectedItems(selectedItemsTmp));
+          dispatch(setSelectedItemsWithDetails(selectedItemsWithDetailsTmp));
+        }
+      }
+    },
+    [dispatch, selectedItems],
+  );
+
   return {
     searchText,
     isLoading,
@@ -96,6 +128,8 @@ const useSearch = () => {
     page,
     isLoadingDetails,
     characterDetails,
+    selectedItems,
+    selectedItemsWithDetails,
     handleSetSearchTextCallback,
     handleSetIsLoadingCallback,
     handleSetCharactersCallback,
@@ -104,6 +138,7 @@ const useSearch = () => {
     handleSetPageCallback,
     handleSetIsLoadingDetailsCallback,
     handleSetCharacterDetailsCallback,
+    handleSetSelectedItemsCallback,
   };
 };
 

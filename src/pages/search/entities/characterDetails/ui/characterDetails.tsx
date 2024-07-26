@@ -1,5 +1,6 @@
 import styles from './characterDetails.module.css';
-import Loader from '../../../../../shared/loader';import { getDetailsCharacter } from '../../../api/helpers.ts';
+import Loader from '../../../../../shared/loader';
+import { getDetailsCharacter } from '../../../api/helpers.ts';
 import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 
 function CharacterDetails() {

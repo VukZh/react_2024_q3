@@ -28,6 +28,12 @@ export interface SearchStateType {
   setCharacterDetails: Dispatch<
     SetStateAction<SearchStateType['characterDetails']>
   >;
+  selectedItems: number[];
+  setSelectedItems: Dispatch<SetStateAction<SearchStateType['selectedItems']>>;
+  selectedItemsWithDetails: RickAndMortyCharacterType[];
+  setSelectedItemsWithDetails: Dispatch<
+    SetStateAction<SearchStateType['selectedItemsWithDetails']>
+  >;
 }
 
 const InitialSearchState: SearchStateType = {
@@ -66,6 +72,10 @@ const InitialSearchState: SearchStateType = {
     created: '',
   },
   setCharacterDetails: () => {},
+  selectedItems: [],
+  setSelectedItems: () => {},
+  selectedItemsWithDetails: [],
+  setSelectedItemsWithDetails: () => {},
 };
 
 export const searchSlice = createSlice({
@@ -102,6 +112,15 @@ export const searchSlice = createSlice({
     ) => {
       state.characterDetails = action.payload;
     },
+    setSelectedItems: (state, action: PayloadAction<number[]>) => {
+      state.selectedItems = action.payload;
+    },
+    setSelectedItemsWithDetails: (
+      state,
+      action: PayloadAction<RickAndMortyCharacterType[]>,
+    ) => {
+      state.selectedItemsWithDetails = action.payload;
+    },
   },
 });
 
@@ -114,6 +133,8 @@ export const {
   setPage,
   setIsLoadingDetails,
   setCharacterDetails,
+  setSelectedItems,
+  setSelectedItemsWithDetails,
 } = searchSlice.actions;
 
 export default searchSlice.reducer;

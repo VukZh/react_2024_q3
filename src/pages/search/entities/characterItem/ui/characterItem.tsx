@@ -2,6 +2,9 @@ import styles from './characterItem.module.css';
 import { RickAndMortyShortCharacter } from '../../../model/types.ts';
 import { useContext } from 'react';
 import { Context } from '../../../../../shared/context/contextProvider.tsx';
+import { Simulate } from 'react-dom/test-utils';
+import input = Simulate.input;
+import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 
 type PropsType = {
   character: RickAndMortyShortCharacter;
@@ -10,7 +13,8 @@ type PropsType = {
 
 function CharacterItem(props: PropsType) {
   const { themeIsDark } = useContext(Context);
-  const { name, status, species } = props.character;
+  const { name, status, species, id } = props.character;
+  const { handleSetSelectedItemsCallback, selectedItems, selectedItemsWithDetails } = useSearch();
   return (
     <div
       className={`
@@ -21,9 +25,16 @@ function CharacterItem(props: PropsType) {
         }
           ${themeIsDark ? '' : styles.light}
       `}>
-      <div className={styles.name}>{name}</div>
-      <div className={styles.status}>{status}</div>
-      <div className={styles.species}>{species}</div>
+      <div className={styles.itemWrapper}>
+        <div className={styles.name}>{name}</div>
+        <div className={styles.status}>{status}</div>
+        <div className={styles.species}>{species}</div>
+      </div>
+      <input
+        type="checkbox"
+        onChange={() => handleSetSelectedItemsCallback(id)}
+        checked={selectedItems.includes(id)}
+      />
     </div>
   );
 }

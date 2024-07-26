@@ -1,6 +1,7 @@
 import styles from './pagination.module.css';
 import { LS_MY_SEARCH } from '../../../ui/search.tsx';
-import { fetchData } from '../../../api/helpers.ts';import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
+import { fetchData } from '../../../api/helpers.ts';
+import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 
 function Pagination() {
   const {

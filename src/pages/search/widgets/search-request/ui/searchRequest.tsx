@@ -19,6 +19,7 @@ function SearchRequest() {
     handleSetIsLoadingCallback: changeIsLoading,
     handleSetCharactersCallback,
     handleSetPageCallback,
+    selectedItems,
   } = useSearch();
 
   const handleSearchSubmit = async () => {

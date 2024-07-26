@@ -14,7 +14,6 @@ function SearchResult() {
     handleSetIsLoadingDetailsCallback: changeIsLoadingDetails,
     handleSetCharacterDetailsCallback,
     selectedId,
-    isShowingDetails,
   } = useSearch();
 
   const characters = getShortCharacters(draftCharacters);
