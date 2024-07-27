@@ -1,27 +1,16 @@
 import styles from './pagination.module.css';
-import { LS_MY_SEARCH } from '../../../ui/search.tsx';
-import { fetchData } from '../../../api/helpers.ts';
 import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 
 function Pagination() {
-  const {
-    handleSetIsLoadingCallback: changeIsLoading,
-    handleSetCharactersCallback,
-    page,
-    handleSetPageCallback,
-  } = useSearch();
+  const { page, handleSetPageCallback } = useSearch();
 
   const { currPage, totalPages } = page;
 
-  const handleSearchPageSubmit = async (currPage) => {
-    const searchText = localStorage.getItem(LS_MY_SEARCH);
-    fetchData(
-      searchText as string,
-      changeIsLoading,
-      handleSetCharactersCallback,
-      handleSetPageCallback,
-      currPage,
-    );
+  const handleSearchPageSubmit = async (newPage) => {
+    handleSetPageCallback({
+      totalPages,
+      currPage: newPage,
+    });
   };
 
   return (
