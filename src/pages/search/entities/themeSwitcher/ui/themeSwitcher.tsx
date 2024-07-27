@@ -1,19 +1,40 @@
 import styles from './themeSwitcher.module.css';
-import { useContext } from 'react';
+import { MouseEventHandler, useContext } from 'react';
 import { Context } from '../../../../../shared/context/contextProvider.tsx';
 
 function ThemeSwitcher() {
-  const { setThemeIsDark } = useContext(Context);
+  const { setThemeIsDark, themeIsDark } = useContext(Context);
+  const switchHandler = (e) => {
+    const { value } = e.target;
+    if (value === 'dark') {
+      setThemeIsDark(true);
+    } else {
+      setThemeIsDark(false);
+    }
+  };
 
   return (
     <div className={styles.wrapper} onClick={(e) => e.stopPropagation()}>
-      <label className={styles.switch}>
+      <div className={styles.switch}>
         <input
-          type="checkbox"
-          onChange={(e) => setThemeIsDark(!e.target.checked)}
+          type="radio"
+          id="radio-dark"
+          name="switch"
+          value="dark"
+          checked={themeIsDark}
+          onClick={switchHandler}
         />
-        <span className={styles.sliderRound}></span>
-      </label>
+        <label htmlFor="radio-dark">Dark</label>
+        <input
+          type="radio"
+          id="radio-light"
+          name="switch"
+          value="light"
+          checked={!themeIsDark}
+          onClick={switchHandler}
+        />
+        <label htmlFor="radio-light">Light</label>
+      </div>
     </div>
   );
 }

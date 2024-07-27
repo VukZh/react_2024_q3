@@ -58,8 +58,11 @@ function SearchRequest() {
   useEffect(() => {
     if (error) {
       handleSetCharactersCallback([]);
+      handleSetPageCallback({
+        totalPages: page.totalPages,
+        currPage: 1,
+      });
     } else if (data?.results.length) {
-      console.log('data.results.length', data.results.length);
       handleSetCharactersCallback(data.results);
     }
   }, [data, error]);
