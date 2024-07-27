@@ -1,5 +1,5 @@
 import styles from './themeSwitcher.module.css';
-import { MouseEventHandler, useContext } from 'react';
+import { useContext } from 'react';
 import { Context } from '../../../../../shared/context/contextProvider.tsx';
 
 function ThemeSwitcher() {

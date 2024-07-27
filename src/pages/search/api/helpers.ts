@@ -1,10 +1,8 @@
 import {
-  PageType,
   RickAndMortyCharacterType,
   RickAndMortyDetailsCharacter,
   RickAndMortyShortCharacter,
 } from '../model/types.ts';
-import { searchCharacters } from './rickAndMortyAPI.ts';
 
 export const getShortCharacters = (
   characters: RickAndMortyCharacterType[],
@@ -42,27 +40,6 @@ export const getDetailsCharacter = (
         },
       };
 };
-
-export const fetchData = async (
-  searchText: string,
-  setLoading: (isLoading: boolean) => void,
-  setCharacters: (characters: RickAndMortyCharacterType[]) => void,
-  setPage: (page: PageType) => void,
-  searchPage?: number,
-) => {
-  setLoading(true);
-
-  try {
-    const { characters, page } = await searchCharacters(searchText, searchPage);
-    setCharacters(characters);
-    setPage(page);
-  } catch (error) {
-    console.error('Error during search:', error);
-  } finally {
-    setLoading(false);
-  }
-};
-
 export const getCharactersToExport = (
   characters: RickAndMortyCharacterType[],
 ): RickAndMortyShortCharacter[] => {

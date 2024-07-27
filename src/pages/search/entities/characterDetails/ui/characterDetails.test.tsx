@@ -5,11 +5,9 @@ import '@testing-library/jest-dom';
 
 import { RickAndMortyCharacterType } from '../../../model/types.ts';
 import { getDetailsCharacter } from '../../../api/helpers.ts';
-
-import {
-  Context,
-  ContextType,
-} from '../../../../../shared/context/contextProvider';
+import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
+import { useGetCharacterDetailsQuery } from '../../../../../shared/store/characterDetailsApi.ts';
+import useCustomSearchParams from '../../../../../shared/hooks/useCustomSearchParams.tsx';
 
 jest.mock('../../../api/helpers.ts', () => ({
   getDetailsCharacter: jest.fn(),
@@ -19,6 +17,9 @@ jest.mock('../../../../../shared/loader/ui/loader.tsx', () => {
   LoaderMock.displayName = 'LoaderMock';
   return LoaderMock;
 });
+jest.mock('../../../../../shared/hooks/useSearch.tsx');
+jest.mock('../../../../../shared/store/characterDetailsApi.ts');
+jest.mock('../../../../../shared/hooks/useCustomSearchParams.tsx');
 
 describe('CharacterDetails tests', () => {
   const character: RickAndMortyCharacterType = {
@@ -44,6 +45,20 @@ describe('CharacterDetails tests', () => {
 
   beforeEach(() => {
     (getDetailsCharacter as jest.Mock).mockReturnValue(character);
+    (useSearch as jest.Mock).mockReturnValue({
+      isShowingDetails: true,
+      handleSetIsShowingDetailsCallback: jest.fn(),
+      selectedId: 1,
+      handleSetCharacterDetailsCallback: jest.fn(),
+      handleSetSelectedIdCallback: jest.fn(),
+    });
+    (useGetCharacterDetailsQuery as jest.Mock).mockReturnValue({
+      character,
+      isFetching: false,
+    });
+    (useCustomSearchParams as jest.Mock).mockReturnValue({
+      searchParams: new URLSearchParams('details=1'),
+    });
   });
 
   afterEach(() => {
@@ -51,88 +66,56 @@ describe('CharacterDetails tests', () => {
   });
 
   it('renders character details when isShowingDetails is true', () => {
-    const mockContext = {
-      characterDetails: character,
-      isShowingDetails: true,
-      setIsShowingDetails: jest.fn(),
-      isLoadingDetails: false,
-    };
-
-    render(
-      <Context.Provider value={mockContext}>
-        <CharacterDetails />
-      </Context.Provider>,
-    );
+    render(<CharacterDetails />);
 
     expect(screen.queryByText(/Name: Rick Sanchez/i)).toBeInTheDocument();
     expect(screen.queryByText(/Status: Alive/i)).toBeInTheDocument();
     expect(screen.queryByText(/Species: Human/i)).toBeInTheDocument();
     expect(screen.queryByText(/Location: Earth/i)).toBeInTheDocument();
-    // expect(screen.getByAltText('character')).toHaveAttribute('src', 'https://example.com/rick.jpg');
+    expect(screen.getByAltText('character')).toHaveAttribute(
+      'src',
+      'https://example.com/rick.jpg',
+    );
   });
 
   it('renders empty when isShowingDetails is false', () => {
-    const mockContext: Pick<
-      ContextType,
-      | 'characterDetails'
-      | 'isShowingDetails'
-      | 'setIsShowingDetails'
-      | 'isLoadingDetails'
-    > = {
-      characterDetails: character,
+    (useSearch as jest.Mock).mockReturnValue({
       isShowingDetails: false,
-      setIsShowingDetails: jest.fn(),
-      isLoadingDetails: false,
-    };
+      handleSetIsShowingDetailsCallback: jest.fn(),
+      selectedId: 1,
+      handleSetCharacterDetailsCallback: jest.fn(),
+      handleSetSelectedIdCallback: jest.fn(),
+    });
 
-    render(
-      <Context.Provider value={mockContext}>
-        <CharacterDetails />
-      </Context.Provider>,
-    );
+    render(<CharacterDetails />);
 
     expect(screen.queryByText(/Name: Rick Sanchez/i)).not.toBeInTheDocument();
   });
 
-  it('calls setIsShowingDetails when close button is clicked', () => {
-    const setIsShowingDetails = jest.fn();
-    const mockContext: Pick<
-      ContextType,
-      | 'characterDetails'
-      | 'isShowingDetails'
-      | 'setIsShowingDetails'
-      | 'isLoadingDetails'
-    > = {
-      characterDetails: character,
+  it('calls handleSetIsShowingDetailsCallback when close button is clicked', () => {
+    const handleSetIsShowingDetailsCallback = jest.fn();
+    (useSearch as jest.Mock).mockReturnValue({
       isShowingDetails: true,
-      setIsShowingDetails,
-      isLoadingDetails: false,
-    };
+      handleSetIsShowingDetailsCallback,
+      selectedId: 1,
+      handleSetCharacterDetailsCallback: jest.fn(),
+      handleSetSelectedIdCallback: jest.fn(),
+    });
 
-    render(
-      <Context.Provider value={mockContext}>
-        <CharacterDetails />
-      </Context.Provider>,
-    );
+    render(<CharacterDetails />);
 
     fireEvent.click(screen.getByText('Close'));
 
-    expect(setIsShowingDetails).toHaveBeenCalledWith(false);
+    expect(handleSetIsShowingDetailsCallback).toHaveBeenCalledWith(false);
   });
 
-  it('renders loader when isLoadingDetails is true', () => {
-    const mockContext = {
-      characterDetails: character,
-      isShowingDetails: true,
-      setIsShowingDetails: jest.fn(),
-      isLoadingDetails: true,
-    };
+  it('renders loader when isFetching is true', () => {
+    (useGetCharacterDetailsQuery as jest.Mock).mockReturnValue({
+      character,
+      isFetching: true,
+    });
 
-    render(
-      <Context.Provider value={mockContext}>
-        <CharacterDetails />
-      </Context.Provider>,
-    );
+    render(<CharacterDetails />);
 
     expect(screen.getByTestId('loader')).toBeInTheDocument();
     expect(screen.queryByText(/Loading.../i)).toBeInTheDocument();
