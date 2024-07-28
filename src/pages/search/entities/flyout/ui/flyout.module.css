@@ -1,0 +1,45 @@
+.flyoutWrapper {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    min-width: 160px;
+    height: 22px;
+    background-color: #333;
+    border-radius: 5px;
+    border: 1px solid black;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    padding-left: 4px;
+    opacity: 1;
+    transition: opacity 1s ease-out;
+    cursor: default;
+    box-shadow: inset -1px -3px 6px rgba(0, 0, 0, 0.6), 0 1px rgba(255, 255, 255, 0.1);
+
+}
+
+.flyoutButton {
+    margin: 0 5px;
+    background-color: #333;
+    border-radius: 5px;
+    border: 1px solid black;
+    color: inherit;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.flyoutButton:hover {
+    background-color: gray;
+}
+
+.light {
+    background-color: lightgray;
+    color: black;
+}
+
+.hiddenFlyout {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
