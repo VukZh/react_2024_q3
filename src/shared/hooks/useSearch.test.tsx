@@ -32,27 +32,21 @@ describe('useSearch tests', () => {
     const { result } = renderHook(() => useSearch());
 
     expect(result.current.searchText).toBe('');
-    expect(result.current.isLoading).toBe(false);
     expect(result.current.characters).toEqual([]);
     expect(result.current.isShowingDetails).toBe(false);
     expect(result.current.selectedId).toBe(0);
     expect(result.current.page).toBe(1);
-    expect(result.current.isLoadingDetails).toBe(false);
     expect(result.current.characterDetails).toBeNull();
     expect(result.current.selectedItems).toEqual([]);
     expect(result.current.selectedItemsWithDetails).toEqual([]);
 
     expect(typeof result.current.handleSetSearchTextCallback).toBe('function');
-    expect(typeof result.current.handleSetIsLoadingCallback).toBe('function');
     expect(typeof result.current.handleSetCharactersCallback).toBe('function');
     expect(typeof result.current.handleSetIsShowingDetailsCallback).toBe(
       'function',
     );
     expect(typeof result.current.handleSetSelectedIdCallback).toBe('function');
     expect(typeof result.current.handleSetPageCallback).toBe('function');
-    expect(typeof result.current.handleSetIsLoadingDetailsCallback).toBe(
-      'function',
-    );
     expect(typeof result.current.handleSetCharacterDetailsCallback).toBe(
       'function',
     );
@@ -69,7 +63,6 @@ describe('useSearch tests', () => {
 
     act(() => {
       result.current.handleSetSearchTextCallback('test');
-      result.current.handleSetIsLoadingCallback(true);
       result.current.handleSetCharactersCallback([
         { id: 1, name: 'Rick' },
       ] as RickAndMortyCharacterType[]);
@@ -77,6 +70,6 @@ describe('useSearch tests', () => {
       result.current.handleSetSelectedIdCallback(1);
     });
 
-    expect(mockDispatch).toHaveBeenCalledTimes(5);
+    expect(mockDispatch).toHaveBeenCalledTimes(4);
   });
 });

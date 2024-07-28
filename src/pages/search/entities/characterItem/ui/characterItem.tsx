@@ -2,8 +2,6 @@ import styles from './characterItem.module.css';
 import { RickAndMortyShortCharacter } from '../../../model/types.ts';
 import { useContext } from 'react';
 import { Context } from '../../../../../shared/context/contextProvider.tsx';
-import { Simulate } from 'react-dom/test-utils';
-import input = Simulate.input;
 import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 
 type PropsType = {

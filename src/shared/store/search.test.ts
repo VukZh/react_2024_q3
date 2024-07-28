@@ -1,11 +1,9 @@
 import searchReducer, {
   setSearchText,
-  setIsLoading,
   setCharacters,
   setIsShowingDetails,
   setSelectedId,
   setPage,
-  setIsLoadingDetails,
   setCharacterDetails,
   setSelectedItems,
   setSelectedItemsWithDetails,
@@ -18,11 +16,6 @@ describe('searchSlice tests', () => {
   it('should handle setSearchText', () => {
     const newState = searchReducer(initialState, setSearchText('Rick'));
     expect(newState.searchText).toBe('Rick');
-  });
-
-  it('should handle setIsLoading', () => {
-    const newState = searchReducer(initialState, setIsLoading(true));
-    expect(newState.isLoading).toBe(true);
   });
 
   it('should handle setCharacters', () => {
@@ -48,11 +41,6 @@ describe('searchSlice tests', () => {
     const page = { currPage: 2, totalPages: 5 };
     const newState = searchReducer(initialState, setPage(page));
     expect(newState.page).toEqual(page);
-  });
-
-  it('should handle setIsLoadingDetails', () => {
-    const newState = searchReducer(initialState, setIsLoadingDetails(true));
-    expect(newState.isLoadingDetails).toBe(true);
   });
 
   it('should handle setCharacterDetails', () => {

@@ -10,7 +10,7 @@
     "format:fix": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "preview": "vite preview",
     "prepare": "husky",
-    "test": "jest --coverage"
+    "test": "jest --coverage --silent"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.6",
