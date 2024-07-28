@@ -36,7 +36,7 @@ export interface SearchStateType {
   >;
 }
 
-const InitialSearchState: SearchStateType = {
+export const InitialSearchState: SearchStateType = {
   searchText: '',
   setSearchText: () => {},
   isLoading: false,

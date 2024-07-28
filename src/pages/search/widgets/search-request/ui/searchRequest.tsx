@@ -46,8 +46,6 @@ function SearchRequest() {
       totalPages: page.totalPages,
       currPage: searchParams.get('page') ? +searchParams.get('page') : 1,
     });
-
-    // handleNameChange(searchParams.get('name') ? +searchParams.get('name') : '');
   }, []);
 
   const { data, isFetching, error } = useGetCharactersQuery({

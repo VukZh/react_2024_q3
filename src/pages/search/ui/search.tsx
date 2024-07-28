@@ -23,7 +23,6 @@ function Search() {
     handleSetSelectedIdCallback,
     page,
     handleSetIsShowingDetailsCallback,
-    characterDetails,
     handleSetSearchTextCallback,
     selectedId,
   } = useSearch();
