@@ -64,7 +64,7 @@ function Flyout() {
           }>
           Download
         </button>
-        <a ref={linkRef} style={{ display: 'none' }}>
+        <a ref={linkRef} style={{ display: 'none' }} data-testid="link">
           Download
         </a>
       </div>

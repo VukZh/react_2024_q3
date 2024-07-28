@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import styles from './searchResult.module.css';
 import CharacterItem from '../../../entities/characterItem';
-import useCustomSearchParams from '../../../../../shared/hooks/useCustomSearchParams.tsx';
 import { getShortCharacters } from '../../../api/helpers.ts';
 import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 
@@ -10,8 +9,6 @@ function SearchResult() {
     characters: draftCharacters,
     handleSetSelectedIdCallback: changeSelectedId,
     handleSetIsShowingDetailsCallback: changeIsShowingDetails,
-    handleSetIsLoadingDetailsCallback: changeIsLoadingDetails,
-    handleSetCharacterDetailsCallback,
     selectedId,
   } = useSearch();
 
@@ -24,8 +21,6 @@ function SearchResult() {
       changeIsShowingDetails(true);
     }
   }, [characters.length]);
-
-  const { searchParams } = useCustomSearchParams();
 
   return (
     <div className={styles.searchResult}>

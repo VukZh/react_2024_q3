@@ -16,6 +16,8 @@
     opacity: 1;
     transition: opacity 1s ease-out;
     cursor: default;
+    box-shadow: inset -1px -3px 6px rgba(0, 0, 0, 0.6), 0 1px rgba(255, 255, 255, 0.1);
+
 }
 
 .flyoutButton {

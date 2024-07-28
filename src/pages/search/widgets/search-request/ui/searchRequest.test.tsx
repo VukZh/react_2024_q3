@@ -5,12 +5,38 @@ import SearchRequest from './SearchRequest';
 import '@testing-library/jest-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
-jest.mock('../../../api/helpers.ts', () => ({
-  fetchData: jest.fn(),
-}));
-
 jest.mock('../../../../../shared/hooks/useLocalStorage.tsx', () => ({
   useLocalStorage: () => ['test', jest.fn()],
+}));
+
+jest.mock('../../../../../shared/hooks/useCustomSearchParams.tsx', () => ({
+  __esModule: true,
+  default: jest.fn(() => ({
+    searchParams: new URLSearchParams(),
+    handleNameChange: jest.fn(),
+  })),
+}));
+
+jest.mock('../../../../../shared/hooks/useSearch.tsx', () => ({
+  useSearch: jest.fn(() => ({
+    searchText: '',
+    handleSetSearchTextCallback: jest.fn(),
+    handleSetCharactersCallback: jest.fn(),
+    handleSetPageCallback: jest.fn(),
+    handleSetSelectedIdCallback: jest.fn(),
+    page: {
+      totalPages: 1,
+      currPage: 1,
+    },
+  })),
+}));
+
+jest.mock('../../../../../shared/store/charactersApi.ts', () => ({
+  useGetCharactersQuery: jest.fn(() => ({
+    data: null,
+    isFetching: false,
+    error: null,
+  })),
 }));
 
 describe('SearchRequest', () => {
@@ -39,6 +65,7 @@ describe('SearchRequest', () => {
         </Context.Provider>
       </Router>,
     );
+
     expect(
       screen.getByPlaceholderText('Enter search query'),
     ).toBeInTheDocument();
