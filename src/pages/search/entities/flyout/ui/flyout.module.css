@@ -1,5 +1,5 @@
 .flyoutWrapper {
-    position: absolute;
+    position: fixed;
     bottom: 20px;
     right: 20px;
     min-width: 160px;
