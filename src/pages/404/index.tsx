@@ -1,7 +1,7 @@
 import styles from './notFound.module.css';
-import ThemeSwitcher from '../../../pages/search/entities/themeSwitcher';
 import { useContext } from 'react';
-import { Context } from '../../context/contextProvider.tsx';
+import { Context } from '../../shared/context/contextProvider.tsx';
+import ThemeSwitcher from "../../components/search/entities/themeSwitcher";
 
 function NotFound() {
   const { themeIsDark } = useContext(Context);

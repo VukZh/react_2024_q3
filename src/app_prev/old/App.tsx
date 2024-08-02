@@ -1,10 +1,10 @@
 import './App.css';
-import Search from '../../pages/search';
+import Search from '../../pages_/search';
 import ErrorBoundary from '../../shared/error-boundary';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import NotFound from '../../shared/not-found';
+import Index from '../../shared/not-found';
 import { ContextProvider } from '../../shared/context/contextProvider.tsx';
-import CharacterDetails from '../../pages/search/entities/characterDetails';
+import CharacterDetails from '../../pages_/search/entities/characterDetails';
 import { store } from '../../shared/store/store.ts';
 import { Provider } from 'react-redux';
 
@@ -18,7 +18,7 @@ function App() {
               <Route path="/" element={<Search />}>
                 <Route path="/" element={<CharacterDetails />} />
               </Route>
-              <Route path="*" element={<NotFound />} />
+              <Route path="*" element={<Index />} />
             </Routes>
           </BrowserRouter>
         </ContextProvider>

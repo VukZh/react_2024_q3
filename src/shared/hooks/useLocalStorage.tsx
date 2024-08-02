@@ -1,25 +1,30 @@
-import { LS_MY_SEARCH } from '../../pages/search/ui/search.tsx';
 import { useEffect, useState } from 'react';
-import useCustomSearchParams from './useCustomSearchParams.tsx';
+// import useCustomSearchParams from './useCustomSearchParams.tsx';
+import {LS_MY_SEARCH} from "../../components/search/ui/search.tsx";
 
 export function useLocalStorage(
   key: string = LS_MY_SEARCH,
   initialValue: string = '',
 ) {
-  const getStoredValue = () => {
-    const storedValue = localStorage.getItem(key);
-    return storedValue ? storedValue : initialValue;
-  };
+  const setValue = value => {
+    try {
+      window.localStorage.setItem(key, JSON.stringify(value))
+      setState(value)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
-  const { handleNameChange } = useCustomSearchParams();
+  // const { handleNameChange } = useCustomSearchParams();
 
-  const [newValue, setNewValue] = useState(getStoredValue());
+  const [state, setState] = useState(() => {
+    try {
+      const value = window.localStorage.getItem(key)
+      return value ? JSON.parse(value) : initialValue
+    } catch (error) {
+      console.error(error)
+    }
+  })
 
-  useEffect(() => {
-    localStorage.setItem(key, newValue);
-    handleNameChange(newValue);
-    handleNameChange(newValue);
-  }, [newValue]);
-
-  return [newValue, setNewValue];
+  return [state, setValue];
 }

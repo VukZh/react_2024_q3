@@ -1,3 +1,3 @@
-import NotFound from './ui/notFound';
+import Index from '../../pages/404';
 
-export default NotFound;
+export default Index;

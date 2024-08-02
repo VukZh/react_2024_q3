@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   ReqCharactersType,
   RickAndMortyCharacterType,
-} from '../../pages/search/model/types.ts';
+} from '../../pages_/search/model/types.ts';
 
 const BASE_URL = 'https://rickandmortyapi.com/api/character/';
 

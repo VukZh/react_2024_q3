@@ -15,7 +15,7 @@ import {
 import {
   PageType,
   RickAndMortyCharacterType,
-} from '../../pages/search/model/types.ts';
+} from '../../pages_/search/model/types.ts';
 
 const useSearch = () => {
   const dispatch = useTypedDispatch();
