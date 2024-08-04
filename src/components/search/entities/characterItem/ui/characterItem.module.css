@@ -38,7 +38,7 @@
     gap: 10px;
 }
 
-input[type="checkbox"] {
+.itemCheckbox {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -52,7 +52,7 @@ input[type="checkbox"] {
     margin-right: 10px;
 }
 
-input[type="checkbox"]:checked::after {
+.itemCheckbox:checked::after {
     content: "";
     position: absolute;
     top: 2px;

@@ -5,9 +5,10 @@ import { useLocalStorage } from '../../../../../shared/hooks/useLocalStorage.tsx
 import useCustomSearchParams from '../../../../../shared/hooks/useCustomSearchParams.tsx';
 import { Context } from '../../../../../shared/context/contextProvider.tsx';
 import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
-import { useGetCharactersQuery } from '../../../../../shared/store/charactersApi.ts';
+// import { useGetCharactersQuery } from '../../../../../shared/store/charactersApi.ts';
 import {usePathname, useSearchParams} from "next/navigation";
 import {useRouter} from "next/router";
+
 
 function SearchRequest() {
   const [localSearchText, saveLocalSearchText] = useLocalStorage();
@@ -17,25 +18,34 @@ function SearchRequest() {
   const {
     searchText,
     handleSetSearchTextCallback: changeSearchText,
-    handleSetCharactersCallback,
+    // handleSetCharactersCallback,
     handleSetPageCallback,
     handleSetSelectedIdCallback,
     page,
+    handleSetIsLoadingCallback,
+    isLoading,
   } = useSearch();
 
-  const searchParams = useSearchParams();
+  // const searchParams = useSearchParams();
+  //
+  // const params = new URLSearchParams(searchParams);
+  //
+  // const {replace} = useRouter();
+  // const pathname = usePathname();
 
-  const params = new URLSearchParams(searchParams);
-
-  const {replace} = useRouter();
-  const pathname = usePathname();
+  const {
+    searchParams,
+    handleNameChange,
+    handleDetailsChange,
+    handlePageChange,
+  } = useCustomSearchParams();
 
   useEffect(() => {
-    if (params.get('name')) {
-      changeSearchText(params.get('name')!);
-      saveLocalSearchText(params.get('name')!);
+    if (searchParams.get('name')) {
+      changeSearchText(searchParams.get('name')!);
+      saveLocalSearchText(searchParams.get('name')!);
     }
-  }, [params.get('name')]);
+  }, [searchParams.get('name')]);
 
   const handleSearchSubmit = async () => {
     // handleNameChange(searchText);
@@ -48,39 +58,40 @@ function SearchRequest() {
       currPage: 1,
     });
     console.log('searchText', searchText);
-    replace(`${pathname}?name=${searchText}`)
+    handleNameChange(searchText);
+    handleSetIsLoadingCallback(true);
 
   };
 
-  // const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
-  //   if (event.key === 'Enter') {
-  //     handleSearchSubmit();
-  //   }
-  // };
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      handleSearchSubmit();
+    }
+  };
 
   // const { searchParams, handleNameChange } = useCustomSearchParams();
 
-  // useEffect(() => {
-  //   handleSetPageCallback({
-  //     totalPages: page.totalPages,
-  //     currPage: 1,
-  //   });
-  // }, []);
+  useEffect(() => {
+    handleSetPageCallback({
+      totalPages: page.totalPages,
+      currPage: searchParams.get('page') ? +searchParams.get('page') : 1,
+    });
+  }, []);
 
-  // const { data, isFetching, error } = useGetCharactersQuery({
+  // const { data, isFetching, error, isLoading } = useGetCharactersQuery({
   //   name: localSearchText,
   //   page: 1,
   // });
 
   // useEffect(() => {
   //   if (error) {
-  //     handleSetCharactersCallback([]);
+  //     // handleSetCharactersCallback([]);
   //     handleSetPageCallback({
   //       totalPages: page.totalPages,
   //       currPage: 1,
   //     });
   //   } else if (data?.results.length) {
-  //     handleSetCharactersCallback(data.results);
+  //     // handleSetCharactersCallback(data.results);
   //   }
   // }, [data, error]);
 
@@ -112,9 +123,9 @@ function SearchRequest() {
         className={`${styles.inputSearch} ${themeIsDark ? '' : styles.light}`}
         value={searchText}
         onChange={(e) => changeSearchText(e.target.value)}
-        // onKeyUp={handleKeyPress}
+        onKeyUp={handleKeyPress}
       />
-      {!![] ? (
+      {!isLoading ? (
         <button className={styles.buttonSearch} onClick={handleSearchSubmit}>
           Search
         </button>

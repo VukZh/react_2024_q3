@@ -28,6 +28,12 @@ export interface SearchStateType {
   setSelectedItemsWithDetails: Dispatch<
     SetStateAction<SearchStateType['selectedItemsWithDetails']>
   >;
+  isLoading: boolean;
+  setIsLoading: Dispatch<SetStateAction<SearchStateType['isLoading']>>;
+  isDetailsLoading: boolean;
+  setIsDetailsLoading: Dispatch<
+    SetStateAction<SearchStateType['isDetailsLoading']>
+  >;
 }
 
 export const InitialSearchState: SearchStateType = {
@@ -66,6 +72,10 @@ export const InitialSearchState: SearchStateType = {
   setSelectedItems: () => {},
   selectedItemsWithDetails: [],
   setSelectedItemsWithDetails: () => {},
+  isLoading: false,
+  setIsLoading: () => {},
+  isDetailsLoading: false,
+  setIsDetailsLoading: () => {},
 };
 
 export const searchSlice = createSlice({
@@ -105,6 +115,12 @@ export const searchSlice = createSlice({
     ) => {
       state.selectedItemsWithDetails = action.payload;
     },
+    setIsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
+    setIsDetailsLoading: (state, action: PayloadAction<boolean>) => {
+      state.isDetailsLoading = action.payload;
+    },
   },
 });
 
@@ -117,6 +133,8 @@ export const {
   setCharacterDetails,
   setSelectedItems,
   setSelectedItemsWithDetails,
+  setIsLoading,
+  setIsDetailsLoading,
 } = searchSlice.actions;
 
 export default searchSlice.reducer;

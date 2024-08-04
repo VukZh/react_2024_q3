@@ -10,6 +10,7 @@ function SearchResult() {
     handleSetSelectedIdCallback: changeSelectedId,
     handleSetIsShowingDetailsCallback: changeIsShowingDetails,
     selectedId,
+    handleSetIsDetailsLoadingCallback
   } = useSearch();
 
   const characters = getShortCharacters(draftCharacters);
@@ -17,6 +18,7 @@ function SearchResult() {
   useEffect(() => {
     if (!characters.length) {
       changeIsShowingDetails(false);
+      changeSelectedId(0);
     } else {
       changeIsShowingDetails(true);
     }
@@ -32,6 +34,7 @@ function SearchResult() {
               e.stopPropagation();
               changeIsShowingDetails(true);
               changeSelectedId(character.id);
+              handleSetIsDetailsLoadingCallback(true);
             }}>
             <CharacterItem
               character={character}

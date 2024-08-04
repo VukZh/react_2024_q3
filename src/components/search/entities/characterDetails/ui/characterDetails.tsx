@@ -5,6 +5,7 @@ import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 import { useGetCharacterDetailsQuery } from '../../../../../shared/store/characterDetailsApi.ts';
 import useCustomSearchParams from '../../../../../shared/hooks/useCustomSearchParams.tsx';
 import { useEffect } from 'react';
+import Image from 'next/image';
 
 function CharacterDetails() {
   const {
@@ -13,6 +14,8 @@ function CharacterDetails() {
     selectedId,
     handleSetCharacterDetailsCallback,
     handleSetSelectedIdCallback,
+    characterDetails,
+    isDetailsLoading,
   } = useSearch();
 
   const { searchParams } = useCustomSearchParams();
@@ -24,13 +27,13 @@ function CharacterDetails() {
     }
   }, []);
 
-  const { data, isFetching } = useGetCharacterDetailsQuery(selectedId, {
-    skip: selectedId === 0,
-  });
-  handleSetCharacterDetailsCallback(data);
+  // const { data, isFetching } = useGetCharacterDetailsQuery(selectedId, {
+  //   skip: selectedId === 0,
+  // });
+  // handleSetCharacterDetailsCallback(data);
 
-  const character = getDetailsCharacter(data);
-  handleSetCharacterDetailsCallback(data);
+  const character = getDetailsCharacter(characterDetails);
+  // handleSetCharacterDetailsCallback(data);
 
   if (!selectedId || !isShowing) {
     return <div className={styles.empty}></div>;
@@ -38,11 +41,17 @@ function CharacterDetails() {
 
   return (
     <>
-      {!isFetching ? (
+      {!isDetailsLoading ? (
         <div
           className={styles.characterDetailsWrapper}
           onClick={(e) => e.stopPropagation()}>
-          <img src={character.image} alt="character" className={styles.image} />
+          <Image
+            src={character.image}
+            alt="character"
+            className={styles.image}
+            width={300}
+            height={300}
+          />
           <div className={styles.name}>Name: {character.name}</div>
           <div className={styles.status}>Status: {character.status}</div>
           <div className={styles.species}>Species: {character.species}</div>
@@ -52,7 +61,10 @@ function CharacterDetails() {
 
           <button
             className={styles.buttonClose}
-            onClick={() => changeIsShowingDetails(false)}>
+            onClick={() => {
+              changeIsShowingDetails(false);
+              handleSetSelectedIdCallback(0);
+            }}>
             Close
           </button>
         </div>

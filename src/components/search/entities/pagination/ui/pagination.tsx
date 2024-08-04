@@ -2,7 +2,7 @@ import styles from './pagination.module.css';
 import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 
 function Pagination() {
-  const { page, handleSetPageCallback } = useSearch();
+  const { page, handleSetPageCallback, handleSetIsLoadingCallback } = useSearch();
 
   const { currPage, totalPages } = page;
 
@@ -11,6 +11,7 @@ function Pagination() {
       totalPages,
       currPage: newPage,
     });
+    handleSetIsLoadingCallback(true);
   };
 
   return (

@@ -11,11 +11,13 @@ import {
   setCharacterDetails,
   setSelectedItems,
   setSelectedItemsWithDetails,
+  setIsLoading,
+  setIsDetailsLoading,
 } from '../store/search';
 import {
   PageType,
   RickAndMortyCharacterType,
-} from '../../pages_/search/model/types.ts';
+} from '../../components/search/model/types.ts';
 
 const useSearch = () => {
   const dispatch = useTypedDispatch();
@@ -28,6 +30,8 @@ const useSearch = () => {
     characterDetails,
     selectedItems,
     selectedItemsWithDetails,
+    isLoading,
+    isDetailsLoading,
   } = useTypedSelector((state) => state.search);
 
   const handleSetSearchTextCallback = useCallback(
@@ -72,6 +76,13 @@ const useSearch = () => {
     [dispatch],
   );
 
+  const handleSetIsLoadingCallback = useCallback(
+    (isLoading: boolean) => {
+      dispatch(setIsLoading(isLoading));
+    },
+    [dispatch],
+  );
+
   const handleSetSelectedItemsCallback = useCallback(
     (id: number) => {
       const selectedItemsTmp = [...selectedItems];
@@ -98,6 +109,13 @@ const useSearch = () => {
     [dispatch, selectedItems],
   );
 
+  const handleSetIsDetailsLoadingCallback = useCallback(
+    (isDetailsLoading: boolean) => {
+      dispatch(setIsDetailsLoading(isDetailsLoading));
+    },
+    [dispatch],
+  );
+
   return {
     searchText,
     characters,
@@ -107,6 +125,8 @@ const useSearch = () => {
     characterDetails,
     selectedItems,
     selectedItemsWithDetails,
+    isLoading,
+    isDetailsLoading,
     handleSetSearchTextCallback,
     handleSetCharactersCallback,
     handleSetIsShowingDetailsCallback,
@@ -114,6 +134,8 @@ const useSearch = () => {
     handleSetPageCallback,
     handleSetCharacterDetailsCallback,
     handleSetSelectedItemsCallback,
+    handleSetIsLoadingCallback,
+    handleSetIsDetailsLoadingCallback,
   };
 };
 

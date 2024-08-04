@@ -31,6 +31,7 @@ function CharacterItem(props: PropsType) {
       </div>
       <div onClick={(e) => e.stopPropagation()}>
         <input
+          className={styles.itemCheckbox}
           type="checkbox"
           onChange={() => handleSetSelectedItemsCallback(id)}
           checked={selectedItems.includes(id)}
