@@ -13,11 +13,7 @@ type AppPropsType = {
 export default function App({ characters, page, details }: AppPropsType) {
   return (
     <div>
-      <Search
-        characters={characters}
-        page={page}
-        details={details}
-      />
+      <Search characters={characters} page={page} details={details} />
     </div>
   );
 }

@@ -10,7 +10,7 @@ function SearchResult() {
     handleSetSelectedIdCallback: changeSelectedId,
     handleSetIsShowingDetailsCallback: changeIsShowingDetails,
     selectedId,
-    handleSetIsDetailsLoadingCallback
+    handleSetIsDetailsLoadingCallback,
   } = useSearch();
 
   const characters = getShortCharacters(draftCharacters);

@@ -1,18 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { characterDetailsApi } from './characterDetailsApi.ts';
-import { charactersApi } from './charactersApi.ts';
 import search from './search.ts';
 
 export const store = configureStore({
   reducer: {
-    [characterDetailsApi.reducerPath]: characterDetailsApi.reducer,
-    [charactersApi.reducerPath]: charactersApi.reducer,
     search,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false })
-      .concat(characterDetailsApi.middleware)
-      .concat(charactersApi.middleware),
+    getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

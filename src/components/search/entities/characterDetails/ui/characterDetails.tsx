@@ -2,7 +2,6 @@ import styles from './characterDetails.module.css';
 import Loader from '../../../../../shared/loader';
 import { getDetailsCharacter } from '../../../api/helpers.ts';
 import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
-import { useGetCharacterDetailsQuery } from '../../../../../shared/store/characterDetailsApi.ts';
 import useCustomSearchParams from '../../../../../shared/hooks/useCustomSearchParams.tsx';
 import { useEffect } from 'react';
 import Image from 'next/image';
@@ -12,7 +11,6 @@ function CharacterDetails() {
     isShowingDetails: isShowing,
     handleSetIsShowingDetailsCallback: changeIsShowingDetails,
     selectedId,
-    handleSetCharacterDetailsCallback,
     handleSetSelectedIdCallback,
     characterDetails,
     isDetailsLoading,
@@ -27,13 +25,7 @@ function CharacterDetails() {
     }
   }, []);
 
-  // const { data, isFetching } = useGetCharacterDetailsQuery(selectedId, {
-  //   skip: selectedId === 0,
-  // });
-  // handleSetCharacterDetailsCallback(data);
-
   const character = getDetailsCharacter(characterDetails);
-  // handleSetCharacterDetailsCallback(data);
 
   if (!selectedId || !isShowing) {
     return <div className={styles.empty}></div>;

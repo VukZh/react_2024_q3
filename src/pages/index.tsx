@@ -1,12 +1,15 @@
 import App from '../container/App.tsx';
 
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
-import {fetchCharacters, getDetailsCharacter} from '../components/search/api/rickAndMortyAPI.ts';
+import {
+  fetchCharacters,
+  getDetailsCharacter,
+} from '../components/search/api/rickAndMortyAPI.ts';
+import Head from 'next/head';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const { name = '', page = 0, details = '' } = context.query;
-    console.log('d------------------0', name, page, details);
 
     const data = await fetchCharacters(name, page);
 
@@ -15,7 +18,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     if (details) {
       detailsData = await getDetailsCharacter(+details);
     }
-    console.log('d-------------------', detailsData);
     return {
       props: { charactersData: data, detailsData: detailsData },
     };
@@ -28,7 +30,18 @@ const Home = ({
   charactersData,
   detailsData,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => (
-  <App characters={charactersData.characters} page={charactersData.page} details={detailsData} />
+  <>
+    <Head>
+      <title>Rick and Morty Search</title>
+      <meta name="description" content="Search for Rick and Morty characters" />
+      <link rel="icon" type="image/svg+xml" href="/images/rm.png" />
+    </Head>
+    <App
+      characters={charactersData.characters}
+      page={charactersData.page}
+      details={detailsData}
+    />
+  </>
 );
 
 export default Home;

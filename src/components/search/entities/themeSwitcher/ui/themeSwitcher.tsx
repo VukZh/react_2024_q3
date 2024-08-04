@@ -23,6 +23,7 @@ function ThemeSwitcher() {
           value="dark"
           checked={themeIsDark}
           onClick={switchHandler}
+          readOnly
         />
         <label htmlFor="radio-dark">Dark</label>
         <input
@@ -32,6 +33,7 @@ function ThemeSwitcher() {
           value="light"
           checked={!themeIsDark}
           onClick={switchHandler}
+          readOnly
         />
         <label htmlFor="radio-light">Light</label>
       </div>

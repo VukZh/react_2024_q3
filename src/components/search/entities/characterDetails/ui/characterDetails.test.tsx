@@ -6,7 +6,6 @@ import '@testing-library/jest-dom';
 import { RickAndMortyCharacterType } from '../../../model/types.ts';
 import { getDetailsCharacter } from '../../../api/helpers.ts';
 import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
-import { useGetCharacterDetailsQuery } from '../../../../../shared/store/characterDetailsApi.ts';
 import useCustomSearchParams from '../../../../../shared/hooks/useCustomSearchParams.tsx';
 
 jest.mock('../../../api/helpers.ts', () => ({
@@ -51,10 +50,6 @@ describe('CharacterDetails tests', () => {
       selectedId: 1,
       handleSetCharacterDetailsCallback: jest.fn(),
       handleSetSelectedIdCallback: jest.fn(),
-    });
-    (useGetCharacterDetailsQuery as jest.Mock).mockReturnValue({
-      character,
-      isFetching: false,
     });
     (useCustomSearchParams as jest.Mock).mockReturnValue({
       searchParams: new URLSearchParams('details=1'),
@@ -110,10 +105,6 @@ describe('CharacterDetails tests', () => {
   });
 
   it('renders loader when isFetching is true', () => {
-    (useGetCharacterDetailsQuery as jest.Mock).mockReturnValue({
-      character,
-      isFetching: true,
-    });
 
     render(<CharacterDetails />);
 

@@ -4,11 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
     "devNext": "set NODE_OPTIONS='--dns-result-order=ipv4first' && next dev",
-    "build": "vite build",
     "buildNext": "set NODE_OPTIONS=--max_old_space_size=4096 && next build",
-    "start": "next start",
+    "startNext": "next start",
     "lint": "eslint . \"**/*.{ts,tsx}\" --max-warnings 0",
     "format:fix": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "preview": "vite preview",

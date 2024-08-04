@@ -9,10 +9,7 @@ export const fetchCharacters = async (name: string, queryPage = 0) => {
       ? `/?page=${queryPage}&name=${name}`
       : `/?name=${name}`;
 
-    // console.log(">>>>>>>>>>>", BASE_URL + query)
-
     const response = await fetch(BASE_URL + query);
-    // console.log("resp >>>>>>>>>>>", response)
 
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -54,7 +51,6 @@ export const getDetailsCharacter = async (id: number) => {
       throw new Error('Network response was not ok');
     }
     const character: RickAndMortyCharacterType = await response.json();
-    console.log('character +++++++++++++++++++++++', character)
     return character;
   } catch (error) {
     console.error('Error fetching data:', error);
