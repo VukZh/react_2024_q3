@@ -24,18 +24,22 @@ function SearchResult() {
     }
   }, [characters.length]);
 
+  const handleSelectId = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
+    e.stopPropagation();
+    changeIsShowingDetails(true);
+    changeSelectedId(id);
+    if (selectedId !== id) {
+      handleSetIsDetailsLoadingCallback(true);
+    }
+  };
+
   return (
     <div className={styles.searchResult}>
       {characters.length ? (
         characters.map((character) => (
           <div
             key={character.id}
-            onClick={async (e) => {
-              e.stopPropagation();
-              changeIsShowingDetails(true);
-              changeSelectedId(character.id);
-              handleSetIsDetailsLoadingCallback(true);
-            }}>
+            onClick={(e) => handleSelectId(e, character.id)}>
             <CharacterItem
               character={character}
               isSelected={selectedId === character.id}></CharacterItem>
