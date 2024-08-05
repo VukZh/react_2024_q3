@@ -17,7 +17,10 @@ function Flyout() {
     csvRows.push(header.join(','));
     for (const row of charactersToExport) {
       const values = header.map((key) => {
-        const escaped = ('' + row[key]).replace(/"/g, '\\"');
+        const escaped = ('' + (row as Record<string, unknown>)[key]).replace(
+          /"/g,
+          '\\"',
+        );
         return `"${escaped}"`;
       });
       csvRows.push(values.join(','));
@@ -28,9 +31,10 @@ function Flyout() {
     });
     const url = URL.createObjectURL(blob);
     if (linkRef.current) {
-      linkRef.current.href = url;
-      linkRef.current.download = `${charactersToExport.length}_characters.csv`;
-      linkRef.current.click();
+      (linkRef.current as HTMLAnchorElement).href = url;
+      (linkRef.current as HTMLAnchorElement).download =
+        `${charactersToExport.length}_characters.csv`;
+      (linkRef.current as HTMLAnchorElement).click();
       URL.revokeObjectURL(url);
     }
   };

@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-import NotFound from './index.tsx';
+import NotFound from '../pages/404';
 import * as React from 'react';
 
 test('Renders the NotFound page', () => {

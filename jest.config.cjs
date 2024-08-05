@@ -1,16 +1,34 @@
 module.exports = {
-    preset: 'ts-jest',
-    testEnvironment: 'jest-environment-jsdom',
-    transform: {
-        "^.+\\.tsx?$": "ts-jest",
-    },
+    collectCoverage: true,
+    coverageProvider: 'v8',
+    collectCoverageFrom: [
+        '**/*.{ts,tsx}',
+        '!**/*.d.ts',
+        '!**/node_modules/**',
+        '!**/index.ts',
+        '!**/types.ts',
+        '!<rootDir>/out/**',
+        '!<rootDir>/dist/**',
+        '!<rootDir>/.next/**',
+        '!<rootDir>/*.config.js',
+        '!<rootDir>/coverage/**',
+    ],
     moduleNameMapper: {
-        '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/src/test/__ mocks __/fileMocks.js',
-        '\\.(png|css)$': '<rootDir>/path-to-fileMock.js',
+        '^.+\\.module\\.(css|sass|scss)$': 'identity-obj-proxy',
+        '^.+\\.(css|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
+        '^.+\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$/i': `<rootDir>/__mocks__/fileMock.js`,
+        '^@/components/(.*)$': '<rootDir>/components/$1',
+        '@next/font/(.*)': `<rootDir>/__mocks__/nextFontMock.js`,
+        'next/font/(.*)': `<rootDir>/__mocks__/nextFontMock.js`,
+        'server-only': `<rootDir>/__mocks__/empty.js`,
     },
-    globals: {
-        'ts-jest': {
-            diagnostics: false
-        }
-    }
+    testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
+    testEnvironment: 'jsdom',
+    transform: {
+        '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
+    },
+    transformIgnorePatterns: [
+        '/node_modules/',
+        '^.+\\.module\\.(css|sass|scss)$',
+    ],
 }

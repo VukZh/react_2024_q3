@@ -7,7 +7,7 @@ import { Context } from '../../../../../shared/context/contextProvider.tsx';
 import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 
 function SearchRequest() {
-  const [localSearchText, saveLocalSearchText] = useLocalStorage();
+  const [, saveLocalSearchText] = useLocalStorage();
 
   const { themeIsDark } = useContext(Context);
 
@@ -20,10 +20,7 @@ function SearchRequest() {
     isLoading,
   } = useSearch();
 
-  const {
-    searchParams,
-    handleNameChange,
-  } = useCustomSearchParams();
+  const { searchParams, handleNameChange } = useCustomSearchParams();
 
   useEffect(() => {
     if (searchParams.get('name')) {
@@ -51,7 +48,8 @@ function SearchRequest() {
   useEffect(() => {
     handleSetPageCallback({
       totalPages: page.totalPages,
-      currPage: searchParams.get('page') ? +searchParams.get('page') : 1,
+      currPage:
+        searchParams.get('page') !== null ? +searchParams.get('page')! : 1,
     });
   }, []);
 

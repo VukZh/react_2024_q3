@@ -1,23 +1,34 @@
 import { renderHook, act } from '@testing-library/react';
 
-import { MemoryRouter, useSearchParams } from 'react-router-dom';
 import useCustomSearchParams from './useCustomSearchParams';
 import '@testing-library/jest-dom';
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
+jest.mock('next/navigation', () => ({
+  usePathname: jest.fn(),
   useSearchParams: jest.fn(),
 }));
 
+jest.mock('next/router', () => ({
+  useRouter: jest.fn(),
+}));
+
 describe('useCustomSearchParams tests', () => {
+  const mockReplace = jest.fn();
+
   beforeEach(() => {
-    useSearchParams.mockReturnValue([new URLSearchParams(), jest.fn()]);
+    const mockSearchParams = new URLSearchParams('?page=1&name=initial');
+    require('next/navigation').useSearchParams.mockReturnValue(
+      mockSearchParams,
+    );
+    require('next/navigation').usePathname.mockReturnValue('/');
+    require('next/router').useRouter.mockReturnValue({
+      replace: mockReplace,
+    });
+    jest.clearAllMocks();
   });
 
   it('returns the correct initial values', () => {
-    const { result } = renderHook(() => useCustomSearchParams(), {
-      wrapper: MemoryRouter,
-    });
+    const { result } = renderHook(() => useCustomSearchParams());
 
     expect(result.current.searchParams).toBeInstanceOf(URLSearchParams);
     expect(typeof result.current.handleNameChange).toBe('function');
@@ -26,47 +37,34 @@ describe('useCustomSearchParams tests', () => {
   });
 
   it('updates the search params when handleNameChange is called', () => {
-    const setSearchParams = jest.fn();
-    useSearchParams.mockReturnValue([new URLSearchParams(), setSearchParams]);
-
-    const { result } = renderHook(() => useCustomSearchParams(), {
-      wrapper: MemoryRouter,
-    });
+    const { result } = renderHook(() => useCustomSearchParams());
 
     act(() => {
       result.current.handleNameChange('John');
     });
 
-    expect(setSearchParams).toHaveBeenCalledWith(expect.any(Function));
+    expect(mockReplace).toHaveBeenCalledWith('/?page=1&name=John&details=');
   });
 
   it('updates the search params when handleDetailsChange is called', () => {
-    const setSearchParams = jest.fn();
-    useSearchParams.mockReturnValue([new URLSearchParams(), setSearchParams]);
-
-    const { result } = renderHook(() => useCustomSearchParams(), {
-      wrapper: MemoryRouter,
-    });
+    const { result } = renderHook(() => useCustomSearchParams());
 
     act(() => {
       result.current.handleDetailsChange('123');
     });
 
-    expect(setSearchParams).toHaveBeenCalledWith(expect.any(Function));
+    expect(mockReplace).toHaveBeenCalledWith(
+      '/?page=1&name=initial&details=123',
+    );
   });
 
   it('updates the search params when handlePageChange is called', () => {
-    const setSearchParams = jest.fn();
-    useSearchParams.mockReturnValue([new URLSearchParams(), setSearchParams]);
-
-    const { result } = renderHook(() => useCustomSearchParams(), {
-      wrapper: MemoryRouter,
-    });
+    const { result } = renderHook(() => useCustomSearchParams());
 
     act(() => {
       result.current.handlePageChange('2');
     });
 
-    expect(setSearchParams).toHaveBeenCalledWith(expect.any(Function));
+    expect(mockReplace).toHaveBeenCalledWith('/?page=2&name=initial&details=');
   });
 });

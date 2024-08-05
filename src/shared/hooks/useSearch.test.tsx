@@ -2,7 +2,7 @@ import { renderHook, act } from '@testing-library/react';
 import { useSearch } from './useSearch';
 import { useTypedSelector } from './useTypedSelector';
 import { useTypedDispatch } from './useTypedDispatch';
-import { RickAndMortyCharacterType } from '../../pages_/search/model/types.ts';
+import { RickAndMortyCharacterType } from '../../components/search/model/types.ts';
 
 jest.mock('./useTypedSelector');
 jest.mock('./useTypedDispatch');

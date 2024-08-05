@@ -1,18 +1,12 @@
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 
-function replacePageParam(queryString, key, pageValue) {
-  const params = new URLSearchParams(queryString.split('/')[1]);
-  params.set(key, pageValue);
-  return params.toString();
-}
-
 function useCustomSearchParams() {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
 
-  const handleNameChange = (newName) => {
+  const handleNameChange = (newName: string) => {
     const details = searchParams.get('details')
       ? `&details=${searchParams.get('details')}`
       : '&details=';
@@ -20,7 +14,7 @@ function useCustomSearchParams() {
     replace(`${pathname}?page=1` + `&name=${newName}` + details);
   };
 
-  const handleDetailsChange = (newId) => {
+  const handleDetailsChange = (newId: number) => {
     const name = searchParams.get('name')
       ? `&name=${searchParams.get('name')}`
       : '&name=';
@@ -31,7 +25,7 @@ function useCustomSearchParams() {
     replace(`${pathname}${page}${name}&details=${newId || ''}`);
   };
 
-  const handlePageChange = (page) => {
+  const handlePageChange = (page: number) => {
     const name = searchParams.get('name')
       ? `&name=${searchParams.get('name')}`
       : '&name=';

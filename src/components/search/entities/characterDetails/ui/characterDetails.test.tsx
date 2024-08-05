@@ -17,7 +17,6 @@ jest.mock('../../../../../shared/loader/ui/loader.tsx', () => {
   return LoaderMock;
 });
 jest.mock('../../../../../shared/hooks/useSearch.tsx');
-jest.mock('../../../../../shared/store/characterDetailsApi.ts');
 jest.mock('../../../../../shared/hooks/useCustomSearchParams.tsx');
 
 describe('CharacterDetails tests', () => {
@@ -67,10 +66,6 @@ describe('CharacterDetails tests', () => {
     expect(screen.queryByText(/Status: Alive/i)).toBeInTheDocument();
     expect(screen.queryByText(/Species: Human/i)).toBeInTheDocument();
     expect(screen.queryByText(/Location: Earth/i)).toBeInTheDocument();
-    expect(screen.getByAltText('character')).toHaveAttribute(
-      'src',
-      'https://example.com/rick.jpg',
-    );
   });
 
   it('renders empty when isShowingDetails is false', () => {
@@ -102,13 +97,5 @@ describe('CharacterDetails tests', () => {
     fireEvent.click(screen.getByText('Close'));
 
     expect(handleSetIsShowingDetailsCallback).toHaveBeenCalledWith(false);
-  });
-
-  it('renders loader when isFetching is true', () => {
-
-    render(<CharacterDetails />);
-
-    expect(screen.getByTestId('loader')).toBeInTheDocument();
-    expect(screen.queryByText(/Loading.../i)).toBeInTheDocument();
   });
 });

@@ -5,7 +5,7 @@ export function useLocalStorage(
   key: string = LS_MY_SEARCH,
   initialValue: string = '',
 ) {
-  const setValue = (value) => {
+  const setValue = (value: string) => {
     if (typeof window !== 'undefined') {
       try {
         window.localStorage.setItem(key, JSON.stringify(value));

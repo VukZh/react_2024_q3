@@ -19,9 +19,10 @@ function CharacterDetails() {
   const { searchParams } = useCustomSearchParams();
 
   useEffect(() => {
-    if (searchParams.get('details')) {
+    const detailsParam = searchParams.get('details') ?? '0';
+    if (detailsParam) {
       changeIsShowingDetails(true);
-      handleSetSelectedIdCallback(+searchParams.get('details'));
+      handleSetSelectedIdCallback(+detailsParam);
     }
   }, []);
 

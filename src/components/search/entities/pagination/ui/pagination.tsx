@@ -7,7 +7,7 @@ function Pagination() {
 
   const { currPage, totalPages } = page;
 
-  const handleSearchPageSubmit = async (newPage) => {
+  const handleSearchPageSubmit = async (newPage: number) => {
     handleSetPageCallback({
       totalPages,
       currPage: newPage,

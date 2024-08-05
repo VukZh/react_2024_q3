@@ -1,17 +1,19 @@
 import App from '../container/App.tsx';
-
 import { GetServerSideProps, InferGetServerSidePropsType } from 'next';
+import Head from 'next/head';
 import {
   fetchCharacters,
   getDetailsCharacter,
 } from '../components/search/api/rickAndMortyAPI.ts';
-import Head from 'next/head';
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   try {
     const { name = '', page = 0, details = '' } = context.query;
 
-    const data = await fetchCharacters(name, page);
+    const nameStr = Array.isArray(name) ? name[0] : name;
+    const pageStr = Array.isArray(page) ? page[0] : page;
+
+    const data = await fetchCharacters(nameStr, +pageStr);
 
     let detailsData = null;
 
@@ -22,7 +24,11 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       props: { charactersData: data, detailsData: detailsData },
     };
   } catch (e) {
-    return e.message;
+    if (e instanceof Error) {
+      return { props: { error: e.message } };
+    } else {
+      return { props: { error: 'An unknown error' } };
+    }
   }
 };
 

@@ -12,6 +12,7 @@ jest.mock('../../../../../shared/hooks/useSearch.tsx', () => {
 });
 describe('Pagination tests', () => {
   const handleSetPageCallback = jest.fn();
+  const handleSetIsLoadingCallback = jest.fn();
 
   beforeEach(() => {
     (useSearch as jest.Mock).mockReturnValue({
@@ -20,6 +21,7 @@ describe('Pagination tests', () => {
         totalPages: 5,
       },
       handleSetPageCallback,
+      handleSetIsLoadingCallback,
     });
     render(<Pagination />);
   });
@@ -30,25 +32,26 @@ describe('Pagination tests', () => {
     expect(currPageElement).toBeInTheDocument();
     expect(totalPagesElement).toBeInTheDocument();
   });
-  it('calls setPage when next page is clicked', () => {
-    render(<Pagination />);
 
-    const text3 = screen.getAllByText('3');
-    fireEvent.click(text3[0]);
+  it('calls setPage and setLoading when next page is clicked', () => {
+    const nextPage = screen.getAllByText('3')[0];
+    fireEvent.click(nextPage);
+
     expect(handleSetPageCallback).toHaveBeenCalledWith({
       currPage: 3,
       totalPages: 5,
     });
+    expect(handleSetIsLoadingCallback).toHaveBeenCalledWith(true);
   });
 
-  it('calls setPage when previous page is clicked', () => {
-    render(<Pagination />);
+  it('calls setPage and setLoading when previous page is clicked', () => {
+    const prevPage = screen.getAllByText('1')[0];
+    fireEvent.click(prevPage);
 
-    const text1 = screen.getAllByText('1');
-    fireEvent.click(text1[0]);
     expect(handleSetPageCallback).toHaveBeenCalledWith({
       currPage: 1,
       totalPages: 5,
     });
+    expect(handleSetIsLoadingCallback).toHaveBeenCalledWith(true);
   });
 });

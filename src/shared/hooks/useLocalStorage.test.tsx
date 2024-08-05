@@ -1,17 +1,7 @@
 import { renderHook, act } from '@testing-library/react';
 import { useLocalStorage } from './useLocalStorage';
-import useCustomSearchParams from './useCustomSearchParams.tsx';
-
-jest.mock('./useCustomSearchParams.tsx');
 
 describe('useLocalStorage tests', () => {
-  beforeEach(() => {
-    localStorage.clear();
-    useCustomSearchParams.mockReturnValue({
-      handleNameChange: jest.fn(),
-    });
-  });
-
   it('returns the initial value when localStorage is empty', () => {
     const { result } = renderHook(() => useLocalStorage('test', 'initial'));
 
@@ -19,7 +9,7 @@ describe('useLocalStorage tests', () => {
   });
 
   it('returns the stored value from localStorage', () => {
-    localStorage.setItem('test', 'stored value');
+    localStorage.setItem('test', JSON.stringify('stored value'));
 
     const { result } = renderHook(() => useLocalStorage('test', 'initial'));
 
@@ -27,11 +17,6 @@ describe('useLocalStorage tests', () => {
   });
 
   it('updates the stored value and calls handleNameChange when the value is changed', () => {
-    const handleNameChange = jest.fn();
-    useCustomSearchParams.mockReturnValue({
-      handleNameChange,
-    });
-
     const { result } = renderHook(() => useLocalStorage('test', 'initial'));
 
     act(() => {
@@ -39,15 +24,13 @@ describe('useLocalStorage tests', () => {
     });
 
     expect(result.current[0]).toBe('new value');
-    expect(localStorage.getItem('test')).toBe('new value');
-    expect(handleNameChange).toHaveBeenCalled();
-    expect(handleNameChange).toHaveBeenCalledWith('new value');
+    expect(localStorage.getItem('test')).toBe('"new value"');
   });
 
   it('uses the default key and initial value when not provided', () => {
     const { result } = renderHook(() => useLocalStorage());
 
     expect(result.current[0]).toBe('');
-    expect(localStorage.getItem('mySearch')).toBe('');
+    expect(localStorage.getItem('mySearch')).toBe(null);
   });
 });

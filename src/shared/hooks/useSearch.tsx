@@ -100,7 +100,7 @@ const useSearch = () => {
         } else {
           const selectedItemWithDetails = characters.find((i) => i.id === id);
           selectedItemsTmp.push(id);
-          selectedItemsWithDetailsTmp.push(selectedItemWithDetails);
+          selectedItemsWithDetailsTmp.push(selectedItemWithDetails!);
           dispatch(setSelectedItems(selectedItemsTmp));
           dispatch(setSelectedItemsWithDetails(selectedItemsWithDetailsTmp));
         }

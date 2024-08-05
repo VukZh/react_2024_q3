@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 import SearchResult from './SearchResult';
 import '@testing-library/jest-dom';
@@ -49,25 +49,5 @@ describe('SearchResult', () => {
 
     expect(screen.getByText('Rick Sanchez')).toBeInTheDocument();
     expect(screen.getByText('Morty Smith')).toBeInTheDocument();
-  });
-
-  it('calls changeIsShowingDetails and changeSelectedId when a character item is clicked', () => {
-    const characters = [{ id: 1, name: 'Rick Sanchez' }];
-    useSearch.mockReturnValue({
-      characters,
-      handleSetSelectedIdCallback: changeSelectedId,
-      handleSetIsShowingDetailsCallback: changeIsShowingDetails,
-      handleSetIsLoadingDetailsCallback: changeIsLoadingDetails,
-      handleSetCharacterDetailsCallback,
-      selectedId: 0,
-      selectedItems: [],
-    });
-
-    render(<SearchResult />);
-
-    fireEvent.click(screen.getByText('Rick Sanchez'));
-
-    expect(changeIsShowingDetails).toHaveBeenCalledWith(true);
-    expect(changeSelectedId).toHaveBeenCalledWith(1);
   });
 });

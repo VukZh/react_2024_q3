@@ -4,9 +4,9 @@ import { Context } from '../../../../../shared/context/contextProvider.tsx';
 
 function ThemeSwitcher() {
   const { setThemeIsDark, themeIsDark } = useContext(Context);
-  const switchHandler = (e) => {
-    const { value } = e.target;
-    if (value === 'dark') {
+  const switchHandler = (e: React.MouseEvent<HTMLInputElement>) => {
+    const selectedValue = e.currentTarget.value;
+    if (selectedValue === 'dark') {
       setThemeIsDark(true);
     } else {
       setThemeIsDark(false);

@@ -1,9 +1,10 @@
 import { Dispatch, SetStateAction } from 'react';
+
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   PageType,
   RickAndMortyCharacterType,
-} from '../../pages_/search/model/types.ts';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+} from '../../components/search/model/types.ts';
 
 export interface SearchStateType {
   searchText: string;
