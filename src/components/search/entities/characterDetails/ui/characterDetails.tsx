@@ -6,9 +6,12 @@ import { getDetailsCharacter } from '../../../api/helpers.ts';
 import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 import useCustomSearchParams from '../../../../../shared/hooks/useCustomSearchParams.tsx';
 import { useEffect } from 'react';
-import Image from 'next/image';
 
-function CharacterDetails() {
+type CharacterDetailsPropsType = {
+  children: React.ReactNode;
+};
+
+function CharacterDetails({children}: CharacterDetailsPropsType) {
   const {
     isShowingDetails: isShowing,
     handleSetIsShowingDetailsCallback: changeIsShowingDetails,
@@ -39,20 +42,23 @@ function CharacterDetails() {
       {!isDetailsLoading ? (
         <div
           className={styles.characterDetailsWrapper}
-          onClick={(e) => e.stopPropagation()}>
-          <Image
-            src={character.image}
-            alt="character"
-            className={styles.image}
-            width={300}
-            height={300}
-          />
-          <div className={styles.name}>Name: {character.name}</div>
-          <div className={styles.status}>Status: {character.status}</div>
-          <div className={styles.species}>Species: {character.species}</div>
-          <div className={styles.location}>
-            Location: {character.location.name}
-          </div>
+          onClick={(e) => e.stopPropagation()}
+        >
+          {/*<Image*/}
+          {/*  src={character.image}*/}
+          {/*  alt="character"*/}
+          {/*  className={styles.image}*/}
+          {/*  width={300}*/}
+          {/*  height={300}*/}
+          {/*/>*/}
+          {/*<div className={styles.name}>Name: {character.name}</div>*/}
+          {/*<div className={styles.status}>Status: {character.status}</div>*/}
+          {/*<div className={styles.species}>Species: {character.species}</div>*/}
+          {/*<div className={styles.location}>*/}
+          {/*  Location: {character.location.name}*/}
+          {/*</div>*/}
+
+          {children}
 
           <button
             className={styles.buttonClose}

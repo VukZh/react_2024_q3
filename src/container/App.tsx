@@ -4,6 +4,7 @@ import {
   RickAndMortyCharacterType,
 } from '../components/search/model/types.ts';
 import SearchResult from '../components/search/widgets/search-result';
+import CharacterDetailsRSC from '../components/search/entities/characterDetails/ui/characterDetailsRSC.tsx';
 
 type AppPropsType = {
   characters: RickAndMortyCharacterType[];
@@ -18,8 +19,8 @@ export default function App({ characters, page, details }: AppPropsType) {
         characters={characters}
         page={page}
         details={details}
-        resultSlot={<SearchResult />}>
-      </Search>
+        resultSlot={<SearchResult />}
+        detailsSlot={<CharacterDetailsRSC />}></Search>
     </div>
   );
 }

@@ -22,12 +22,13 @@ type SearchPropsType = {
   page: PageType;
   details: RickAndMortyCharacterType | null;
   resultSlot: React.ReactNode;
+  detailsSlot: React.ReactNode;
 };
 
 function Search(data: SearchPropsType) {
   const {themeIsDark} = useContext(Context);
 
-  const {characters, page, details, resultSlot} = data;
+  const {characters, page, details, resultSlot, detailsSlot} = data;
 
   const {
     handleSetSelectedIdCallback,
@@ -127,11 +128,14 @@ function Search(data: SearchPropsType) {
 
           {resultSlot}
 
-          {/*{characters?.length ? <Pagination></Pagination> : null}*/}
+          {characters?.length ? <Pagination></Pagination> : null}
 
           {/*{data.childrenRes}*/}
         </div>
-        <CharacterDetails/>
+
+        <CharacterDetails>
+          {detailsSlot}
+        </CharacterDetails>
         <ThemeSwitcher/>
         <Flyout/>
       </div>
