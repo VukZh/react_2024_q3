@@ -1,3 +1,5 @@
+'use client';
+
 import styles from './flyout.module.css';
 import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 import { useContext, useRef } from 'react';

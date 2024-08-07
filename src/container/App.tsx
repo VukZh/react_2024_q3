@@ -3,6 +3,7 @@ import {
   PageType,
   RickAndMortyCharacterType,
 } from '../components/search/model/types.ts';
+import SearchResult from '../components/search/widgets/search-result';
 
 type AppPropsType = {
   characters: RickAndMortyCharacterType[];
@@ -13,7 +14,12 @@ type AppPropsType = {
 export default function App({ characters, page, details }: AppPropsType) {
   return (
     <div>
-      <Search characters={characters} page={page} details={details} />
+      <Search
+        characters={characters}
+        page={page}
+        details={details}
+        resultSlot={<SearchResult />}>
+      </Search>
     </div>
   );
 }

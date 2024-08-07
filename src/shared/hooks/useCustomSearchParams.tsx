@@ -1,5 +1,5 @@
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
+'use client';
+import { usePathname, useSearchParams, useRouter } from 'next/navigation';
 
 function useCustomSearchParams() {
   const searchParams = useSearchParams();

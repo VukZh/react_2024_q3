@@ -1,17 +1,19 @@
-import { useContext, useEffect } from 'react';
+'use client';
+
+import {useContext, useEffect} from 'react';
 
 import styles from './search.module.css';
 import SearchRequest from '../widgets/search-request';
 import SearchResult from '../widgets/search-result';
 import Pagination from '../entities/pagination/ui/pagination.tsx';
-import { useLocalStorage } from '../../../shared/hooks/useLocalStorage.tsx';
+import {useLocalStorage} from '../../../shared/hooks/useLocalStorage.tsx';
 import useCustomSearchParams from '../../../shared/hooks/useCustomSearchParams.tsx';
-import { Context } from '../../../shared/context/contextProvider.tsx';
+import {Context} from '../../../shared/context/contextProvider.tsx';
 import ThemeSwitcher from '../entities/themeSwitcher';
-import { useSearch } from '../../../shared/hooks/useSearch.tsx';
+import {useSearch} from '../../../shared/hooks/useSearch.tsx';
 import Flyout from '../entities/flyout';
 import CharacterDetails from '../entities/characterDetails';
-import { PageType, RickAndMortyCharacterType } from '../model/types.ts';
+import {PageType, RickAndMortyCharacterType} from '../model/types.ts';
 
 export const LS_MY_SEARCH = 'mySearch';
 
@@ -19,11 +21,13 @@ type SearchPropsType = {
   characters: RickAndMortyCharacterType[];
   page: PageType;
   details: RickAndMortyCharacterType | null;
+  resultSlot: React.ReactNode;
 };
-function Search(data: SearchPropsType) {
-  const { themeIsDark } = useContext(Context);
 
-  const { characters, page, details } = data;
+function Search(data: SearchPropsType) {
+  const {themeIsDark} = useContext(Context);
+
+  const {characters, page, details, resultSlot} = data;
 
   const {
     handleSetSelectedIdCallback,
@@ -44,6 +48,15 @@ function Search(data: SearchPropsType) {
     handleSetCharactersCallback(characters);
     handleSetIsLoadingCallback(false);
   }, [characters]);
+
+  useEffect(() => {
+    if (!characters.length) {
+      handleSetIsShowingDetailsCallback(false);
+      handleSetSelectedIdCallback(0);
+    } else {
+      handleSetIsShowingDetailsCallback(true);
+    }
+  }, [characters.length]);
 
   useEffect(() => {
     handleSetPageCallback(page);
@@ -99,14 +112,28 @@ function Search(data: SearchPropsType) {
         onClick={() => {
           handleSetIsShowingDetailsCallback(false);
           handleSetSelectedIdCallback(0);
-        }}>
+        }}
+      >
         <div>
-          <SearchResult></SearchResult>
-          {characters?.length ? <Pagination></Pagination> : null}
+          {/*<SearchResult*/}
+          {/*  changeSelectedId={handleSetSelectedIdCallback}*/}
+          {/*  changeIsShowingDetails={handleSetIsShowingDetailsCallback}*/}
+          {/*  selectedId={selectedId}*/}
+          {/*  setIsDetailsLoading={*/}
+          {/*    handleSetIsDetailsLoadingCallback*/}
+          {/*  }*/}
+          {/*  draftCharacters={characters}*/}
+          {/*></SearchResult>*/}
+
+          {resultSlot}
+
+          {/*{characters?.length ? <Pagination></Pagination> : null}*/}
+
+          {/*{data.childrenRes}*/}
         </div>
-        <CharacterDetails />
-        <ThemeSwitcher />
-        <Flyout />
+        <CharacterDetails/>
+        <ThemeSwitcher/>
+        <Flyout/>
       </div>
     </div>
   );

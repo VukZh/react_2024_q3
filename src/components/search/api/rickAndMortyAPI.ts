@@ -9,7 +9,7 @@ export const fetchCharacters = async (name: string, queryPage = 0) => {
       ? `/?page=${queryPage}&name=${name}`
       : `/?name=${name}`;
 
-    const response = await fetch(BASE_URL + query);
+    const response = await fetch(BASE_URL + query, { cache: 'force-cache' });
 
     if (!response.ok) {
       throw new Error('Network response was not ok');
@@ -46,7 +46,7 @@ export const fetchCharacters = async (name: string, queryPage = 0) => {
 
 export const getDetailsCharacter = async (id: number) => {
   try {
-    const response = await fetch(BASE_URL + `/${id}`);
+    const response = await fetch(BASE_URL + `/${id}`, { cache: 'force-cache' });
     if (!response.ok) {
       throw new Error('Network response was not ok');
     }

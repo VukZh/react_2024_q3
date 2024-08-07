@@ -52,3 +52,24 @@ export const getCharactersToExport = (
     image: character.image,
   }));
 };
+
+export function parseQueryString(queryString) {
+  const result = {};
+
+  if (queryString && queryString.startsWith('?')) {
+    queryString = queryString.slice(1);
+  }
+
+  if (queryString) {
+    const pairs = queryString.split('&');
+
+    for (const pair of pairs) {
+      const [key, value] = pair.split('=');
+      if (key) {
+        result[key] = decodeURIComponent(value || '');
+      }
+    }
+  }
+
+  return result;
+}

@@ -1,3 +1,5 @@
+'use client';
+
 import styles from './characterDetails.module.css';
 import Loader from '../../../../../shared/loader';
 import { getDetailsCharacter } from '../../../api/helpers.ts';

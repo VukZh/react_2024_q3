@@ -1,14 +1,10 @@
-import type { Metadata } from 'next'
+'use client';
 
 import '../index.css';
+import { Provider } from 'react-redux';
+import { store } from '../shared/store/store.ts';
+import { ContextProvider } from '../shared/context/contextProvider.tsx';
 
-export const metadata: Metadata = {
-  title: 'Rick and Morty Search',
-  description: 'Search for Rick and Morty characters',
-  icons: {
-    icon: '/images/rm.png',
-  },
-}
 export default function RootLayout({
   children,
 }: {
@@ -16,7 +12,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Provider store={store}>
+          <ContextProvider>{children}</ContextProvider>
+        </Provider>
+      </body>
     </html>
   );
 }
