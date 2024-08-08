@@ -1,5 +1,10 @@
 import { RickAndMortyCharacterType } from '../model/types.ts';
-import { getDetailsCharacter, getShortCharacters } from './helpers.ts';
+import {
+  getDetailsCharacter,
+  getShortCharacters,
+  getCharactersToExport,
+  parseQueryString,
+} from './helpers.ts';
 
 const mockCharacters: RickAndMortyCharacterType[] = [
   {
@@ -131,5 +136,96 @@ describe('getDetailsCharacter test', () => {
     const result = getDetailsCharacter(characterWithZeroId);
 
     expect(result).toEqual(expectedDetails);
+  });
+});
+
+describe('getCharactersToExport test', () => {
+  it('should return an array of characters', () => {
+    const expectedExportCharacters = [
+      {
+        id: 1,
+        name: 'Rick Sanchez',
+        status: 'Alive',
+        species: 'Human',
+        gender: 'Male',
+        created: '2017-11-04T18:48:46.250Z',
+        image: 'https://example.com/rick.jpg',
+      },
+      {
+        id: 2,
+        name: 'Morty Smith',
+        status: 'Alive',
+        species: 'Human',
+        gender: 'Male',
+        created: '2017-11-04T18:50:21.651Z',
+        image: 'https://example.com/morty.jpg',
+      },
+    ];
+
+    const result = getCharactersToExport(mockCharacters);
+
+    expect(result).toEqual(expectedExportCharacters);
+  });
+
+  it('should return an empty array', () => {
+    const characters: RickAndMortyCharacterType[] = [];
+
+    const result = getCharactersToExport(characters);
+
+    expect(result).toEqual([]);
+  });
+});
+
+describe('parseQueryString test', () => {
+  it('should return parsed query parameters', () => {
+    const queryString = '?name=Rick&page=1&details=123';
+    const expectedParams = {
+      name: 'Rick',
+      page: '1',
+      details: '123',
+    };
+
+    const result = parseQueryString(queryString);
+
+    expect(result).toEqual(expectedParams);
+  });
+
+  it('should return default values for missing parameters', () => {
+    const queryString = '?name=Rick';
+    const expectedParams = {
+      name: 'Rick',
+      page: '0',
+      details: '',
+    };
+
+    const result = parseQueryString(queryString);
+
+    expect(result).toEqual(expectedParams);
+  });
+
+  it('should handle an empty query string', () => {
+    const queryString = '';
+    const expectedParams = {
+      name: '',
+      page: '0',
+      details: '',
+    };
+
+    const result = parseQueryString(queryString);
+
+    expect(result).toEqual(expectedParams);
+  });
+
+  it('should decode URI components', () => {
+    const queryString = '?name=Rick%20Sanchez&page=1&details=123';
+    const expectedParams = {
+      name: 'Rick Sanchez',
+      page: '1',
+      details: '123',
+    };
+
+    const result = parseQueryString(queryString);
+
+    expect(result).toEqual(expectedParams);
   });
 });

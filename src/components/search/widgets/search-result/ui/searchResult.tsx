@@ -24,11 +24,12 @@ async function getDataResult() {
 }
 
 async function SearchResult() {
-  console.log('getDataResult');
   const draftCharacters =
     (await getDataResult()) as RickAndMortyCharacterType[];
 
-  const characters = getShortCharacters(draftCharacters!);
+  const characters = Array.isArray(draftCharacters)
+    ? getShortCharacters(draftCharacters)
+    : [];
 
   return (
     <div className={styles.searchResult}>

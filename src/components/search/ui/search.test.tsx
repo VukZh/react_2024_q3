@@ -92,7 +92,13 @@ describe('Search Component test', () => {
 
   test('renders Search component', () => {
     renderWithProviders(
-      <Search characters={[]} page={{}} details={null} />,
+      <Search
+        characters={[]}
+        page={{}}
+        details={null}
+        detailsSlot={<div>details</div>}
+        resultSlot={<div>result</div>}
+      />,
       { providerProps },
       store,
     );
@@ -100,8 +106,8 @@ describe('Search Component test', () => {
     expect(
       screen.getByPlaceholderText(/Enter search query/i),
     ).toBeInTheDocument();
-    expect(screen.getByText('No results')).toBeInTheDocument();
     expect(screen.getByText('Dark')).toBeInTheDocument();
     expect(screen.getByText('Light')).toBeInTheDocument();
+    expect(screen.getByText('result')).toBeInTheDocument();
   });
 });

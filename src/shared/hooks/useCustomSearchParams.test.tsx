@@ -1,14 +1,10 @@
 import { renderHook, act } from '@testing-library/react';
-
 import useCustomSearchParams from './useCustomSearchParams';
 import '@testing-library/jest-dom';
 
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
   useSearchParams: jest.fn(),
-}));
-
-jest.mock('next/router', () => ({
   useRouter: jest.fn(),
 }));
 
@@ -21,7 +17,7 @@ describe('useCustomSearchParams tests', () => {
       mockSearchParams,
     );
     require('next/navigation').usePathname.mockReturnValue('/');
-    require('next/router').useRouter.mockReturnValue({
+    require('next/navigation').useRouter.mockReturnValue({
       replace: mockReplace,
     });
     jest.clearAllMocks();
@@ -50,7 +46,7 @@ describe('useCustomSearchParams tests', () => {
     const { result } = renderHook(() => useCustomSearchParams());
 
     act(() => {
-      result.current.handleDetailsChange('123');
+      result.current.handleDetailsChange(123);
     });
 
     expect(mockReplace).toHaveBeenCalledWith(
@@ -62,7 +58,7 @@ describe('useCustomSearchParams tests', () => {
     const { result } = renderHook(() => useCustomSearchParams());
 
     act(() => {
-      result.current.handlePageChange('2');
+      result.current.handlePageChange(2);
     });
 
     expect(mockReplace).toHaveBeenCalledWith('/?page=2&name=initial&details=');

@@ -5,7 +5,7 @@ import {
 } from '../model/types.ts';
 
 interface QueryParams {
-  [key: string]: string; // Определите, что ключи объекта будут строками, а значения - тоже строками
+  [key: string]: string;
 }
 
 export const getShortCharacters = (
