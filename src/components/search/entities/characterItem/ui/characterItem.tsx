@@ -10,8 +10,6 @@ type PropsType = {
   character: RickAndMortyShortCharacter;
 };
 
-
-
 function CharacterItem(props: PropsType) {
   const { themeIsDark } = useContext(Context);
   const { name, status, species, id } = props.character;

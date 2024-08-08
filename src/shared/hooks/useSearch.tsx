@@ -106,7 +106,7 @@ const useSearch = () => {
         }
       }
     },
-    [dispatch, selectedItems],
+    [dispatch, selectedItems, characters],
   );
 
   const handleSetIsDetailsLoadingCallback = useCallback(

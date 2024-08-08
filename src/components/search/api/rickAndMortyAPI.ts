@@ -3,7 +3,7 @@ import { RickAndMortyCharacterType } from '../model/types.ts';
 const BASE_URL = 'https://rickandmortyapi.com/api/character';
 
 const PAGE_SIZE = 20;
-export const fetchCharacters = async (name: string, queryPage = 0) => {
+export const fetchCharacters = async (name: string, queryPage: string) => {
   try {
     const query = queryPage
       ? `/?page=${queryPage}&name=${name}`

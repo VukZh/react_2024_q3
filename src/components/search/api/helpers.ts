@@ -4,6 +4,10 @@ import {
   RickAndMortyShortCharacter,
 } from '../model/types.ts';
 
+interface QueryParams {
+  [key: string]: string; // Определите, что ключи объекта будут строками, а значения - тоже строками
+}
+
 export const getShortCharacters = (
   characters: RickAndMortyCharacterType[],
 ): RickAndMortyShortCharacter[] => {
@@ -53,8 +57,8 @@ export const getCharactersToExport = (
   }));
 };
 
-export function parseQueryString(queryString) {
-  const result = {};
+export function parseQueryString(queryString: string): QueryParams {
+  const result: QueryParams = {};
 
   if (queryString && queryString.startsWith('?')) {
     queryString = queryString.slice(1);
@@ -71,5 +75,9 @@ export function parseQueryString(queryString) {
     }
   }
 
-  return result;
+  return {
+    name: result?.name || '',
+    page: result?.page || '0',
+    details: result?.details || '',
+  };
 }

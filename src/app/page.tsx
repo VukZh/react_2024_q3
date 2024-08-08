@@ -1,14 +1,11 @@
 import type { Metadata } from 'next';
-import {fetchCharacters, getDetailsCharacter} from "../components/search/api/rickAndMortyAPI.ts";
-import App from "../container/App.tsx";
-import {usePathname} from "next/navigation";
-import { headers } from "next/headers";
-import {parseQueryString} from "../components/search/api/helpers.ts";
-
-const BASE_URL = 'https://rickandmortyapi.com/api/character';
-
-const PAGE_SIZE = 20;
-
+import {
+  fetchCharacters,
+  getDetailsCharacter,
+} from '../components/search/api/rickAndMortyAPI.ts';
+import App from '../container/App.tsx';
+import { headers } from 'next/headers';
+import { parseQueryString } from '../components/search/api/helpers.ts';
 
 export const metadata: Metadata = {
   title: 'Rick and Morty Search',
@@ -20,23 +17,18 @@ export const metadata: Metadata = {
 
 async function getData() {
   try {
-
     const headerList = headers();
-    const pathname = headerList.get("x-current-path");
-    const {name = '', page = 0, details = ''} = parseQueryString(pathname);
-
+    const pathname = headerList.get('x-current-path');
+    const {
+      name = '',
+      page = '0',
+      details = '',
+    } = parseQueryString(pathname || '');
     const data = await fetchCharacters(name, page);
-
-    console.log('data', data);
-
     let detailsData = null;
-
     if (details) {
       detailsData = await getDetailsCharacter(+details);
     }
-
-    console.log('detailsData', detailsData);
-    // const detailsData = await getDetailsCharacter(+details);
 
     return {
       props: { charactersData: data, detailsData },
@@ -51,19 +43,17 @@ async function getData() {
 }
 export default async function Home() {
   const data = await getData();
-  // console.log('data', data.props.charactersData);
   return (
     <>
-      {
-        !data.props?.error ? (
-            <App
-              characters={data.props.charactersData.characters}
-              page={data.props.charactersData.page}
-              details={data.props.detailsData}
-            />
-        ) : null
-      }
-
+      {!data.props?.error ? (
+        <App
+          characters={data.props?.charactersData?.characters || []}
+          page={
+            data.props?.charactersData?.page || { currPage: 1, totalPages: 1 }
+          }
+          details={data.props?.detailsData || null}
+        />
+      ) : null}
     </>
   );
 }

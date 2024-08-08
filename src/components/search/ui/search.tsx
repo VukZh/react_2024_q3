@@ -1,19 +1,18 @@
 'use client';
 
-import {useContext, useEffect} from 'react';
+import { useContext, useEffect } from 'react';
 
 import styles from './search.module.css';
 import SearchRequest from '../widgets/search-request';
-import SearchResult from '../widgets/search-result';
 import Pagination from '../entities/pagination/ui/pagination.tsx';
-import {useLocalStorage} from '../../../shared/hooks/useLocalStorage.tsx';
+import { useLocalStorage } from '../../../shared/hooks/useLocalStorage.tsx';
 import useCustomSearchParams from '../../../shared/hooks/useCustomSearchParams.tsx';
-import {Context} from '../../../shared/context/contextProvider.tsx';
+import { Context } from '../../../shared/context/contextProvider.tsx';
 import ThemeSwitcher from '../entities/themeSwitcher';
-import {useSearch} from '../../../shared/hooks/useSearch.tsx';
+import { useSearch } from '../../../shared/hooks/useSearch.tsx';
 import Flyout from '../entities/flyout';
 import CharacterDetails from '../entities/characterDetails';
-import {PageType, RickAndMortyCharacterType} from '../model/types.ts';
+import { PageType, RickAndMortyCharacterType } from '../model/types.ts';
 
 export const LS_MY_SEARCH = 'mySearch';
 
@@ -26,9 +25,9 @@ type SearchPropsType = {
 };
 
 function Search(data: SearchPropsType) {
-  const {themeIsDark} = useContext(Context);
+  const { themeIsDark } = useContext(Context);
 
-  const {characters, page, details, resultSlot, detailsSlot} = data;
+  const { characters, page, details, resultSlot, detailsSlot } = data;
 
   const {
     handleSetSelectedIdCallback,
@@ -113,31 +112,16 @@ function Search(data: SearchPropsType) {
         onClick={() => {
           handleSetIsShowingDetailsCallback(false);
           handleSetSelectedIdCallback(0);
-        }}
-      >
+        }}>
         <div>
-          {/*<SearchResult*/}
-          {/*  changeSelectedId={handleSetSelectedIdCallback}*/}
-          {/*  changeIsShowingDetails={handleSetIsShowingDetailsCallback}*/}
-          {/*  selectedId={selectedId}*/}
-          {/*  setIsDetailsLoading={*/}
-          {/*    handleSetIsDetailsLoadingCallback*/}
-          {/*  }*/}
-          {/*  draftCharacters={characters}*/}
-          {/*></SearchResult>*/}
-
           {resultSlot}
 
           {characters?.length ? <Pagination></Pagination> : null}
-
-          {/*{data.childrenRes}*/}
         </div>
 
-        <CharacterDetails>
-          {detailsSlot}
-        </CharacterDetails>
-        <ThemeSwitcher/>
-        <Flyout/>
+        <CharacterDetails>{detailsSlot}</CharacterDetails>
+        <ThemeSwitcher />
+        <Flyout />
       </div>
     </div>
   );
