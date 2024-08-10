@@ -9,7 +9,7 @@ import { Context } from '../../../../../shared/context/contextProvider.tsx';
 import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
 
 function SearchRequest() {
-  const [, saveLocalSearchText] = useLocalStorage();
+  const [localSearchText, saveLocalSearchText] = useLocalStorage();
 
   const { themeIsDark } = useContext(Context);
 
@@ -32,13 +32,15 @@ function SearchRequest() {
   }, [searchParams.get('name')]);
 
   const handleSearchSubmit = async () => {
-    saveLocalSearchText(searchText);
+    if (localSearchText !== searchText || page.currPage !== 1) {
+      handleSetIsLoadingCallback(true);
+      saveLocalSearchText(searchText);
+    }
     handleSetPageCallback({
       totalPages: page.totalPages,
       currPage: 1,
     });
     handleNameChange(searchText);
-    handleSetIsLoadingCallback(true);
   };
 
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
