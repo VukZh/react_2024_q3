@@ -1,0 +1,65 @@
+.characterItemWrapper,.characterSelectedItemWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 40px;
+    justify-content: space-between;
+    border-top: 1px solid gray;
+}
+
+.characterSelectedItemWrapper{
+    background-color: dimgray;
+}
+
+.characterItemWrapper:hover,.characterSelectedItemWrapper:hover {
+    background-color: darkslategray;
+    cursor: pointer;
+}
+
+.light:hover {
+    background-color: lightgray;
+}
+
+.name {
+    font-weight: bold;
+}
+
+.status {
+    color: darkcyan;
+}
+
+.species {
+    color: orange;
+}
+
+.itemWrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.itemCheckbox {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #bbb;
+    border: 1px solid #666;
+    border-radius: 2px;
+    position: relative;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.itemCheckbox:checked::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 5px;
+    width: 5px;
+    height: 10px;
+    border: solid darkorchid;
+    border-width: 0 4px 4px 0;
+    transform: rotate(45deg);
+}

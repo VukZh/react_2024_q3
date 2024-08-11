@@ -1,0 +1,106 @@
+import React from 'react';
+import { render, screen, fireEvent } from '@testing-library/react';
+import CharacterDetails from './CharacterDetails';
+import '@testing-library/jest-dom';
+
+import { RickAndMortyCharacterType } from '../../../model/types.ts';
+import { getDetailsCharacter } from '../../../api/helpers.ts';
+import { useSearch } from '../../../../../shared/hooks/useSearch.tsx';
+import useCustomSearchParams from '../../../../../shared/hooks/useCustomSearchParams.tsx';
+import CharacterDetailsRSC from './characterDetailsRSC.tsx';
+
+jest.mock('../../../api/helpers.ts', () => ({
+  getDetailsCharacter: jest.fn(),
+}));
+jest.mock('../../../../../shared/loader/ui/loader.tsx', () => {
+  const LoaderMock = () => <div data-testid="loader">Loading...</div>;
+  LoaderMock.displayName = 'LoaderMock';
+  return LoaderMock;
+});
+jest.mock('../../../../../shared/hooks/useSearch.tsx');
+jest.mock('../../../../../shared/hooks/useCustomSearchParams.tsx');
+
+describe('CharacterDetails tests', () => {
+  const character: RickAndMortyCharacterType = {
+    id: 1,
+    name: 'Rick Sanchez',
+    status: 'Alive',
+    species: 'Human',
+    type: '',
+    gender: 'Male',
+    origin: {
+      name: 'Earth',
+      url: 'https://example.com/earth',
+    },
+    location: {
+      name: 'Earth',
+      url: 'https://example.com/earth',
+    },
+    image: 'https://example.com/rick.jpg',
+    episode: ['https://example.com/episode/1', 'https://example.com/episode/2'],
+    url: 'https://example.com/character/1',
+    created: '2017-11-04T18:48:46.250Z',
+  };
+
+  beforeEach(() => {
+    (getDetailsCharacter as jest.Mock).mockReturnValue(character);
+    (useSearch as jest.Mock).mockReturnValue({
+      isShowingDetails: true,
+      handleSetIsShowingDetailsCallback: jest.fn(),
+      selectedId: 1,
+      handleSetCharacterDetailsCallback: jest.fn(),
+      handleSetSelectedIdCallback: jest.fn(),
+    });
+    (useCustomSearchParams as jest.Mock).mockReturnValue({
+      searchParams: new URLSearchParams('details=1'),
+    });
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  //
+  // it('renders character details when isShowingDetails is true', () => {
+  //   render(<CharacterDetails><CharacterDetailsRSC /></CharacterDetails>);
+  //
+  //   expect(screen.queryByText(/Name: Rick Sanchez/i)).toBeInTheDocument();
+  //   expect(screen.queryByText(/Status: Alive/i)).toBeInTheDocument();
+  //   expect(screen.queryByText(/Species: Human/i)).toBeInTheDocument();
+  //   expect(screen.queryByText(/Location: Earth/i)).toBeInTheDocument();
+  // });
+
+  it('renders empty when isShowingDetails is false', () => {
+    (useSearch as jest.Mock).mockReturnValue({
+      isShowingDetails: false,
+      handleSetIsShowingDetailsCallback: jest.fn(),
+      selectedId: 1,
+      handleSetCharacterDetailsCallback: jest.fn(),
+      handleSetSelectedIdCallback: jest.fn(),
+    });
+
+    render(
+      <CharacterDetails>
+        <CharacterDetailsRSC />
+      </CharacterDetails>,
+    );
+
+    expect(screen.queryByText(/Name: Rick Sanchez/i)).not.toBeInTheDocument();
+  });
+
+  // it('calls handleSetIsShowingDetailsCallback when close button is clicked', () => {
+  //   const handleSetIsShowingDetailsCallback = jest.fn();
+  //   (useSearch as jest.Mock).mockReturnValue({
+  //     isShowingDetails: true,
+  //     handleSetIsShowingDetailsCallback,
+  //     selectedId: 1,
+  //     handleSetCharacterDetailsCallback: jest.fn(),
+  //     handleSetSelectedIdCallback: jest.fn(),
+  //   });
+  //
+  //   render(<CharacterDetails><CharacterDetailsRSC /></CharacterDetails>);
+  //
+  //   fireEvent.click(screen.getByText('Close'));
+  //
+  //   expect(handleSetIsShowingDetailsCallback).toHaveBeenCalledWith(false);
+  // });
+});

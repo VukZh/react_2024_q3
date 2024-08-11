@@ -1,0 +1,23 @@
+.searchWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.resultsWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100vw;
+}
+
+.empty {
+    width: 400px;
+}
+
+.light {
+    background-color: white;
+    color: black;
+}

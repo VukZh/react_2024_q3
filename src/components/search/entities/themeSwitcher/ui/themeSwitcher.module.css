@@ -1,0 +1,50 @@
+.wrapper {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 90px;
+    height: 25px;
+}
+
+.switch {
+    display: flex;
+    margin-bottom: 36px;
+    overflow: hidden;
+}
+
+.switch input {
+    position: absolute !important;
+    height: 0;
+    width: 0;
+}
+
+.switch label {
+    background-color: #e4e4e4;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1;
+    text-align: center;
+    font-weight: 600;
+    padding: 4px 8px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.6), 0 1px rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease-in-out;
+    user-select: none;
+}
+
+.switch label:hover {
+    cursor: pointer;
+}
+
+.switch input:checked + label {
+    background-color: #a5dc86;
+    box-shadow: none;
+}
+
+.switch label:first-of-type {
+    border-radius: 6px 0 0 6px;
+}
+
+.switch label:last-of-type {
+    border-radius: 0 6px 6px 0;
+}
