@@ -8,6 +8,7 @@
 
 .formGroup {
     margin-bottom: 15px;
+    position: relative;
 }
 
 .formGroup label {
@@ -20,10 +21,13 @@
 .formGroup input[type='email'],
 .formGroup input[type='password'],
 .formGroup select {
-    width: 100%;
-    padding: 8px 0;
+    width: calc(100% - 20px);
+    padding: 8px;
     border: 1px solid gray;
     border-radius: 4px;
+}
+.formGroup select {
+    width: 100%;
 }
 
 .formContainer button[type='submit'] {
@@ -33,4 +37,24 @@
     border: none;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.formContainer button[type='submit']:hover {
+    background-color: blue;
+}
+
+.error {
+    position: absolute;
+    font-size: 12px;
+    font-weight: 600;
+    background-color: rgba(32, 32, 32, 0.7);
+    top: 45px;
+    left: 50px;
+    padding: 0 3px;
+    color: tomato;
+    border-radius: 3px;
+}
+
+.btnInactive.btnInactive.btnInactive.btnInactive {
+    background-color: gray!important;
 }

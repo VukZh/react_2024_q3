@@ -42,8 +42,9 @@ export default function FormWithReactHookForm() {
             id="gender"
             name="gender"
             placeholder="Select Gender"
+            defaultValue=""
             required>
-            <option value="" disabled selected hidden>
+            <option value="" disabled>
               Select Gender
             </option>
             <option value="male">Male</option>
@@ -53,7 +54,7 @@ export default function FormWithReactHookForm() {
         <div className={styles.formGroup}>
           <label htmlFor="country">Country:</label>
           <select id="country" name="country" defaultValue="" required>
-            <option value="" disabled selected hidden>
+            <option value="" disabled>
               Select Country
             </option>
             <option value="Russia">Russia</option>
