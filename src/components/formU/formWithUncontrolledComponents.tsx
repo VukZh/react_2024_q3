@@ -1,8 +1,8 @@
 import styles from './formWithUncontrolledComponents.module.css';
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { formSchema } from '../../helpers/yupScema.ts';
-import {redirect, useNavigate} from "react-router-dom";
-import {ValidationError} from "yup";
+import { useNavigate } from 'react-router-dom';
+import { ValidationError } from 'yup';
 
 export default function FormWithUncontrolledComponents() {
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -15,11 +15,11 @@ export default function FormWithUncontrolledComponents() {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     data.terms = data.terms === 'true' ? 'true' : data.terms;
-    console.log("formData: ", data)
+    console.log('formData: ', data);
     try {
       await formSchema.validate(data, { abortEarly: false });
-      console.log("formData 2: ", data)
-      navigate("/");
+      console.log('formData 2: ', data);
+      navigate('/');
     } catch (err: ValidationError) {
       const validationErrors: Record<string, string> = {};
       err.inner.forEach((error: ValidationError) => {

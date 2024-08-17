@@ -5,6 +5,7 @@ import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import FormWithReactHookForm from './components/formRHF/formWithReactHookForm.tsx';
 import FormWithUncontrolledComponents from './components/formU/formWithUncontrolledComponents.tsx';
+import NotFound from './components/notFound/notFound.tsx';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,10 @@ const router = createBrowserRouter([
   {
     path: '/rhf',
     element: <FormWithReactHookForm />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);
 

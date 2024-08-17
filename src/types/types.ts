@@ -1,6 +1,11 @@
 type GenderType = 'male' | 'female';
 
-type CountryType = 'Russia' | 'Belorussia' | 'Georgia' | 'Australia' | 'Germany';
+type CountryType =
+  | 'Russia'
+  | 'Belorussia'
+  | 'Georgia'
+  | 'Australia'
+  | 'Germany';
 
 export type FormDataType = {
   name: string;

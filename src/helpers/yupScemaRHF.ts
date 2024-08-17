@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-export const formSchema = yup.object().shape({
+export const formSchemaRHF = yup.object().shape({
   name: yup
     .string()
     .required('Name is required')
@@ -36,19 +36,24 @@ export const formSchema = yup.object().shape({
   country: yup.string().required('Country is required'),
   picture: yup
     .mixed()
-    .test('fileType', 'Only PNG and JPEG files are allowed', (value) => {
-      if (!value) return true;
-      return ['image/png', 'image/jpeg'].includes(value.type);
-    })
-    .test('fileSize', 'File size must be less than 1MB', (value) => {
-      if (!value) return true;
-      return value.size <= 1024 * 1024;
-    }),
-  terms: yup
-    .mixed()
+    .required('A file is required')
     .test(
-      'is-checked',
-      'You must accept the Terms and Conditions',
-      (value) => value === 'true',
+      'fileType',
+      'Only PNG and JPEG files are allowed',
+      (value: Array<{ type }>) => {
+        if (!value?.length) return false;
+        return ['image/png', 'image/jpeg'].includes(value[0].type);
+      },
+    )
+    .test(
+      'fileSize',
+      'File size must be less than 1MB',
+      (value: Array<{ size }>) => {
+        if (!value?.length) return false;
+        return value[0].size <= 1024 * 1024;
+      },
     ),
+  terms: yup
+    .boolean()
+    .oneOf([true], 'You must accept the Terms and Conditions'),
 });
