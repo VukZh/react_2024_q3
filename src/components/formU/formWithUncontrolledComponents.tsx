@@ -3,17 +3,20 @@ import { useState } from 'react';
 import { formSchema } from '../../helpers/yupScema.ts';
 import { useNavigate } from 'react-router-dom';
 import { ValidationError } from 'yup';
-import { useFormRHF } from '../../hooks/useFormRHF.tsx';
 import { FormDataType } from '../../types/types.ts';
 import { fileToBase64 } from '../../helpers/fileToBase64.ts';
 import { useFormU } from '../../hooks/useFormU.tsx';
+import AutocompleteU from '../autocomplete/autocompleteU.tsx';
 
 export default function FormWithUncontrolledComponents() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
-  const { formDataU, handleSetFormU } = useFormU();
+  const { formDataU, handleSetFormU, countries } = useFormU();
 
-  console.log('formDataU: ', formDataU);
+  const countriesOptions = countries.map((c) => ({
+    label: c,
+    value: c,
+  }));
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,7 +30,6 @@ export default function FormWithUncontrolledComponents() {
       await formSchema.validate(data, { abortEarly: false });
       const pictureBase64 = await fileToBase64(data.picture as File);
 
-      // handleSetFormRHF(data);
       const dataUpdates = {
         name: data.name,
         age: data.age,
@@ -39,9 +41,7 @@ export default function FormWithUncontrolledComponents() {
         picture: pictureBase64,
         terms: data.terms,
       };
-      console.log('formData: ', dataUpdates, pictureBase64);
       handleSetFormU(dataUpdates as FormDataType);
-      // console.log('formData 2: ', data);
       navigate('/');
     } catch (err: ValidationError) {
       const validationErrors: Record<string, string> = {};
@@ -138,22 +138,11 @@ export default function FormWithUncontrolledComponents() {
             <span className={styles.error}>{errors.gender}</span>
           )}
         </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="country">Country:</label>
-          <select
-            id="country"
-            name="country"
-            defaultValue=""
-            onChange={handleClearError}>
-            <option value="" disabled hidden>
-              Select Country
-            </option>
-            <option value="Russia">Russia</option>
-            <option value="Belarus">Belorussia</option>
-            <option value="Georgia">Georgia</option>
-            <option value="Australia">Australia</option>
-            <option value="Germany">Germany</option>
-          </select>
+        <div
+          className={styles.formGroup}
+          style={{ zIndex: '1' }}
+          onClick={handleClearError}>
+          <AutocompleteU options={countriesOptions} name="country" />
           {errors.country && (
             <span className={styles.error}>{errors.country}</span>
           )}

@@ -1,18 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CountryType, GenderType } from '../types/types.ts';
+import { CountryType, FormDataType, GenderType } from '../types/types.ts';
+import { COUNTRIES } from '../helpers/countries.ts';
 
 type FormDataSliceType = {
-  formDataU: {
-    name: string;
-    age: number;
-    email: string;
-    password: string;
-    confirmPassword: string;
-    gender: GenderType | '';
-    country: CountryType | '';
-    picture: File | null;
-    terms: boolean;
-  };
+  formDataU: FormDataType;
+  countries: CountryType[];
 };
 
 const initialState: FormDataSliceType = {
@@ -24,17 +16,18 @@ const initialState: FormDataSliceType = {
     confirmPassword: '',
     gender: '',
     country: '',
-    picture: null,
+    picture: '',
     terms: false,
   },
+  countries: COUNTRIES,
 };
 
 const formUSlice = createSlice({
   name: 'formU',
   initialState,
   reducers: {
-    setFormData: (state, action: PayloadAction<FormDataSliceType>) => {
-      return action.payload;
+    setFormData: (state, action: PayloadAction<FormDataType>) => {
+      state.formDataU = action.payload;
     },
   },
 });

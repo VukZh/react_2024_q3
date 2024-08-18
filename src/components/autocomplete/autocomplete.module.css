@@ -1,0 +1,46 @@
+.autocomplete {
+    position: relative;
+}
+
+.autocomplete input {
+    width: 100%;
+    padding: 8px;
+    font-size: 16px;
+}
+
+.options {
+    position: absolute;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    background-color: rgb(18, 18, 18);
+    border: 1px solid gray;
+    font-size: 12px;
+}
+
+.options ul {
+    background-color: rgb(18, 18, 18);
+}
+
+.options li {
+    padding: 8px;
+    cursor: pointer;
+    line-height: 2px;
+    background-color: rgb(18, 18, 18);
+    z-index: 100;
+}
+
+.options li:hover {
+    background-color: #007bff;
+}
+
+.inputCountry {
+    font-size: 14px!important;
+    padding: 8px;
+    border: 1px solid gray;
+    border-radius: 4px;
+    background-color: rgb(18, 18, 18);
+}

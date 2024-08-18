@@ -1,5 +1,10 @@
 export type GenderType = 'male' | 'female';
 
+type CountryOptionType = {
+  label: CountryType;
+  value: CountryType;
+};
+
 export type CountryType =
   | 'Russia'
   | 'Belarus'
@@ -13,8 +18,14 @@ export type FormDataType = {
   email: string;
   password: string;
   confirmPassword: string;
-  gender: GenderType;
-  country: CountryType;
+  gender: GenderType | '';
+  country: CountryType | '';
   picture: string;
   terms: boolean;
 };
+
+export type HistoryFormDataType =
+  | FormDataType
+  | {
+      formType: 'u' & 'rhf';
+    };

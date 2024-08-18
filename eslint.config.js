@@ -30,6 +30,7 @@ export default [
       'react/jsx-uses-react': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
       'react-compiler/react-compiler': 'error',
+      'react/prop-types': 'off',
     },
     settings: {
       react: {

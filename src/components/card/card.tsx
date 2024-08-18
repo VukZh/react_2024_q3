@@ -11,7 +11,11 @@ export default function Card({ isRHF }: CardPropsType) {
   const formData = isRHF ? formDataRHF : formDataU;
   return (
     <>
-      <div className={styles.card}>
+      <div
+        className={styles.card}
+        style={{
+          borderColor: !formData.name ? '#242424' : isRHF ? 'green' : 'tomato',
+        }}>
         {formData.name ? (
           <>
             <div>Name: {formData.name}</div>
@@ -20,12 +24,7 @@ export default function Card({ isRHF }: CardPropsType) {
             <div>Password: {formData.password[0] + '.....'}</div>
             <div>Gender: {formData.gender}</div>
             <div>Country: {formData.country}</div>
-            <img
-              src={formData.picture}
-              alt="Uploaded"
-              width="300"
-              // height="300"
-            />
+            <img src={formData.picture} alt="Uploaded" width="300" />
           </>
         ) : null}
       </div>

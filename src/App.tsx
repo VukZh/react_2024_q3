@@ -1,13 +1,9 @@
 import './App.css';
 import { Link } from 'react-router-dom';
-import { useFormRHF } from './hooks/useFormRHF.tsx';
 import Card from './components/card/card.tsx';
+import History from './components/history/history.tsx';
 
 function App() {
-  const { formDataRHF } = useFormRHF();
-
-  console.log('formDataRHF::::::: ', formDataRHF);
-
   return (
     <>
       <div className="navigation">
@@ -22,6 +18,7 @@ function App() {
         <Card isRHF={true}></Card>
         <Card isRHF={false}></Card>
       </div>
+      <History />
     </>
   );
 }

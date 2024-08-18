@@ -1,31 +1,35 @@
 import styles from './formWithReactHookForm.module.css';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import { formSchemaRHF } from '../../helpers/yupScemaRHF.ts';
 import { useFormRHF } from '../../hooks/useFormRHF.tsx';
 import { fileToBase64 } from '../../helpers/fileToBase64.ts';
+import { FormDataType } from '../../types/types.ts';
+import AutocompleteRHF from '../autocomplete/autocompleteRHF.tsx';
 
 export default function FormWithReactHookForm() {
   const navigate = useNavigate();
-  const { formDataRHF, handleSetFormRHF } = useFormRHF();
+  const { handleSetFormRHF, countries } = useFormRHF();
+
+  const countriesOptions = countries.map((c) => ({
+    label: c,
+    value: c,
+  }));
 
   const {
     register,
     handleSubmit,
+    control,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(formSchemaRHF),
   });
 
-  console.log(errors);
-
   const hasError = Object.keys(errors).length > 0;
 
   const onSubmit = async (data) => {
-    console.log(data);
     const pictureBase64 = await fileToBase64(data.picture[0] as File);
-    console.log('...', pictureBase64);
     const dataUpdates = {
       name: data.name,
       age: data.age,
@@ -38,8 +42,7 @@ export default function FormWithReactHookForm() {
       terms: data.terms,
     };
 
-    console.log(dataUpdates);
-    handleSetFormRHF(dataUpdates);
+    handleSetFormRHF(dataUpdates as FormDataType);
     navigate('/');
   };
 
@@ -100,7 +103,7 @@ export default function FormWithReactHookForm() {
         </div>
         <div className={styles.formGroup}>
           <label htmlFor="gender">Gender:</label>
-          <select id="gender" {...register('gender')}>
+          <select id="gender" {...register('gender')} defaultValue="">
             <option value="" disabled>
               Select Gender
             </option>
@@ -111,19 +114,20 @@ export default function FormWithReactHookForm() {
             <span className={styles.error}>{errors.gender.message}</span>
           )}
         </div>
-        <div className={styles.formGroup}>
-          <label htmlFor="country">Country:</label>
-          <select id="country" {...register('country')}>
-            <option value="" disabled>
-              Select Country
-            </option>
-            <option value="Russia">Russia</option>
-            <option value="Belarus">Belorussia</option>
-            <option value="Georgia">Georgia</option>
-            <option value="Australia">Australia</option>
-            <option value="Germany">Germany</option>
-          </select>
-          {errors.country && (
+        <div className={styles.formGroup} style={{ zIndex: '1' }}>
+          <Controller
+            name="country"
+            control={control}
+            defaultValue=""
+            render={({ field }) => (
+              <AutocompleteRHF
+                options={countriesOptions}
+                name="country"
+                onInputChange={(value) => field.onChange(value)}
+              />
+            )}
+          />
+          {errors.country?.message && (
             <span className={styles.error}>{errors.country.message}</span>
           )}
         </div>

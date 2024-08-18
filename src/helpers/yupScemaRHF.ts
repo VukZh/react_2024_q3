@@ -10,7 +10,10 @@ export const formSchemaRHF = yup.object().shape({
     .required('Age is required')
     .positive('Age must be a positive number')
     .integer('Age must be an integer'),
-  email: yup.string().email('Invalid email').required('Email is required'),
+  email: yup
+    .string()
+    .matches(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i, 'Invalid email')
+    .required('Email is required'),
   password: yup
     .string()
     .required('Password is required')
