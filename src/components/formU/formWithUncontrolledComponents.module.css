@@ -1,0 +1,64 @@
+.formContainer {
+    min-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    max-width: 30vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.formGroup {
+    margin-bottom: 15px;
+    position: relative;
+}
+
+.formGroup label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.formGroup input[type='text'],
+.formGroup input[type='number'],
+.formGroup input[type='email'],
+.formGroup input[type='password'],
+.formGroup select {
+    width: calc(100% - 20px);
+    padding: 8px;
+    border: 1px solid gray;
+    border-radius: 4px;
+}
+.formGroup select {
+    width: 100%;
+}
+
+.formContainer button[type='submit'] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.formContainer button[type='submit']:hover {
+    background-color: blue;
+}
+
+.error {
+    position: absolute;
+    font-size: 12px;
+    font-weight: 600;
+    background-color: rgba(32, 32, 32, 0.7);
+    top: 45px;
+    left: 50px;
+    padding: 0 3px;
+    color: tomato;
+    border-radius: 3px;
+}
+
+.btnInactive.btnInactive.btnInactive.btnInactive {
+    background-color: gray!important;
+}
