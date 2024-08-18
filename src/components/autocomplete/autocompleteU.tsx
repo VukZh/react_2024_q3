@@ -14,7 +14,6 @@ type AutocompleteProps = {
 const AutocompleteU: React.FC<AutocompleteProps> = ({
   options,
   name,
-  onInputChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [inputValue, setInputValue] = useState('');

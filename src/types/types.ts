@@ -1,10 +1,5 @@
 export type GenderType = 'male' | 'female';
 
-type CountryOptionType = {
-  label: CountryType;
-  value: CountryType;
-};
-
 export type CountryType =
   | 'Russia'
   | 'Belarus'

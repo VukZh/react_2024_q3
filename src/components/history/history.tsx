@@ -5,7 +5,6 @@ import SmallCard from '../card/smallCard.tsx';
 
 export default function History() {
   const { history, handleResetHistory } = useHistory();
-  const dispatch = useTypedDispatch();
   const array = new Uint32Array(1);
   return (
     <div className={styles.wrapper}>

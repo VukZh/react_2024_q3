@@ -11,7 +11,7 @@ import AutocompleteU from '../autocomplete/autocompleteU.tsx';
 export default function FormWithUncontrolledComponents() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
-  const { formDataU, handleSetFormU, countries } = useFormU();
+  const { handleSetFormU, countries } = useFormU();
 
   const countriesOptions = countries.map((c) => ({
     label: c,

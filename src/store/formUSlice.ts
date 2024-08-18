@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CountryType, FormDataType, GenderType } from '../types/types.ts';
+import { CountryType, FormDataType } from '../types/types.ts';
 import { COUNTRIES } from '../helpers/countries.ts';
 
 type FormDataSliceType = {
