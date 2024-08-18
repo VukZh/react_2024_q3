@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import { COUNTRIES } from './countries.ts';
 
 export const formSchema = yup.object().shape({
   name: yup
@@ -36,7 +37,10 @@ export const formSchema = yup.object().shape({
     .required('Confirm Password is required')
     .oneOf([yup.ref('password')], 'Passwords must match'),
   gender: yup.string().required('Gender is required'),
-  country: yup.string().required('Country is required'),
+  country: yup
+    .string()
+    .oneOf(COUNTRIES, 'The input data must be one of the existing ones')
+    .required('Country is required'),
   picture: yup
     .mixed()
     .test('fileType', 'Only PNG and JPEG files are allowed', (value) => {
