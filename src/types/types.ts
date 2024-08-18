@@ -1,8 +1,8 @@
-type GenderType = 'male' | 'female';
+export type GenderType = 'male' | 'female';
 
-type CountryType =
+export type CountryType =
   | 'Russia'
-  | 'Belorussia'
+  | 'Belarus'
   | 'Georgia'
   | 'Australia'
   | 'Germany';
@@ -15,6 +15,6 @@ export type FormDataType = {
   confirmPassword: string;
   gender: GenderType;
   country: CountryType;
-  picture: File;
+  picture: string;
   terms: boolean;
 };

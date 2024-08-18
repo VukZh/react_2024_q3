@@ -1,27 +1,28 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
 import './App.css';
 import { Link } from 'react-router-dom';
+import { useFormRHF } from './hooks/useFormRHF.tsx';
+import Card from './components/card/card.tsx';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const { formDataRHF } = useFormRHF();
+
+  console.log('formDataRHF::::::: ', formDataRHF);
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        backgroundColor: '#242424',
-        color: '#ffffff',
-      }}>
-      <Link to="/rhf">rhf</Link>
-      <Link to="/uncontrolled">uncontrolled</Link>
-      <div>forms</div>
-    </div>
+    <>
+      <div className="navigation">
+        <Link to="/rhf" className="leftLink">
+          Form with React Hook Form
+        </Link>
+        <Link to="/uncontrolled" className="rightLink">
+          Form with uncontrolled components
+        </Link>
+      </div>
+      <div className="cards">
+        <Card isRHF={true}></Card>
+        <Card isRHF={false}></Card>
+      </div>
+    </>
   );
 }
 

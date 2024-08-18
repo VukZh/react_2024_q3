@@ -3,10 +3,17 @@ import { useState } from 'react';
 import { formSchema } from '../../helpers/yupScema.ts';
 import { useNavigate } from 'react-router-dom';
 import { ValidationError } from 'yup';
+import { useFormRHF } from '../../hooks/useFormRHF.tsx';
+import { FormDataType } from '../../types/types.ts';
+import { fileToBase64 } from '../../helpers/fileToBase64.ts';
+import { useFormU } from '../../hooks/useFormU.tsx';
 
 export default function FormWithUncontrolledComponents() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const navigate = useNavigate();
+  const { formDataU, handleSetFormU } = useFormU();
+
+  console.log('formDataU: ', formDataU);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -15,10 +22,26 @@ export default function FormWithUncontrolledComponents() {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData.entries());
     data.terms = data.terms === 'true' ? 'true' : data.terms;
-    console.log('formData: ', data);
+
     try {
       await formSchema.validate(data, { abortEarly: false });
-      console.log('formData 2: ', data);
+      const pictureBase64 = await fileToBase64(data.picture as File);
+
+      // handleSetFormRHF(data);
+      const dataUpdates = {
+        name: data.name,
+        age: data.age,
+        email: data.email,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+        gender: data.gender,
+        country: data.country,
+        picture: pictureBase64,
+        terms: data.terms,
+      };
+      console.log('formData: ', dataUpdates, pictureBase64);
+      handleSetFormU(dataUpdates as FormDataType);
+      // console.log('formData 2: ', data);
       navigate('/');
     } catch (err: ValidationError) {
       const validationErrors: Record<string, string> = {};
@@ -126,7 +149,7 @@ export default function FormWithUncontrolledComponents() {
               Select Country
             </option>
             <option value="Russia">Russia</option>
-            <option value="Belorussia">Belorussia</option>
+            <option value="Belarus">Belorussia</option>
             <option value="Georgia">Georgia</option>
             <option value="Australia">Australia</option>
             <option value="Germany">Germany</option>

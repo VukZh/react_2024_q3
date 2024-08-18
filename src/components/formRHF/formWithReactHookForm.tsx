@@ -3,9 +3,12 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useNavigate } from 'react-router-dom';
 import { formSchemaRHF } from '../../helpers/yupScemaRHF.ts';
+import { useFormRHF } from '../../hooks/useFormRHF.tsx';
+import { fileToBase64 } from '../../helpers/fileToBase64.ts';
 
 export default function FormWithReactHookForm() {
   const navigate = useNavigate();
+  const { formDataRHF, handleSetFormRHF } = useFormRHF();
 
   const {
     register,
@@ -19,8 +22,24 @@ export default function FormWithReactHookForm() {
 
   const hasError = Object.keys(errors).length > 0;
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     console.log(data);
+    const pictureBase64 = await fileToBase64(data.picture[0] as File);
+    console.log('...', pictureBase64);
+    const dataUpdates = {
+      name: data.name,
+      age: data.age,
+      email: data.email,
+      password: data.password,
+      confirmPassword: data.confirmPassword,
+      gender: data.gender,
+      country: data.country,
+      picture: pictureBase64,
+      terms: data.terms,
+    };
+
+    console.log(dataUpdates);
+    handleSetFormRHF(dataUpdates);
     navigate('/');
   };
 
@@ -99,7 +118,7 @@ export default function FormWithReactHookForm() {
               Select Country
             </option>
             <option value="Russia">Russia</option>
-            <option value="Belorussia">Belorussia</option>
+            <option value="Belarus">Belorussia</option>
             <option value="Georgia">Georgia</option>
             <option value="Australia">Australia</option>
             <option value="Germany">Germany</option>

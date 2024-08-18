@@ -1,6 +1,25 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.navigation {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 150px;
+  padding-top: 20px;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 150px;
+  padding-top: 20px;
+}
+
+.leftLink {
+  text-align: right;
+  width: 300px;
+}
+
+.rightLink {
+  text-align: left;
+  width: 300px;
 }

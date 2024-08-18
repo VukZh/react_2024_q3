@@ -1,9 +1,13 @@
 .formContainer {
-    min-width: 30vw;
-    margin: 0 auto;
+    min-width: 500px;
+    margin: 20px auto;
     padding: 20px;
     border: 1px solid gray;
     border-radius: 5px;
+    max-width: 30vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .formGroup {
